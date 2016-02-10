@@ -1,0 +1,33 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Langue
+ *
+ * @ORM\Table(name="langue")
+ * @ORM\Entity
+ */
+class Langue
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="langue", type="string", length=100, nullable=false)
+     */
+    private $langue;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

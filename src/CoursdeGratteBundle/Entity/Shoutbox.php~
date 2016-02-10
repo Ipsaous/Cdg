@@ -1,0 +1,50 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Shoutbox
+ *
+ * @ORM\Table(name="shoutbox", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Entity
+ */
+class Shoutbox
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="message", type="text", length=65535, nullable=false)
+     */
+    private $message;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="posted_at", type="datetime", nullable=false)
+     */
+    private $postedAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+
+}
+

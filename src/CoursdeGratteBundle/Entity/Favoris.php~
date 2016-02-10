@@ -1,0 +1,56 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Favoris
+ *
+ * @ORM\Table(name="favoris", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="tuto_id", columns={"tuto_id"}), @ORM\Index(name="playlist_id", columns={"playlist_id"})})
+ * @ORM\Entity
+ */
+class Favoris
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Playlist
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Playlist")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="playlist_id", referencedColumnName="id")
+     * })
+     */
+    private $playlist;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Tutovideo
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Tutovideo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tuto_id", referencedColumnName="id")
+     * })
+     */
+    private $tuto;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+
+}
+

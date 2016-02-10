@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="CoursdeGratteBundle\Entity\Tutovideo" table="tutovideo" repository-class="CoursdeGratteBundle\Entity\TutoRepository">
+    <indexes>
+      <index name="id_artiste" columns="id_artiste"/>
+      <index name="id_difficulty" columns="id_difficulty"/>
+      <index name="id_prof" columns="id_prof"/>
+      <index name="id_style" columns="id_style"/>
+      <index name="id_typeguitare" columns="id_typeguitare"/>
+      <index name="id_typejeu" columns="id_typejeu"/>
+      <index name="id_typetuto" columns="id_typetuto"/>
+      <index name="id_styletechnique" columns="id_styletechnique"/>
+      <index name="id_styletechnique_2" columns="id_styletechnique"/>
+      <index name="titre" columns="titre"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="titre" type="string" column="titre" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lientuto" type="string" column="lientuto" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="liendemo" type="string" column="liendemo" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie2" type="string" column="partie2" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie3" type="string" column="partie3" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie4" type="string" column="partie4" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie5" type="string" column="partie5" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie6" type="string" column="partie6" length="11" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie7" type="string" column="partie7" length="11" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie8" type="string" column="partie8" length="11" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie9" type="string" column="partie9" length="11" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="partie10" type="string" column="partie10" length="11" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="lientablature" type="string" column="lientablature" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="slug" type="string" column="slug" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dateajout" type="datetime" column="dateajout" nullable="false"/>
+    <field name="nbrvues" type="integer" column="nbrvues" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="nbrvuesparmois" type="integer" column="nbrvuesparmois" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <many-to-one field="idTypejeu" target-entity="Typejeu" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_typejeu" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idTypetuto" target-entity="Typetuto" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_typetuto" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idStyletechnique" target-entity="Styletechnique" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_styletechnique" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idTypeguitare" target-entity="Typeguitare" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_typeguitare" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idStyle" target-entity="Style" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_style" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDifficulty" target-entity="Difficulty" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_difficulty" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idProf" target-entity="Prof" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_prof" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idArtiste" target-entity="Artiste" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_artiste" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

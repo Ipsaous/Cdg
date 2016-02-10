@@ -1,0 +1,236 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Stamptutovideo
+ *
+ * @ORM\Table(name="stamptutovideo")
+ * @ORM\Entity
+ */
+class Stamptutovideo
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
+     */
+    private $titre;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_artiste", type="integer", nullable=true)
+     */
+    private $idArtiste;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_difficulty", type="integer", nullable=false)
+     */
+    private $idDifficulty;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nouvelartiste", type="string", length=255, nullable=false)
+     */
+    private $nouvelartiste;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lientuto", type="string", length=255, nullable=false)
+     */
+    private $lientuto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="liendemo", type="string", length=255, nullable=false)
+     */
+    private $liendemo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie2", type="string", length=255, nullable=false)
+     */
+    private $partie2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie3", type="string", length=255, nullable=false)
+     */
+    private $partie3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie4", type="string", length=255, nullable=false)
+     */
+    private $partie4;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie5", type="string", length=255, nullable=false)
+     */
+    private $partie5;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie6", type="string", length=11, nullable=false)
+     */
+    private $partie6;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie7", type="string", length=11, nullable=false)
+     */
+    private $partie7;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie8", type="string", length=11, nullable=false)
+     */
+    private $partie8;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie9", type="string", length=11, nullable=false)
+     */
+    private $partie9;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie10", type="string", length=11, nullable=false)
+     */
+    private $partie10;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lientablature", type="string", length=255, nullable=false)
+     */
+    private $lientablature;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_prof", type="integer", nullable=true)
+     */
+    private $idProf;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nouveauprof", type="string", length=255, nullable=false)
+     */
+    private $nouveauprof;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_style", type="integer", nullable=true)
+     */
+    private $idStyle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nouveaustyle", type="string", length=255, nullable=false)
+     */
+    private $nouveaustyle;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_langue", type="integer", nullable=true)
+     */
+    private $idLangue;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nouvellelangue", type="string", length=255, nullable=false)
+     */
+    private $nouvellelangue;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_typeguitare", type="integer", nullable=false)
+     */
+    private $idTypeguitare;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_typejeu", type="integer", nullable=false)
+     */
+    private $idTypejeu;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=200, nullable=false)
+     */
+    private $slug;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_typetuto", type="integer", nullable=false)
+     */
+    private $idTypetuto;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_styletechnique", type="integer", nullable=true)
+     */
+    private $idStyletechnique;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nouveaustyletechnique", type="string", length=255, nullable=false)
+     */
+    private $nouveaustyletechnique;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="siteprof", type="string", length=255, nullable=false)
+     */
+    private $siteprof;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=true)
+     */
+    private $userId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Cours de gratte.com | Retrouvez les meilleurs tutos guitare du net !{% endblock %}</title>
+    {% stylesheets '@CoursdeGratteBundle/Resources/public/css/*' filter='cssrewrite'%}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-static-top"> <!-- Barre de navigation -->
+    <div class="navbar-header">
+        <a href="{{  path('main') }}" class="navbar-brand title">COURS<span class="orange"> de </span>GRATTE <span class="orange">.com</span></a>
+        <p class="navbar-text navbar-left subtitle">Tous les meilleurs Cours de Guitare Gratuits du Net !</p>
+        <button class="navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+            {% image '@CoursdeGratteBundle/Resources/public/images/iconemenucompte.png' %}
+            <img class="iconemembre" src="{{ asset_url }}" alt="icone compte" />
+            {% endimage %}
+        </button>
+    </div>
+
+    <div class="collapse navbar-collapse navHeaderCollapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="proposition" href="">Poster un TUTO</a></li>
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
+            <li><a id="inscription-link" href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
+            <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+            {% else %}
+            <li id="menu_shoutbox"><a href="" target="_blank"> Shoutbox ! </a></li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" id="pseudo_menu" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {{ app.user.username }}<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <!--  admin -->
+                    <li><a href="">Administration</a></li>
+                    <?php endif; ?>
+
+                    <li><a href="">Mes Favoris</a></li>
+                    <li><a href="">Playlist</a></li>
+                    <li><a href="">Informations</a></li>
+
+                    <li class="divider"></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                </ul>
+            </li>
+            {% endif %}
+
+        </ul>
+
+    </div>
+</div><!-- Fin du menu -->

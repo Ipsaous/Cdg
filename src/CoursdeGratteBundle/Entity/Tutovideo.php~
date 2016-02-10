@@ -1,0 +1,225 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Tutovideo
+ *
+ * @ORM\Table(name="tutovideo", indexes={@ORM\Index(name="id_artiste", columns={"id_artiste"}), @ORM\Index(name="id_difficulty", columns={"id_difficulty"}), @ORM\Index(name="id_prof", columns={"id_prof"}), @ORM\Index(name="id_style", columns={"id_style"}), @ORM\Index(name="id_typeguitare", columns={"id_typeguitare"}), @ORM\Index(name="id_typejeu", columns={"id_typejeu"}), @ORM\Index(name="id_typetuto", columns={"id_typetuto"}), @ORM\Index(name="id_styletechnique", columns={"id_styletechnique"}), @ORM\Index(name="id_styletechnique_2", columns={"id_styletechnique"}), @ORM\Index(name="titre", columns={"titre"})})
+ * @ORM\Entity
+ */
+class Tutovideo
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
+     */
+    private $titre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lientuto", type="string", length=255, nullable=false)
+     */
+    private $lientuto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="liendemo", type="string", length=255, nullable=false)
+     */
+    private $liendemo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie2", type="string", length=255, nullable=false)
+     */
+    private $partie2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie3", type="string", length=255, nullable=false)
+     */
+    private $partie3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie4", type="string", length=255, nullable=false)
+     */
+    private $partie4;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie5", type="string", length=255, nullable=false)
+     */
+    private $partie5;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie6", type="string", length=11, nullable=false)
+     */
+    private $partie6;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie7", type="string", length=11, nullable=false)
+     */
+    private $partie7;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie8", type="string", length=11, nullable=false)
+     */
+    private $partie8;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie9", type="string", length=11, nullable=false)
+     */
+    private $partie9;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partie10", type="string", length=11, nullable=false)
+     */
+    private $partie10;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lientablature", type="string", length=255, nullable=false)
+     */
+    private $lientablature;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     */
+    private $slug;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateajout", type="datetime", nullable=false)
+     */
+    private $dateajout;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbrvues", type="integer", nullable=false)
+     */
+    private $nbrvues = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbrvuesparmois", type="integer", nullable=false)
+     */
+    private $nbrvuesparmois = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Typejeu
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Typejeu")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_typejeu", referencedColumnName="id")
+     * })
+     */
+    private $idTypejeu;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Typetuto
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Typetuto")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_typetuto", referencedColumnName="id")
+     * })
+     */
+    private $idTypetuto;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Styletechnique
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Styletechnique")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_styletechnique", referencedColumnName="id")
+     * })
+     */
+    private $idStyletechnique;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Typeguitare
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Typeguitare")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_typeguitare", referencedColumnName="id")
+     * })
+     */
+    private $idTypeguitare;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Style
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Style")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_style", referencedColumnName="id")
+     * })
+     */
+    private $idStyle;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Difficulty
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Difficulty")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_difficulty", referencedColumnName="id")
+     * })
+     */
+    private $idDifficulty;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Prof
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Prof")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_prof", referencedColumnName="id")
+     * })
+     */
+    private $idProf;
+
+    /**
+     * @var \CoursdeGratteBundle\Entity\Artiste
+     *
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Artiste")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_artiste", referencedColumnName="id")
+     * })
+     */
+    private $idArtiste;
+
+
+}
+

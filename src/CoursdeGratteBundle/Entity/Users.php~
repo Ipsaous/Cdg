@@ -1,0 +1,89 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Users
+ *
+ * @ORM\Table(name="users")
+ * @ORM\Entity
+ */
+class Users
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=30, nullable=false)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=150, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="auth", type="boolean", nullable=false)
+     */
+    private $auth = '0';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=150, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="actif", type="integer", nullable=false)
+     */
+    private $actif = '0';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="activation_key", type="string", length=255, nullable=false)
+     */
+    private $activationKey;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="newsletter_active", type="boolean", nullable=false)
+     */
+    private $newsletterActive = '1';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=100, nullable=false)
+     */
+    private $token;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbre_propositions", type="integer", nullable=false)
+     */
+    private $nbrePropositions;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

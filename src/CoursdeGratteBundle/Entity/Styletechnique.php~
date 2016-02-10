@@ -1,0 +1,33 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Styletechnique
+ *
+ * @ORM\Table(name="styletechnique")
+ * @ORM\Entity
+ */
+class Styletechnique
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="styletechnique", type="string", length=255, nullable=false)
+     */
+    private $styletechnique;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

@@ -1,0 +1,40 @@
+<?php
+
+namespace CoursdeGratteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Paramuser
+ *
+ * @ORM\Table(name="paramuser", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="langue_id", columns={"langue_id"})})
+ * @ORM\Entity
+ */
+class Paramuser
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     */
+    private $userId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="langue_id", type="integer", nullable=false)
+     */
+    private $langueId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+
