@@ -1,3 +1,7 @@
 main:
     path:     /
     defaults: { _controller: CoursdeGratteBundle:Main:index }
+
+ajax_langue:
+    path:     /ajax
+    defaults: { _controller: CoursdeGratteBundle:Main:ajax }

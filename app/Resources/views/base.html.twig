@@ -2,11 +2,12 @@
     {% block body %}{% endblock %}
 
     {% javascripts '@CoursdeGratteBundle/Resources/public/js/jquery.min.js'
-    '@CoursdeGratteBundle/Resources/public/js/bootstrap.min.js' %}
+    '@CoursdeGratteBundle/Resources/public/js/bootstrap.min.js'
+    '@CoursdeGratteBundle/Resources/public/js/new_app.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-{% include "partials/footer.html.twig" %}
+{%  include "partials/footer.html.twig" %}
 
 
 

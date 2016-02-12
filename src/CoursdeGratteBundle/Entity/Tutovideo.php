@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Tutovideo
  *
  * @ORM\Table(name="tutovideo", indexes={@ORM\Index(name="id_artiste", columns={"id_artiste"}), @ORM\Index(name="id_difficulty", columns={"id_difficulty"}), @ORM\Index(name="id_prof", columns={"id_prof"}), @ORM\Index(name="id_style", columns={"id_style"}), @ORM\Index(name="id_typeguitare", columns={"id_typeguitare"}), @ORM\Index(name="id_typejeu", columns={"id_typejeu"}), @ORM\Index(name="id_typetuto", columns={"id_typetuto"}), @ORM\Index(name="id_styletechnique", columns={"id_styletechnique"}), @ORM\Index(name="id_styletechnique_2", columns={"id_styletechnique"}), @ORM\Index(name="titre", columns={"titre"})})
- * @ORM\Entity(repositoryClass="CoursdeGratteBundle\Entity\TutoRepository")
+ * @ORM\Entity(repositoryClass="CoursdeGratteBundle\Repository\TutoRepository")
  */
 class Tutovideo
 {

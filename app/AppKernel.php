@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new CoursdeGratteBundle\CoursdeGratteBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new \MyUserBundle\MyUserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

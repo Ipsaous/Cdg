@@ -4,7 +4,7 @@ namespace CoursdeGratteBundle\Entity;
 
 /**
  * Paramuser
- * @ORM\Entity(repositoryClass="CoursdeGratteBundle\Entity\ParamuserRepository")
+ * @ORM\Entity(repositoryClass="CoursdeGratteBundle\Repository\ParamuserRepository")
  */
 class Paramuser
 {
