@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,500,600,800' rel='stylesheet' type='text/css'>
     <title>{% block title %}Cours de gratte.com | Retrouvez les meilleurs tutos guitare du net !{% endblock %}</title>
-    {% stylesheets '@CoursdeGratteBundle/Resources/public/css/*' filter='cssrewrite'%}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% stylesheets '@CoursdeGratteBundle/Resources/public/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
 <!-- NAVBAR -->
 <nav class="navbar navbar-default navbar-static-top">
-    <div class="navbar-header">
-        <div class="nav-wrapper blue-grey darken-4">
-            <a href="{{  path('main') }}" class="brand-logo">COURS<span class="orange"> de </span>GRATTE <span class="orange">.com</span></a>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="nav-wrapper blue-grey darken-4">
+                <a href="{{ path('main') }}" class="brand-logo"></a>
+            </div>
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                {% image '@CoursdeGratteBundle/Resources/public/images/ic_user_new.png' %}
+                <img id="userIcon" src="{{ asset_url }}" alt="icon_user" />
+                {% endimage %}
+            </button>
         </div>
-    </div>
-    <div class="collapse navbar-collapse navHeaderCollapse">
-        <ul class="nav navbar-nav navbar-right">
-            <!--  admin -->
-            {% if is_granted("ROLE_ADMIN") %}
-                <li><a href="">Administration</a></li>
-            {% endif %}
+        <div class="collapse navbar-collapse navHeaderCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="proposition" href="">Poster un TUTO</a></li>
 
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED")%}
-                <li> {{ app.user.username }} </li>
-                <li class="divider"></li>
-            {% endif %}
-
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
+                <!-- Affichage du menu en fonction d'une session ouverte ou non -->
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
+                <li><a id="inscription-link" href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
                 <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
-                <li><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
-            {% else %}
-            <li><a href="">Mes Favoris</a></li>
-            <li><a href="">Playlist</a></li>
-            <li><a href="">Informations</a></li>
-            <li class="divider"></li>
-            <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
-            {% endif %}
-        </ul>
+                {% endif %}
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="pseudo_menu" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            {{ app.user.username }}
+                        <span class="caret"></span>
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <!--  admin -->
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li><a href="">Administration</a></li>
+                        {% endif %}
+
+                        <li><a href="">Mes Favoris</a></li>
+                        <li><a href="">Playlist</a></li>
+                        <li><a href="">Informations</a></li>
+
+                        <li class="divider"></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </nav>
-
-<div id="searchBox" class="row">
-    <div class="input-field col s12 m10 offset-m1 l8 offset-l2">
-        <input id="search" type="text" class="validate" placeholder="Rechercher" >
-    </div>
-</div>
 

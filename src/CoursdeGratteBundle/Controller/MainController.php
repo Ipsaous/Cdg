@@ -99,6 +99,18 @@ class MainController extends Controller
      * @return mixed
      */
     public function handleAjaxTuto(Request $request){
+
+        $where = $this->buildWhereInRequest($request);
+        $db = $this->get("database_connection");
+        $em = $this->getDoctrine()->getManager();
+        $results = $em->getRepository('CoursdeGratteBundle:Tutovideo')->rawQuery($db, $where, 24, 0);
+
+        return $results;
+
+    }
+
+    public function buildWhereInRequest(Request $request){
+
         $where = "";
         //Partie qui s'occupe de la fonction rechercher
         if($request->get("query") !== null && $request->get("query") != ""){
@@ -142,11 +154,8 @@ class MainController extends Controller
                 }
             }
         }
-        $db = $this->get("database_connection");
-        $em = $this->getDoctrine()->getManager();
-        $results = $em->getRepository('CoursdeGratteBundle:Tutovideo')->rawQuery($db, $where, 24, 0);
 
-        return $results;
+        return $where;
 
     }
 
