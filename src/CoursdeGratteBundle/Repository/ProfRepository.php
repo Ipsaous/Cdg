@@ -10,7 +10,7 @@ class ProfRepository extends EntityRepository{
     public function findAllOrderedByName(){
 
         $queryBuilder = $this->createQueryBuilder("t")->orderBy('t.prof', 'ASC');
-        $results = $queryBuilder->getQuery()->getResult();
+        $results = $queryBuilder->getQuery()->getArrayResult();
         return $results;
 
     }

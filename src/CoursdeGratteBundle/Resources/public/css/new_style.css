@@ -1,0 +1,64 @@
+body{
+    background-color: #222226!important;
+}
+.row{
+    margin-bottom: 10px;
+}
+/** ---MEDIA QUERIES------ **/
+@media (max-width: 767px) {
+    #searchBox{
+        height: 100px!important;
+        line-height: 50px!important;
+    }
+}
+@media (max-width: 992px){
+    .button-collapse{
+        left: 10px;
+    }
+    #searchIcon{
+        right: 10px!important;
+    }
+}
+
+/** -----------FIN DES MEDIA QUERIES------------- **/
+
+/** --------------HEADER--------------- **/
+#searchBox{
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: #263238; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#263238, #222226); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#263238, #222226); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#263238, #222226); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#263238, #222226); /* Standard syntax */
+    height: 200px;
+    line-height: 150px;
+}
+#searchBox input{
+    font-size: 2.5em;
+    font-weight: bold;
+    color:white;
+}
+#searchBox input:focus{
+    border-bottom: 1px solid #FF8B00;
+    box-shadow: 0 1px 0 0 #FF8B00;
+}
+#searchBox input:visited{
+    border-bottom: 1px solid #9e9e9e;
+    box-shadow: 0 1px 0 0 #9e9e9e;
+}
+
+/** --------------FIN DU HEADER--------------- **/
+
+/** -------------- SELECT TRI ---------------- **/
+#allFilters .reset{
+    width: 100%;
+}
+/** -------------- FIN DU TRI -----------------**/
+
+/** -------------- Main Content HomePage ---------------**/
+#mainContent {
+    margin: 0 10px;
+}
+/** --------------- FIN MAIN CONTENT HOMEPAGE ----------**/

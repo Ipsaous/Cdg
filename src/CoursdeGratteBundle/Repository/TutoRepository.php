@@ -25,5 +25,9 @@ class TutoRepository extends EntityRepository {
         return $results;
     }
 
+    public function search($db, $query){
+
+    }
+
 
 } 

@@ -14,7 +14,7 @@ class MainController extends Controller
     {
 
         if($request->isXmlHttpRequest()){
-            $data = $this->newHandle($request);
+            $data = $this->handleAjaxTuto($request);
             return new JsonResponse(['data' => $data]);
         }
         //$user = $this->getUser();
@@ -37,25 +37,76 @@ class MainController extends Controller
             ));
     }
 
-    public function ajaxAction(Request $request){
+    /**
+     * Lance un requête pour récupérer les profs en fonction de la langue
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxProfAction(Request $request){
 
         if($request->isXmlHttpRequest()){
 
             if($request->get("langue") !== null){
                 $em = $this->getDoctrine()->getManager();
-                $profs = $em->getRepository('CoursdeGratteBundle:Prof')->findProfsWithLangue($request->get("langue"));
+                if($request->get("langue") !== ""){
+                    $profs = $em->getRepository('CoursdeGratteBundle:Prof')->findProfsWithLangue($request->get("langue"));
+                }else{
+                    $profs = $em->getRepository('CoursdeGratteBundle:Prof')->findAllOrderedByName();
+                }
                 return new JsonResponse(['profs' => $profs]);
             }
 
         }
-
-
-
     }
 
+    /**
+     * Lance un requête pour récupérer les styles en fonction du type de tuto
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxStyleAction(Request $request){
 
-    public function newHandle(Request $request){
+        if($request->isXmlHttpRequest()){
+
+            if($request->get("typetuto") !== null){
+                $em = $this->getDoctrine()->getManager();
+                if($request->get("typetuto") === "1") {
+                    $styles = $em->getRepository('CoursdeGratteBundle:Style')->findStyleWithTypeTuto();
+                    return new JsonResponse(["styles" => $styles]);
+                }else if($request->get("typetuto") === "2"){
+                    $styles = $em->getRepository('CoursdeGratteBundle:Styletechnique')->findStyleWithTypeTuto();
+                    return new JsonResponse(["stylestechniques" => $styles]);
+                }
+
+            }
+
+        }
+    }
+
+    /**
+     * Lance la requête permettant de faire une recherche
+     * @param Request $request
+     */
+    public function searchAction(Request $request){
+        if($request->get("query") !== null && $request->get("query") != ""){
+
+        }
+    }
+
+    /**
+     * Methode permettant de gérer l'appel ajax en fonction des différents choix de filtres
+     * @param Request $request
+     * @return mixed
+     */
+    public function handleAjaxTuto(Request $request){
         $where = "";
+        //Partie qui s'occupe de la fonction rechercher
+        if($request->get("query") !== null && $request->get("query") != ""){
+            if(preg_match("/^[a-zA-Z0-9\- _'&âêîïëàèùé]+$/", $request->get("query"))) {
+                $query = $request->get("query");
+                $where = ' WHERE (artiste.artiste LIKE "%' . $query . '%" OR tutovideo.titre LIKE "%' . $query . '%" OR prof.prof LIKE "%' . $query . '%")';
+            }
+        }
         $filters = ["difficulty", "style", "prof", "typeguitare", "typejeu", "langue", "tablature", "typetuo"];
         foreach($filters as $filter){
             $value = $request->get($filter);
@@ -98,5 +149,6 @@ class MainController extends Controller
         return $results;
 
     }
+
 
 }
