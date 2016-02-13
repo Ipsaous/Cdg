@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,500,600,800' rel='stylesheet' type='text/css'>
     <title>{% block title %}Cours de gratte.com | Retrouvez les meilleurs tutos guitare du net !{% endblock %}</title>
-    {% stylesheets '@CoursdeGratteBundle/Resources/public/css/*' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% stylesheets 'css/*' filter="cssrewrite"%}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
@@ -16,12 +16,12 @@
     <div class="container-fluid">
         <div class="navbar-header">
                 <a href="{{ path('main') }}" class="brand-logo">
-                    {% image '@CoursdeGratteBundle/Resources/public/images/logo.jpg' %}
+                    {% image 'images/logo.jpg' %}
                     <img id="logo" src="{{ asset_url }}" alt="logo" />
                     {% endimage %}
                 </a>
             <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-                {% image '@CoursdeGratteBundle/Resources/public/images/ic_user_new.png' %}
+                {% image 'images/ic_user_new.png' %}
                 <img id="userIcon" src="{{ asset_url }}" alt="icon_user" />
                 {% endimage %}
             </button>

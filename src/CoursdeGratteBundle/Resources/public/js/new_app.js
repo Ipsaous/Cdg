@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+    //Activation des tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
     var requete = "";
     offset = 0;
     limit = 24;

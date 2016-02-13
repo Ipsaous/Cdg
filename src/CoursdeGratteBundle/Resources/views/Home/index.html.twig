@@ -23,6 +23,7 @@
                             <option value="2">Tutos Divers</option>
                         </select>
                     </div>
+                    <i class="glyphicon glyphicon-info-sign" id="icon-info" data-toggle="tooltip" data-placement="top" title='Sélectionner un type de tuto pour débloquer les autres options'></i>
                 </div>
 
                 <!-- Premiere rangee de filtre -->
@@ -110,7 +111,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts  '@CoursdeGratteBundle/Resources/public/js/new_app.js'
-    '@CoursdeGratteBundle/Resources/public/js/design.js' %}
+    '@CoursdeGratteBundle/Resources/public/js/design.js'%}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
