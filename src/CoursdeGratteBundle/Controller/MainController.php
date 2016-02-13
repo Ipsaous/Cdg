@@ -82,17 +82,6 @@ class MainController extends Controller
 
         }
     }
-
-    /**
-     * Lance la requête permettant de faire une recherche
-     * @param Request $request
-     */
-    public function searchAction(Request $request){
-        if($request->get("query") !== null && $request->get("query") != ""){
-
-        }
-    }
-
     /**
      * Methode permettant de gérer l'appel ajax en fonction des différents choix de filtres
      * @param Request $request
@@ -109,6 +98,11 @@ class MainController extends Controller
 
     }
 
+    /**
+     * Permet de générer le where dans la requete filtrée
+     * @param Request $request
+     * @return string where
+     */
     public function buildWhereInRequest(Request $request){
 
         $where = "";
