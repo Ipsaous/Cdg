@@ -1,12 +1,15 @@
 {% include "partials/header.html.twig" %}
     {% block body %}{% endblock %}
 
-    {% javascripts '@CoursdeGratteBundle/Resources/public/js/jquery.min.js'
-    '@CoursdeGratteBundle/Resources/public/js/bootstrap.min.js'
-    '@CoursdeGratteBundle/Resources/public/js/new_app.js'
-    '@CoursdeGratteBundle/Resources/public/js/design.js'%}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+
+    {%  block javascripts %}
+        {% javascripts '@CoursdeGratteBundle/Resources/public/js/jquery.min.js'
+        '@CoursdeGratteBundle/Resources/public/js/bootstrap.min.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
 
 {%  include "partials/footer.html.twig" %}
 

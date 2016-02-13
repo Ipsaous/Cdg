@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ipsaous
- * Date: 11/02/2016
- * Time: 00:21
- */
 
 namespace CoursdeGratteBundle\Repository;
 

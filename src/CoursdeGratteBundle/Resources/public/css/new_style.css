@@ -3,9 +3,8 @@ body{
 }
 /** ---MEDIA QUERIES------ **/
 @media (max-width: 767px) {
-    #searchBox{
-        height: 100px!important;
-        line-height: 50px!important;
+    #logo{
+        margin-top: 13px!important;
     }
     #mainContent {
         margin: 0;
@@ -26,6 +25,11 @@ body{
 .navbar-right {
     margin-right: 20px!important;
 }
+#logo{
+    margin-left: 10px;
+    margin-top: 5px;
+    width: 50px;
+}
 #userIcon{
     width: 30px;
 }
@@ -39,6 +43,13 @@ body{
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     background-color: #C8C9CA;
     opacity: 1;
+}
+#searchTop{
+    width: 100%;
+    margin-bottom: 10px;
+}
+#selectTypetuto{
+    background-color:#FFAE00;
 }
 
 #tablature, #reset, .form-control{

@@ -19,7 +19,7 @@ class Paramuser
 
     /**
      * @var \CoursdeGratteBundle\Entity\Users
-     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

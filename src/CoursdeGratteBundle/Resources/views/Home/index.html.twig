@@ -2,8 +2,19 @@
 
 {% block body %}
 
+
     <div class="container-fluid" id="mainContent">
         <div class="row">
+
+            <div class="row"><!-- Row de la recherche -->
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="input-group" id="searchTop">
+                        <input id="search" class="form-control input-lg" type="text" name="search"
+                               placeholder="Rechercher Artiste / Chanson / Prof" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
             <!-- Select avec tous les filtres colonne de gauche -->
             <div id="allFilters" data-select=".triSelect">
                 <div class="row" id="typetuto">
@@ -97,4 +108,11 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts  '@CoursdeGratteBundle/Resources/public/js/new_app.js'
+    '@CoursdeGratteBundle/Resources/public/js/design.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
