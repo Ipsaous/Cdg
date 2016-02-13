@@ -39,7 +39,7 @@ class Memo
     private $tuto;
 
     /**
-     * @var \CoursdeGratteBundle\Entity\Users
+     * @var \MyUserBundle\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users")
      * @ORM\JoinColumns({
@@ -111,11 +111,11 @@ class Memo
     /**
      * Set user
      *
-     * @param \CoursdeGratteBundle\Entity\Users $user
+     * @param \MyUserBundle\Entity\Users $user
      *
      * @return Memo
      */
-    public function setUser(\CoursdeGratteBundle\Entity\Users $user = null)
+    public function setUser(\MyUserBundle\Entity\Users $user = null)
     {
         $this->user = $user;
 
@@ -125,7 +125,7 @@ class Memo
     /**
      * Get user
      *
-     * @return \CoursdeGratteBundle\Entity\Users
+     * @return \MyUserBundle\Entity\Users
      */
     public function getUser()
     {

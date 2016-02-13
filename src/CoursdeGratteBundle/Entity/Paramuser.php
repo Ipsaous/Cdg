@@ -18,7 +18,7 @@ class Paramuser
     private $id;
 
     /**
-     * @var \CoursdeGratteBundle\Entity\Users
+     * @var \MyUserBundle\Entity\Users
      * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -49,11 +49,11 @@ class Paramuser
     /**
      * Set user
      *
-     * @param \CoursdeGratteBundle\Entity\Users $userId
+     * @param \MyUserBundle\Entity\Users $userId
      *
      * @return Paramuser
      */
-    public function setUserId(\CoursdeGratteBundle\Entity\Users $userId = null)
+    public function setUserId(\MyUserBundle\Entity\Users $userId = null)
     {
         $this->userId = $userId;
 
@@ -63,7 +63,7 @@ class Paramuser
     /**
      * Get user
      *
-     * @return \CoursdeGratteBundle\Entity\Users
+     * @return \MyUserBundle\Entity\Users
      */
     public function getUserId()
     {

@@ -1,9 +1,5 @@
 $(document).ready(function(){
 
-    var requete = "";
-    offset = 0;
-    limit = 24;
-
     function ajaxQuery(method, url, dataString, params){
         $.ajax({
             type:method,
@@ -45,21 +41,11 @@ $(document).ready(function(){
         }
         //Cas particulier pour la recherche
         var inputSearch = document.querySelector("#search");
-        //Je je n'ai pas encore fait de requete
-        if(requete == "") {
-            if (inputSearch.value.trim() != "") {
-                if (stringData == "") {
-                    stringData += "query=" + inputSearch.value.trim();
-                } else {
-                    stringData += "&query=" + inputSearch.value.trim();
-                }
-            }
-        //Autrement, j'ai déjà fait une requete et donc je continue à rajouter les filtres par dessus la query
-        }else{
-            if (stringData == "") {
-                stringData += "query=" + requete;
-            } else {
-                stringData += "&query=" + requete;
+        if(inputSearch.value.trim() != ""){
+            if(stringData == ""){
+                stringData += "query="+inputSearch.value.trim();
+            }else{
+                stringData += "&query="+inputSearch.value.trim();
             }
         }
         //Cas particulier pour la tablature
@@ -85,6 +71,7 @@ $(document).ready(function(){
         selectStyle.disabled = true
 
         $(selectTypetuto).change(function(){
+            console.log(selectStyle);
            if($(this).val() == 1){
                selectTypejeu.disabled = false;
                selectStyle.disabled = false;
@@ -132,8 +119,6 @@ $(document).ready(function(){
     $("#selectDifficulty, #selectProf, #selectStyle, #selectTypeguitare, #selectTypetuto, #selectTypejeu, #selectTab").change(function(){
         ajaxQuery("GET", './', buildDataString(), 'tutos');
     });
-    //Requete en arrivant sur la page
-    ajaxQuery("GET", './', buildDataString(), 'tutos');
 
     $("#selectTypetuto").change(function(){
         var typetuto = $(this).val();
@@ -170,13 +155,8 @@ $(document).ready(function(){
     $("#search").keypress(function(e){
         if(e.which == 13){
             var query = $(this).val().trim();
-            if(query != ""){
-                requete = query;
-                ajaxQuery("GET", './', "query="+query, 'tutos');
-                resetAllSelect();
-                $(this).val("");
-            }
-
+            ajaxQuery("GET", './', "query="+query, 'tutos');
+            resetAllSelect();
         }
     });
 

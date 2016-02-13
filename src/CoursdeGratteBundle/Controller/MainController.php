@@ -25,12 +25,8 @@ class MainController extends Controller
         $types_jeu = $em->getRepository('CoursdeGratteBundle:Typejeu')->findAllOrderedByName();
         $langues = $em->getRepository('CoursdeGratteBundle:Langue')->findAllOrderedById();
         $profs = $em->getRepository('CoursdeGratteBundle:Prof')->findAllOrderedByName();
-
-
-        $tutos = $em->getRepository('CoursdeGratteBundle:Tutovideo')->myFindAll(0, 24);
         return $this->render('CoursdeGratteBundle:Home:index.html.twig',
             array(
-                'tutos' => $tutos,
                 'profs' => $profs,
                 'types_jeu' => $types_jeu,
                 'langues' => $langues
@@ -120,9 +116,6 @@ class MainController extends Controller
                 //Si la cle GET n'existe pas ça retourne null
                 if ($value !== null) {
                     if ($filter == 'tablature') {
-                        if (empty($value)) {
-                            $tablature = '(lientablature != "" OR lientablature = "")';
-                        }
                         if ($value == 1) {
                             $tablature = 'lientablature != ""';
                         }

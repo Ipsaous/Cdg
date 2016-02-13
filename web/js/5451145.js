@@ -1,9 +1,5 @@
 $(document).ready(function(){
 
-    var requete = "";
-    offset = 0;
-    limit = 24;
-
     function ajaxQuery(method, url, dataString, params){
         $.ajax({
             type:method,
@@ -45,21 +41,11 @@ $(document).ready(function(){
         }
         //Cas particulier pour la recherche
         var inputSearch = document.querySelector("#search");
-        //Je je n'ai pas encore fait de requete
-        if(requete == "") {
-            if (inputSearch.value.trim() != "") {
-                if (stringData == "") {
-                    stringData += "query=" + inputSearch.value.trim();
-                } else {
-                    stringData += "&query=" + inputSearch.value.trim();
-                }
-            }
-        //Autrement, j'ai déjà fait une requete et donc je continue à rajouter les filtres par dessus la query
-        }else{
-            if (stringData == "") {
-                stringData += "query=" + requete;
-            } else {
-                stringData += "&query=" + requete;
+        if(inputSearch.value.trim() != ""){
+            if(stringData == ""){
+                stringData += "query="+inputSearch.value.trim();
+            }else{
+                stringData += "&query="+inputSearch.value.trim();
             }
         }
         //Cas particulier pour la tablature
@@ -85,6 +71,7 @@ $(document).ready(function(){
         selectStyle.disabled = true
 
         $(selectTypetuto).change(function(){
+            console.log(selectStyle);
            if($(this).val() == 1){
                selectTypejeu.disabled = false;
                selectStyle.disabled = false;
@@ -132,8 +119,6 @@ $(document).ready(function(){
     $("#selectDifficulty, #selectProf, #selectStyle, #selectTypeguitare, #selectTypetuto, #selectTypejeu, #selectTab").change(function(){
         ajaxQuery("GET", './', buildDataString(), 'tutos');
     });
-    //Requete en arrivant sur la page
-    ajaxQuery("GET", './', buildDataString(), 'tutos');
 
     $("#selectTypetuto").change(function(){
         var typetuto = $(this).val();
@@ -170,15 +155,51 @@ $(document).ready(function(){
     $("#search").keypress(function(e){
         if(e.which == 13){
             var query = $(this).val().trim();
-            if(query != ""){
-                requete = query;
-                ajaxQuery("GET", './', "query="+query, 'tutos');
-                resetAllSelect();
-                $(this).val("");
-            }
-
+            ajaxQuery("GET", './', "query="+query, 'tutos');
+            resetAllSelect();
         }
     });
+
+
+});
+$(document).ready(function(){
+
+    //----------------Partie pour afficher la search Box
+    var searhBox = $("#searchBox");
+    $("#searchIcon").click(function(){
+        if($('#searchBox').css('display') == "none"){
+            $("#searchBox").fadeIn("fast");
+            $("#mainContent").css('opacity', "0.02");
+            document.getElementById('mainContent').style.pointerEvents = 'none';
+        }else if($('#searchBox').css('display') == "block"){
+            $("#searchBox").fadeOut("fast");
+            $("#mainContent").css('opacity', "1.0");
+            document.getElementById('mainContent').style.pointerEvents = 'visible';
+        }
+
+    });
+
+    $(document).mouseup(function (e) {
+        if (!searhBox.is(e.target) // if the target of the click isn't the searhBox...
+            && searhBox.has(e.target).length === 0) // ... nor a descendant of the searhBox
+        {
+            $("#mainContent").css('opacity', "1.0");
+            document.getElementById('mainContent').style.pointerEvents = 'visible';
+            searhBox.fadeOut("fast");
+        }
+    });
+
+    //------------------Fin partie gérant la searchBox
+
+    //---------- PARTIE FIX SIDEBAR ---------------//
+
+    $(window).scroll(function(){
+        var windowTop = $(window).scrollTop()+80;
+        $('#allFilters').css('top',windowTop);
+    });
+
+
+    //----------- END PARTIE FIX SIDEBAR --------------//
 
 
 });

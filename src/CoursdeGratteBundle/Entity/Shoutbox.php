@@ -36,7 +36,7 @@ class Shoutbox
     private $id;
 
     /**
-     * @var \CoursdeGratteBundle\Entity\Users
+     * @var \MyUserBundle\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users")
      * @ORM\JoinColumns({
@@ -108,11 +108,11 @@ class Shoutbox
     /**
      * Set user
      *
-     * @param \CoursdeGratteBundle\Entity\Users $user
+     * @param \MyUserBundle\Entity\Users $user
      *
      * @return Shoutbox
      */
-    public function setUser(\CoursdeGratteBundle\Entity\Users $user = null)
+    public function setUser(\MyUserBundle\Entity\Users $user = null)
     {
         $this->user = $user;
 
@@ -122,7 +122,7 @@ class Shoutbox
     /**
      * Get user
      *
-     * @return \CoursdeGratteBundle\Entity\Users
+     * @return \MyUserBundle\Entity\Users
      */
     public function getUser()
     {
