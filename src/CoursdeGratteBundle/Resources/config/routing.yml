@@ -2,10 +2,17 @@ main:
     path:     /
     defaults: { _controller: CoursdeGratteBundle:Main:index }
 
-ajax_prof:
+test:
+    path:     /test
+    defaults: { _controller: CoursdeGratteBundle:Main:test }
+ajax_main:
     path:     /ajax
-    defaults: { _controller: CoursdeGratteBundle:Main:ajaxProf }
+    defaults: { _controller: CoursdeGratteBundle:Ajax:ajax }
+
+ajax_prof:
+    path:     /prof
+    defaults: { _controller: CoursdeGratteBundle:Ajax:ajaxProf }
 
 ajax_style:
     path:     /style
-    defaults: { _controller: CoursdeGratteBundle:Main:ajaxStyle }
+    defaults: { _controller: CoursdeGratteBundle:Ajax:ajaxStyle }

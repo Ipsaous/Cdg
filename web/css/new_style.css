@@ -66,4 +66,33 @@ body{
 #mainContent {
     margin: 0 10px;
 }
+#itemContainer{
+    margin-top: 20px;
+}
+/*Vignette*/
+.flag{
+    position:absolute;
+    top: 10px;
+    right: 30px;
+    width: 40px;
+}
+.tutoVignette{
+    position: relative;
+}
+
 /** --------------- FIN MAIN CONTENT HOMEPAGE ----------**/
+
+/** --------------- PAGE LOGIN --------------------------**/
+
+#loginContent{
+    padding-top: 84px;
+}
+#loginContent h1{
+    text-align: center;
+    color: white;
+}
+#loginContent label{
+    color: white;
+}
+
+/**------------------FIN PAGE LOGIN ---------------------**/

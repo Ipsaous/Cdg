@@ -3,11 +3,17 @@ $(document).ready(function(){
     //Activation des tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
+    //Variable globale
     var requete = "";
-    offset = 0;
-    limit = 24;
+    var offset = 0;
+    var limit = 24;
+    var showMore = false;
+    var loader = $("#loader");
+    var mainUrl = "./ajax";
+
 
     function ajaxQuery(method, url, dataString, params){
+        loader.show();
         $.ajax({
             type:method,
             url:url,
@@ -15,6 +21,8 @@ $(document).ready(function(){
             dataType:'json',
             success: function(data){
 
+                var loader = $("#loader");
+                loader.hide();
                 if(params == "tutos"){
                     affichage(data);
                 }else if(params == "profs"){
@@ -28,6 +36,7 @@ $(document).ready(function(){
             },
             error : function(){
                 console.log("Une erreur est survenue");
+                loader.hide();
             }
         });
     }
@@ -102,7 +111,25 @@ $(document).ready(function(){
     }
 
     function affichage(data){
-        console.log(data);
+
+        loader.hide();
+        var results = data.data;
+        var container = $('#itemContainer');
+        var topMois = $('#topMois');
+        if(!showMore){
+            container.empty();
+        }
+        if(results.length > 0){
+            for(var j=0; j < results.length; j++) {
+                var flag = recupFlag(results[j].langue);
+                var titre = shorter(results[j].titre);
+                var artiste = shorter(results[j].artiste);
+                var prof = shorter(results[j].prof);
+
+                container.append('<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 tutoVignette"><img class="flag" src="'+flag+'"/><a href="./tuto/' + results[j].slug + '-' + results[j].tutoid + '"><div class="thumbnail class-' + results[j].id + '"><div class="fonce-' + results[j].id + '"></div><img src="http://img.youtube.com/vi/' + results[j].lientuto + '/mqdefault.jpg"  class="img-responsive vignette" alt="' + results[j].titre + '"><ul class="info"><li class="titre">' + titre + '</li><li class="artiste">' + artiste + '</li><li class="prof">' + prof + '</li></ul></div></a></div>');
+
+            }
+        }
     }
     function fillSelectAjax(data, type, div, text){
         var length = data.length;
@@ -129,14 +156,49 @@ $(document).ready(function(){
         ajaxQuery("GET", './ajax', "langue="+langue , 'profs');
         disableInput();
     }
+    //Récupération des drapeaux
+    function recupFlag(langue){
+
+        if(langue == 'Anglais'){
+            return lien = path+'/uk.jpg';
+        }
+        if(langue == 'Français'){
+            return lien = path+'/france.jpg';
+        }
+        if(langue == 'Portuguais'){
+            return lien = path+'/brazil.jpg';
+        }
+        if(langue == 'Allemand'){
+            return lien = path+'/deutsch.jpg';
+        }
+        if(langue == 'Espagnol'){
+            return lien = path+'/spain.jpg';
+        }
+        if(langue == "Arabe"){
+            return lien = path+'/arabe.jpg';
+        }
+        if(langue == "Italien"){
+            return lien = path+'/italie.jpg';
+        }
+    }
+    function shorter(string){
+        if(string.length > 18){
+            string = string.substr(0,18);
+            string += '...';
+        }
+        return string;
+    }
+
+
+    //------------------- FIN DES FONCTIONS ------------------------//
 
     //Lancement des fonctions
     disableInput();
     $("#selectDifficulty, #selectProf, #selectStyle, #selectTypeguitare, #selectTypetuto, #selectTypejeu, #selectTab").change(function(){
-        ajaxQuery("GET", './', buildDataString(), 'tutos');
+        ajaxQuery("GET", mainUrl, buildDataString(), 'tutos');
     });
     //Requete en arrivant sur la page
-    ajaxQuery("GET", './', buildDataString(), 'tutos');
+    ajaxQuery("GET", mainUrl, buildDataString(), 'tutos');
 
     $("#selectTypetuto").change(function(){
         var typetuto = $(this).val();
@@ -166,7 +228,7 @@ $(document).ready(function(){
             langue = "";
         }
         ajaxQuery("GET", './ajax', "langue="+langue , 'profs');
-        ajaxQuery("GET", './', buildDataString(), 'tutos');
+        ajaxQuery("GET", mainUrl , buildDataString(), 'tutos');
     });
 
     //Lancement de la recherche
@@ -175,7 +237,7 @@ $(document).ready(function(){
             var query = $(this).val().trim();
             if(query != ""){
                 requete = query;
-                ajaxQuery("GET", './', "query="+query, 'tutos');
+                ajaxQuery("GET", mainUrl, "query="+query, 'tutos');
                 resetAllSelect();
                 $(this).val("");
             }

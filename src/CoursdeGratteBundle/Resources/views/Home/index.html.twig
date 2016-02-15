@@ -105,8 +105,37 @@
                 </div>
 
             </div>
+        </div> <!-- Fin de la rangée des select -->
+
+        <div class="row" id="tutoContainer">
+            <script>var path = "{{ asset("/images") }}"</script>
+            <!-- LOADER -->
+            <span id="loader">
+                {% image 'images/ajax-loader.gif' %}
+                    <img id="logo" src="{{ asset_url }}" alt="logo" />
+                {% endimage %}
+            </span>
+
+            <!-- Conteneur pour les tutos-->
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" id="tabTuto">
+                <li role="presentation" class="active"><a href="#itemContainer" aria-controls="itemContainer" role="tab" data-toggle="tab">Tutos Récents</a></li>
+                <li role="presentation"><a href="#topMois" aria-controls="#topMois" role="tab" data-toggle="tab">Top du mois</a></li>
+                <li role="presentation"><a href="#topAllTime" aria-controls="messages" role="tab" data-toggle="tab">Top global</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="itemContainer"></div>
+                <div role="tabpanel" class="tab-pane" id="topMois"></div>
+                <div role="tabpanel" class="tab-pane" id="topAllTime"></div>
+            </div>
+
         </div>
-    </div>
+
+        </div>
+
+    </div><!-- fin du fluid container -->
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
