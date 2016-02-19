@@ -16,6 +16,14 @@ class TutoRepository extends EntityRepository {
         return $results;
     }
 
+//    public function findBySlugId($slug, $id){
+//
+//        $qb = $this->createQueryBuilder("t");
+//        $qb->where("t.slug = :slug")->andWhere("t.id = :id")
+//            ->setParameters(["slug" => $slug, "id" => $id]);
+//        return $result = $qb->getQuery()->getResult();
+//    }
+
     public function rawQuery($db, $where, $limit, $offset){
 
         $query = "SELECT tutovideo.titre, artiste.artiste, difficulty.difficulty, style.style, typeguitare.typeguitare, typejeu.typejeu, tutovideo.slug, langue.langue, tutovideo.lientuto, prof.prof,difficulty.id, tutovideo.id as tutoid, tutovideo.id_typetuto, tutovideo.lientablature FROM tutovideo INNER JOIN style ON style.id = tutovideo.id_style INNER JOIN artiste ON artiste.id = tutovideo.id_artiste INNER JOIN difficulty ON difficulty.id = tutovideo.id_difficulty INNER JOIN typeguitare ON typeguitare.id = tutovideo.id_typeguitare INNER JOIN prof ON prof.id = tutovideo.id_prof INNER JOIN langue ON langue.id = prof.id_langue INNER JOIN typejeu ON typejeu.id = tutovideo.id_typejeu INNER JOIN styletechnique ON styletechnique.id = tutovideo.id_styletechnique INNER JOIN typetuto ON typetuto.id = tutovideo.id_typetuto".$where ." ORDER BY tutovideo.id DESC LIMIT $limit OFFSET $offset";

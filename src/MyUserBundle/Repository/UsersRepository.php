@@ -18,8 +18,7 @@ class UsersRepository extends EntityRepository{
 
         $qb = $this->_em->createQueryBuilder("a")->where("username = :username")->andWhere("password = :password");
         $qb->setParameter("username",$username)->setParameter("password", sha1($salt1.$password.$salt2));
-        $qb->getQuery()->getResult();
-
+        return $qb->getQuery()->getResult();
     }
 
 }

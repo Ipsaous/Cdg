@@ -15,11 +15,29 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-                <a href="{{ path('main') }}" class="brand-logo">
+            <!-- Je vérifie que je suis bien sur la homePage pour afficher l'icone Hamburger -->
+            {% if app.request.get("_route") == "home" %}
+                <button id="menuHamburger">
+                    {% image 'images/m_hamburger.png' %}
+                    <img id="iconHamburger" src="{{ asset_url }}" alt="menuFiltres" />
+                    {% endimage %}
+                </button>
+                <!-- Je rajoute une classe sur le logo pour pouvoir le cacher sur la homepage sur mobile -->
+                <a href="{{ path('home') }}" class="brand-logo">
+                    {% image 'images/logo.jpg' %}
+                    <img id="logo" class="logoToHide" src="{{ asset_url }}" alt="logo" />
+                    {% endimage %}
+                </a>
+            {% else %}
+                <!-- Je suis pas sur la home page donc je laisse le logo s'afficher normalement meme sur mobile -->
+                <a href="{{ path('home') }}" class="brand-logo">
                     {% image 'images/logo.jpg' %}
                     <img id="logo" src="{{ asset_url }}" alt="logo" />
                     {% endimage %}
                 </a>
+            {% endif %}
+
+
             <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                 {% image 'images/ic_user_new.png' %}
                 <img id="userIcon" src="{{ asset_url }}" alt="icon_user" />

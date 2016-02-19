@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Favoris
  *
  * @ORM\Table(name="favoris", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="tuto_id", columns={"tuto_id"}), @ORM\Index(name="playlist_id", columns={"playlist_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CoursdeGratteBundle\Repository\FavorisRepository")
  */
 class Favoris
 {

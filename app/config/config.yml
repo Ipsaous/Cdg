@@ -74,6 +74,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: MyUserBundle\Entity\Users
+    registration:
+        confirmation:
+            enabled: true
 
 #Assetic
 assetic:

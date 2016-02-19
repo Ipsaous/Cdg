@@ -9,11 +9,31 @@ use Doctrine\ORM\Mapping as ORM;
  * Users
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="MyUserBundle\Repository\UsersRepository")
+ * @ORM\Entity
+ * @ORM\AttributeOverrides({
+ *     @ORM\AttributeOverride(name="usernameCanonical",
+ *          column=@ORM\Column(
+ *              name     = "username_canonical",
+ *              type     = "string",
+ *              unique   = false
+ *          )
+ *      ),
+ *      @ORM\AttributeOverride(name="emailCanonical",
+ *          column=@ORM\Column(
+ *              name     = "email_canonical",
+ *              type     = "string",
+ *              unique   = false
+ *          )
+ *      ),
+ * })
  */
 class Users extends BaseUser
 {
 
+    public function __construct(){
+        parent::__construct();
+        //$this->salt = "";
+    }
     /**
      * @var boolean
      *
@@ -90,6 +110,9 @@ class Users extends BaseUser
         return $this->nbrePropositions;
     }
 
+    public function setId($id){
+        return $this->id = $id;
+    }
     /**
      * Get id
      *
@@ -114,8 +137,11 @@ class Users extends BaseUser
     public function setDefaultLangue($default_langue)
     {
         $this->default_langue = $default_langue;
+        
     }
 
-
+    public function addSalt($salt){
+        $this->salt = $salt;
+    }
 
 }

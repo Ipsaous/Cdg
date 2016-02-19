@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        #container{
+            margin-top: 84px;
+        }
+    </style>
+    <div id="container">
+        {{ tuto.titre }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts  '@CoursdeGratteBundle/Resources/public/js/new_app.js'
+    '@CoursdeGratteBundle/Resources/public/js/design.js'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

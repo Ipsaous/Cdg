@@ -1,10 +1,14 @@
-main:
+home:
     path:     /
     defaults: { _controller: CoursdeGratteBundle:Main:index }
 
-test:
-    path:     /test
-    defaults: { _controller: CoursdeGratteBundle:Main:test }
+single:
+    path:     /tuto/{slug}-{id}
+    defaults:  { _controller: CoursdeGratteBundle:Tuto:show }
+    requirements:
+        slug: "[a-z0-9\/-]+"
+        id: \d+
+
 ajax_main:
     path:     /ajax
     defaults: { _controller: CoursdeGratteBundle:Ajax:ajax }
@@ -16,3 +20,7 @@ ajax_prof:
 ajax_style:
     path:     /style
     defaults: { _controller: CoursdeGratteBundle:Ajax:ajaxStyle }
+
+testPassword:
+    path: /testPassword
+    defaults: { _controller: CoursdeGratteBundle:Main:testPassword }

@@ -1,0 +1,3 @@
+#services:
+#    my_password_encoder:
+#        class: MyUserBundle\Security\MyPasswordEncoder

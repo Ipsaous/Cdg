@@ -13,7 +13,13 @@ $(document).ready(function(){
 
 
     function ajaxQuery(method, url, dataString, params){
+
+        //Si j'ai pas cliqué sur afficher plus, je vide le container
+        if(!showMore){
+            $('#itemContainer').empty();
+        }
         loader.show();
+        console.log(url);
         $.ajax({
             type:method,
             url:url,
@@ -113,12 +119,9 @@ $(document).ready(function(){
     function affichage(data){
 
         loader.hide();
-        var results = data.data;
         var container = $('#itemContainer');
+        var results = data.data;
         var topMois = $('#topMois');
-        if(!showMore){
-            container.empty();
-        }
         if(results.length > 0){
             for(var j=0; j < results.length; j++) {
                 var flag = recupFlag(results[j].langue);
@@ -126,10 +129,12 @@ $(document).ready(function(){
                 var artiste = shorter(results[j].artiste);
                 var prof = shorter(results[j].prof);
 
-                container.append('<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 tutoVignette"><img class="flag" src="'+flag+'"/><a href="./tuto/' + results[j].slug + '-' + results[j].tutoid + '"><div class="thumbnail class-' + results[j].id + '"><div class="fonce-' + results[j].id + '"></div><img src="http://img.youtube.com/vi/' + results[j].lientuto + '/mqdefault.jpg"  class="img-responsive vignette" alt="' + results[j].titre + '"><ul class="info"><li class="titre">' + titre + '</li><li class="artiste">' + artiste + '</li><li class="prof">' + prof + '</li></ul></div></a></div>');
+                container.append('<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 tutoVignette"><img class="flag" src="'+flag+'"/><a href="./tuto/' + results[j].slug + '-' + results[j].tutoid + '"><div class="thumbnail class-' + results[j].id + '"><img src="http://img.youtube.com/vi/' + results[j].lientuto + '/mqdefault.jpg"  class="img-responsive vignette" alt="' + results[j].titre + '"><ul class="info"><li class="fonce-' + results[j].id + '"></li><li class="titre">' + titre + '</li><li class="artiste">' + artiste + '</li><li class="prof">' + prof + '</li></ul></div></a></div>');
 
+                $('#itemContainer .tutoVignette').slice(offset, offset + limit).hide();
             }
         }
+        showDiv();
     }
     function fillSelectAjax(data, type, div, text){
         var length = data.length;
@@ -189,6 +194,33 @@ $(document).ready(function(){
         return string;
     }
 
+    //Ouverture de la sidebar filtre pour les mobiles
+    function handleMenuFiltresResponsive(){
+
+        $("#menuHamburger").click(function(){
+            var sidebar = $("#leftSidebar");
+            sidebar.addClass("filtresOpen");
+            $('body').css("overflow", "hidden");
+        });
+
+        $("#closeFiltre").click(function(){
+            var sidebar = $("#leftSidebar");
+            sidebar.removeClass("filtresOpen");
+            $('body').css("overflow", "visible");
+        });
+    }
+
+    //Fonction pour afficher les vignettes en Fade in
+    function showDiv() {
+        // If there are hidden divs left
+        if($('.tutoVignette:hidden').length) {
+            // Fade the first of them in
+            $('.tutoVignette:hidden:first').fadeIn();
+            // And wait one second before fading in the next one
+            setTimeout(showDiv, 15);
+        }
+    }
+
 
     //------------------- FIN DES FONCTIONS ------------------------//
 
@@ -227,7 +259,7 @@ $(document).ready(function(){
         if(langue == "Choisir"){
             langue = "";
         }
-        ajaxQuery("GET", './ajax', "langue="+langue , 'profs');
+        ajaxQuery("GET", './prof', "langue="+langue , 'profs');
         ajaxQuery("GET", mainUrl , buildDataString(), 'tutos');
     });
 
@@ -244,6 +276,11 @@ $(document).ready(function(){
 
         }
     });
+
+    //Gestion de l'ouverture des filtres pour les mobiles
+    handleMenuFiltresResponsive();
+
+
 
 
 });

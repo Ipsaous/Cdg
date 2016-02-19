@@ -6,8 +6,68 @@ body{
     #logo{
         margin-top: 13px!important;
     }
+    .logoToHide{
+        display:none;
+    }
     #mainContent {
         margin: 0;
+    }
+    #tutoContainer{
+        margin: 0!important;
+    }
+    .tutoVignette{
+        padding: 0;
+    }
+    #menuHamburger{
+        display: block!important;
+    }
+    #leftSidebar{
+        width: 100%!important;
+        z-index: 2500;
+        top:0;
+        float: none!important;
+        background-color: #222226;
+        transition-duration:0.3s;
+        overflow-y: scroll;
+        -webkit-transform:translateX(-100%);
+        -o-transform:translateX(-100%);
+        -ms-transform:translateX(-100%);
+        -moz-transform:translateX(-100%);
+    }
+    #leftSidebar .row{
+        width: 100%!important;
+        margin: 0!important;
+        padding: 0!important;
+    }
+    #closeFiltre{
+        vertical-align: -4px;
+        font-size: 40px;
+        margin-left: 30px;
+        display:inline-block!important;
+    }
+    #closeFiltre:hover{
+        color:orange;
+    }
+    .tutoVignette {
+        margin-top: 65px;
+    }
+    .tutoVignette .thumbnail{
+        border: none!important;
+    }
+    .tutoVignette .vignette{
+        display: none!important;
+    }
+    .tutoVignette .info .titre{
+        background-color: rgba(0,0,0,0.65)!important;
+    }
+    .tutoVignette .info .artiste{
+        background-color: rgba(0,0,0,0.65)!important;
+    }
+    .tutoVignette .info .prof{
+        background-color: rgba(0,0,0,0.65)!important;
+    }
+    .flag{
+        top:-20px!important;
     }
 }
 @media (max-width: 992px){
@@ -25,6 +85,13 @@ body{
 .navbar-right {
     margin-right: 20px!important;
 }
+.filtresOpen{
+    transform:translateX(0px)!important;
+    -webkit-transform: translateX(0px)!important;
+    -o-transform:translateX(0px)!important;
+    -ms-transform:translateX(0px)!important;
+    -moz-transform:translateX(0px)!important;
+}
 #logo{
     margin-left: 10px;
     margin-top: 5px;
@@ -33,12 +100,37 @@ body{
 #userIcon{
     width: 30px;
 }
-
+#menuHamburger{
+    position: relative;
+    float: left;
+    margin-left: 15px;
+    padding: 9px 10px;
+    margin-top: 13px;
+    margin-bottom: 13px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-color: #1a242f;
+    border-radius: 4px;
+    display: none;
+}
+#menuHamburger:focus, #menuHamburger:hover{
+    outline-width: 0;
+    background-color: #1a242f;
+}
+#iconHamburger{
+    width: 30px;
+}
 /** --------------FIN DU HEADER--------------- **/
 
 /** -------------- SELECT TRI ---------------- **/
 #allFilters .reset{
     width: 100%;
+}
+#leftSidebar h1{
+    margin-top: 5px;
+    text-align: center;
+    color: white;
 }
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     background-color: #C8C9CA;
@@ -64,22 +156,111 @@ body{
 
 /** -------------- Main Content HomePage ---------------**/
 #mainContent {
-    margin: 0 10px;
+    padding-top: 84px;
+    position: relative;
+    /*height: 100%;*/
+    /*min-height: 100%;*/
 }
 #itemContainer{
-    margin-top: 20px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
+
+#leftSidebar {
+    position: absolute;
+    width: 275px;
+    height: 100%;
+    float: left;
+}
+#closeFiltre {
+    display: none;
+}
+
+#tutoContainer {
+    position: relative;
+    margin-left: 275px;
+    padding: 0;
+}
+#loader{
+    margin: 0 auto;
+    display: block;
+    margin-top: 40px;
+    width: 60px;
+}
+
 /*Vignette*/
 .flag{
-    position:absolute;
-    top: 10px;
-    right: 30px;
-    width: 40px;
+    position: absolute;
+    top: 6px;
+    z-index: 2;
+    right: 20px;
+    width: 35px;
 }
 .tutoVignette{
     position: relative;
 }
 
+.tutoVignette .thumbnail{
+    position: relative;
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+}
+.tutoVignette .info{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.tutoVignette .info li{
+    list-style: none;
+    text-align: center;
+}
+.tutoVignette .info .fonce-1{
+    background-color: #2ECC71;
+    height: 8px;
+}
+.tutoVignette .info .fonce-2{
+    background-color: #F39C12;
+    height: 8px;
+}
+.tutoVignette .info .fonce-3{
+    background-color: #9B59B6;
+    height: 8px;
+}
+.tutoVignette .info .fonce-4{
+    background-color: #E74C3C;
+    height: 8px;
+}
+.tutoVignette .info .fonce-5{
+    background-color: #642019;
+    height: 8px;
+}
+.tutoVignette .info .titre{
+    color:orange;
+    min-height: 20px;
+    background-color: rgba(0, 0, 0, 0.90);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.tutoVignette .info .artiste{
+    color: white;
+    min-height: 20px;
+    background-color: rgba(0, 0, 0, 0.90);
+    font-size: 1.4rem;
+}
+.tutoVignette .info .prof {
+    color: #dddeee;
+    min-height: 20px;
+    background-color: rgba(0, 0, 0, 0.90);
+    font-size: 1.3rem;
+}
 /** --------------- FIN MAIN CONTENT HOMEPAGE ----------**/
 
 /** --------------- PAGE LOGIN --------------------------**/
