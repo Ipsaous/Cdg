@@ -17,8 +17,8 @@ class MyPasswordEncoder extends BasePasswordEncoder{
      */
     public function encodePassword($raw, $salt)
     {
-        $salt1 = "PROTECTIONMOTDEPASSE1";
-        $salt2 = "PROTECTIONMOTDEPASSE2";
+        $salt1 = "";
+        $salt2 = "";
         $password = sha1($salt1.$raw.$salt2);
         return $password;
     }
