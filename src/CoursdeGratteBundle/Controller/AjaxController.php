@@ -39,10 +39,15 @@ class AjaxController extends Controller{
      */
     public function handleAjaxTuto(Request $request){
 
+        $offset = 0;
+        $limit = 24;
         $where = $this->buildWhereInRequest($request);
+        if($request->get("offset") !== null && $request->get("limit") !== null){
+            $offset = (int) $request->get("offset");
+        }
         $db = $this->get("database_connection");
         $em = $this->getDoctrine()->getManager();
-        $results = $em->getRepository('CoursdeGratteBundle:Tutovideo')->rawQuery($db, $where, $this->limit, 0);
+        $results = $em->getRepository('CoursdeGratteBundle:Tutovideo')->rawQuery($db, $where, $limit, $offset);
 
         return $results;
 

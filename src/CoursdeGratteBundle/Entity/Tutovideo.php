@@ -213,7 +213,7 @@ class Tutovideo
     /**
      * @var \CoursdeGratteBundle\Entity\Artiste
      *
-     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Artiste")
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Artiste"), mappedBy="tuto
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_artiste", referencedColumnName="id")
      * })
@@ -221,13 +221,13 @@ class Tutovideo
     private $idArtiste;
 
     //Field pour récup les names
-    private $difficulty_name;
-    private $style_name;
-    private $prof_name;
-    private $artiste_name;
-    private $typeGuitare_name;
-    private $typeJeu_name;
-    private $styleTechnique_name;
+    private $difficultyName;
+    private $styleName;
+    private $profName;
+    private $artisteName;
+    private $typeGuitareName;
+    private $typeJeuName;
+    private $styleTechniqueName;
 
 
 
@@ -827,6 +827,7 @@ class Tutovideo
     public function setIdArtiste(\CoursdeGratteBundle\Entity\Artiste $idArtiste = null)
     {
         $this->idArtiste = $idArtiste;
+        $idArtiste->setTuto($this);
 
         return $this;
     }
@@ -846,15 +847,15 @@ class Tutovideo
      */
     public function getArtisteName()
     {
-        return $this->artiste_name;
+        return $this->artisteName;
     }
 
     /**
-     * @param mixed $artiste_name
+     * @param mixed $artisteName
      */
-    public function setArtisteName($artiste_name)
+    public function setArtisteName($artisteName)
     {
-        $this->artiste_name = $artiste_name;
+        $this->artisteName = $artisteName;
     }
 
     /**
@@ -862,15 +863,15 @@ class Tutovideo
      */
     public function getDifficultyName()
     {
-        return $this->difficulty_name;
+        return $this->difficultyName;
     }
 
     /**
-     * @param mixed $difficulty_name
+     * @param mixed $difficultyName
      */
-    public function setDifficultyName($difficulty_name)
+    public function setDifficultyName($difficultyName)
     {
-        $this->difficulty_name = $difficulty_name;
+        $this->difficultyName = $difficultyName;
     }
 
     /**
@@ -878,15 +879,15 @@ class Tutovideo
      */
     public function getProfName()
     {
-        return $this->prof_name;
+        return $this->profName;
     }
 
     /**
-     * @param mixed $prof_name
+     * @param mixed $profName
      */
-    public function setProfName($prof_name)
+    public function setProfName($profName)
     {
-        $this->prof_name = $prof_name;
+        $this->profName = $profName;
     }
 
     /**
@@ -894,15 +895,15 @@ class Tutovideo
      */
     public function getStyleTechniqueName()
     {
-        return $this->styleTechnique_name;
+        return $this->styleTechniqueName;
     }
 
     /**
-     * @param mixed $styleTechnique_name
+     * @param mixed $styleTechniqueName
      */
-    public function setStyleTechniqueName($styleTechnique_name)
+    public function setStyleTechniqueName($styleTechniqueName)
     {
-        $this->styleTechnique_name = $styleTechnique_name;
+        $this->styleTechniqueName = $styleTechniqueName;
     }
 
     /**
@@ -910,15 +911,15 @@ class Tutovideo
      */
     public function getStyleName()
     {
-        return $this->style_name;
+        return $this->styleName;
     }
 
     /**
-     * @param mixed $style_name
+     * @param mixed $styleName
      */
-    public function setStyleName($style_name)
+    public function setStyleName($styleName)
     {
-        $this->style_name = $style_name;
+        $this->styleName = $styleName;
     }
 
     /**
@@ -926,15 +927,15 @@ class Tutovideo
      */
     public function getTypeGuitareName()
     {
-        return $this->typeGuitare_name;
+        return $this->typeGuitareName;
     }
 
     /**
-     * @param mixed $typeGuitare_name
+     * @param mixed $typeGuitareName
      */
-    public function setTypeGuitareName($typeGuitare_name)
+    public function setTypeGuitareName($typeGuitareName)
     {
-        $this->typeGuitare_name = $typeGuitare_name;
+        $this->typeGuitareName = $typeGuitareName;
     }
 
     /**
@@ -942,15 +943,19 @@ class Tutovideo
      */
     public function getTypeJeuName()
     {
-        return $this->typeJeu_name;
+        return $this->typeJeuName;
     }
 
     /**
-     * @param mixed $typeJeu_name
+     * @param mixed $typeJeuName
      */
-    public function setTypeJeuName($typeJeu_name)
+    public function setTypeJeuName($typeJeuName)
     {
-        $this->typeJeu_name = $typeJeu_name;
+        $this->typeJeuName = $typeJeuName;
+    }
+
+    public function getArtistes(){
+        return $this->artistes;
     }
 
 

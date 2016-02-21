@@ -82,6 +82,9 @@ body{
 /** -----------FIN DES MEDIA QUERIES------------- **/
 
 /** --------------HEADER--------------- **/
+.navbar{
+    background-color: #607D8B!important;
+}
 .navbar-right {
     margin-right: 20px!important;
 }
@@ -182,6 +185,7 @@ body{
     position: relative;
     margin-left: 275px;
     padding: 0;
+    margin-bottom: 100px;
 }
 #loader{
     margin: 0 auto;
@@ -260,6 +264,12 @@ body{
     min-height: 20px;
     background-color: rgba(0, 0, 0, 0.90);
     font-size: 1.3rem;
+}
+#seeMore{
+    display: none;
+}
+#loadingMore{
+    display: none;
 }
 /** --------------- FIN MAIN CONTENT HOMEPAGE ----------**/
 

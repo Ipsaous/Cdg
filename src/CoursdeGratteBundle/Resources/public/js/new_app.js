@@ -29,6 +29,8 @@ $(document).ready(function(){
 
                 var loader = $("#loader");
                 loader.hide();
+                $("#loadingMore").hide();
+                console.log(params);
                 if(params == "tutos"){
                     affichage(data);
                 }else if(params == "profs"){
@@ -38,11 +40,14 @@ $(document).ready(function(){
                 }else if(params == "stylestechniques"){
                     fillSelectAjax(data.stylestechniques, "styletechnique", "#selectStyle", "Tous les styles");
                 }
+                //Je remet showMore a false;
+                showMore = false;
 
             },
             error : function(){
                 console.log("Une erreur est survenue");
                 loader.hide();
+                $("#loadingMore").hide();
             }
         });
     }
@@ -135,15 +140,24 @@ $(document).ready(function(){
             }
         }
         showDiv();
+
+        //Affichage du bouton "afficher plus"
+        if(results.length >= 24){ // si j'ai plus de 24 résultats, j'affiche le bouton
+            $("#seeMore").show();
+        }else{
+            $("#seeMore").hide();
+        }
     }
     function fillSelectAjax(data, type, div, text){
-        var length = data.length;
-        var element = $(div);
-        if(length > 0){
-            element.html("");
-            element.append('<option value="Choisir">'+text+'</option>');
-            for(var i = 0; i < length; i++){
-                element.append('<option value=' + data[i].id + '>' + data[i][type] + '</option>');
+        if(data != null) {
+            var length = data.length;
+            var element = $(div);
+            if (length > 0) {
+                element.html("");
+                element.append('<option value="Choisir">' + text + '</option>');
+                for (var i = 0; i < length; i++) {
+                    element.append('<option value=' + data[i].id + '>' + data[i][type] + '</option>');
+                }
             }
         }
     }
@@ -217,7 +231,7 @@ $(document).ready(function(){
             // Fade the first of them in
             $('.tutoVignette:hidden:first').fadeIn();
             // And wait one second before fading in the next one
-            setTimeout(showDiv, 15);
+            setTimeout(showDiv, 30);
         }
     }
 
@@ -227,12 +241,15 @@ $(document).ready(function(){
     //Lancement des fonctions
     disableInput();
     $("#selectDifficulty, #selectProf, #selectStyle, #selectTypeguitare, #selectTypetuto, #selectTypejeu, #selectTab").change(function(){
+        offset = 0;
         ajaxQuery("GET", mainUrl, buildDataString(), 'tutos');
+
     });
     //Requete en arrivant sur la page
     ajaxQuery("GET", mainUrl, buildDataString(), 'tutos');
 
     $("#selectTypetuto").change(function(){
+        offset = 0;
         var typetuto = $(this).val();
         if(typetuto == 1){
             type = "styles";
@@ -252,9 +269,11 @@ $(document).ready(function(){
         if(typetuto != ""){
             ajaxQuery("GET", './style', "typetuto="+typetuto, type);
         }
+
     });
 
     $("#selectLangue").change(function(){
+        offset = 0;
         var langue = $(this).val();
         if(langue == "Choisir"){
             langue = "";
@@ -265,6 +284,7 @@ $(document).ready(function(){
 
     //Lancement de la recherche
     $("#search").keypress(function(e){
+        offset = 0;
         if(e.which == 13){
             var query = $(this).val().trim();
             if(query != ""){
@@ -275,6 +295,29 @@ $(document).ready(function(){
             }
 
         }
+    });
+
+    //Gestion de la pagination
+    $("#seeMore").click(function(){
+        $(this).hide();
+        $("#loadingMore").show();
+        offset = offset + limit;
+        showMore = true;
+        var toAppend = "&offset="+offset+"&limit="+limit;
+        if(buildDataString() == ""){
+            toAppend = "offset="+offset+"&limit="+limit;
+        }
+        var stringRequest = buildDataString()+toAppend;
+        //console.log(stringRequest);
+        ajaxQuery("GET", mainUrl, stringRequest, 'tutos');
+
+    });
+
+    //Gestion du bouton Reset
+    $(".reset").click(function(){
+        $("#selectTab").attr("checked", false);
+        resetAllSelect();
+        ajaxQuery("GET", mainUrl, "", 'tutos');
     });
 
     //Gestion de l'ouverture des filtres pour les mobiles

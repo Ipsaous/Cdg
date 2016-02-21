@@ -28,6 +28,16 @@ class Artiste
      */
     private $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Tutovideo", inversedBy="idArtiste"
+     * @ORM\JoinColumn(nullable=false)
+     *
+     */
+    private $tuto;
+
+    public function setTuto(Tutovideo $tuto){
+        $this->tuto = $tuto;
+    }
 
 
     /**
