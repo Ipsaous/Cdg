@@ -36,6 +36,16 @@ class TutoRepository extends EntityRepository {
         return $results;
     }
 
+    public function findByTitle($title){
+
+        $qb = $this->createQueryBuilder("t")
+            ->select("t.titre")->where("t.titre LIKE :query")->setParameter("query", '%'.$title.'%')
+            ->distinct()
+            ->getQuery();
+        return $results = $qb->getArrayResult();
+
+    }
+
     public function test($id){
 
         $qb = $this->createQueryBuilder("t")->join("t.idArtiste", "artistes")->addSelect("artistes")

@@ -236,6 +236,25 @@ $(document).ready(function(){
     }
 
 
+    function toggleSearch(){
+        var searchBlock = $("#searchBlock");
+        if(searchBlock.css("display") == "none"){
+            $("#search").val("");
+            searchBlock.fadeIn("fast");
+            $("body").css("position","fixed");
+            $("#leftSidebar").css("overflow-y", "hidden");
+            $("#overlay").css("opacity", "0.2");
+            $("#searchButton").css("background-color", "#1a242f");
+        }else{
+            $("#search").val("");
+            searchBlock.fadeOut("fast");
+            $("body").css("position","static");
+            $("#leftSidebar").css("overflow-y", "auto");
+            $("#overlay").css("opacity", "1");
+            $("#searchButton").css("background-color", "transparent");
+        }
+    }
+
     //------------------- FIN DES FONCTIONS ------------------------//
 
     //Lancement des fonctions
@@ -292,8 +311,10 @@ $(document).ready(function(){
                 ajaxQuery("GET", mainUrl, "query="+query, 'tutos');
                 resetAllSelect();
                 $(this).val("");
+                $('#search').typeahead('destroy');
+                toggleSearch();
+                initialiseTypeahead();
             }
-
         }
     });
 
@@ -315,6 +336,7 @@ $(document).ready(function(){
 
     //Gestion du bouton Reset
     $(".reset").click(function(){
+        requete = "";
         $("#selectTab").attr("checked", false);
         resetAllSelect();
         ajaxQuery("GET", mainUrl, "", 'tutos');
@@ -323,7 +345,107 @@ $(document).ready(function(){
     //Gestion de l'ouverture des filtres pour les mobiles
     handleMenuFiltresResponsive();
 
+    //Affichage de l'input de la recherche
+    $("#searchButton").click(function(){
+        toggleSearch();
+        $("#search").focus();
+    });
+
+    //********************** TYPEAHEAD *************************//
+    var titres = new Bloodhound({
+        datumTokenizer: function (datum) {
+            return Bloodhound.tokenizers.whitespace(datum.titre);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url :'./typeahead?titre=%QUERY',
+            wildcard : '%QUERY'
+        }
+    });
+    var profs = new Bloodhound({
+        datumTokenizer: function (datum) {
+            return Bloodhound.tokenizers.whitespace(datum.prof);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url :'./typeahead?prof=%QUERY',
+            wildcard : '%QUERY'
+        }
+    });
+    var artistes = new Bloodhound({
+        datumTokenizer: function (datum) {
+            return Bloodhound.tokenizers.whitespace(datum.artiste);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url :'./typeahead?artiste=%QUERY',
+            wildcard : '%QUERY'
+        }
+    });
+
+    titres.initialize();
+    profs.initialize();
+    artistes.initialize();
+    initialiseTypeahead();
+    function initialiseTypeahead(){
+        $('#search').typeahead({
+                hint: false,
+                highlight: true,
+                minLength: 1
+            },
+            {
+                name: 'titres',
+                displayKey: 'titre',
+                source: titres.ttAdapter(),
+                limit:3,
+                templates:{
+                    header:'<h5>Titre(s)</h5>'
+                }
+            },
+            {
+                name: 'artistes',
+                displayKey: 'artiste',
+                source: artistes.ttAdapter(),
+                limit:3,
+                templates:{
+                    header:'<h5>Artiste(s)</h5>'
+                }
+            },
+            {
+                name: 'profs',
+                displayKey: 'prof',
+                source: profs.ttAdapter(),
+                limit:3,
+                templates:{
+                    header:'<h5>Prof(s)</h5>'
+                }
+            });
+    }
 
 
+    $("#search").bind("typeahead:select", function(ev, suggestions){
+        //TODO Pour le titre, mais faire pour les autres cas
+        console.log(suggestions);
+        var suggestion = "";
+        if(suggestions.prof != null){
+            suggestion = suggestions.prof;
+        }else if(suggestions.titre != null){
+            suggestion = suggestions.titre;
+        }else if(suggestions.artiste != null){
+            suggestion = suggestions.artiste;
+        }
+        if(suggestion != "") {
+            requete = suggestion;
+            ajaxQuery("GET", mainUrl, "query="+suggestion, 'tutos');
+            resetAllSelect();
+            $(this).val("");
+            $('#search').typeahead('destroy');
+            toggleSearch();
+            initialiseTypeahead();
+
+        }
+    });
+
+    //********************** FIN TYPEAHEAD *********************//
 
 });

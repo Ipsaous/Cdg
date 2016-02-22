@@ -2,154 +2,166 @@
 
 {% block body %}
 
-    <div class="container-fluid">
-        <div id="mainContent">
-            <div class="row" id="leftSidebar" style="position:fixed">
+    <div id="searchBlock">
+        <div class="col-lg-8 col-lg-offset-2" id="containerBlock">
+            <div class="input-group" id="searchTop">
+                <input id="search" class="form-control input-lg" type="text" name="search"
+                       placeholder="Rechercher Artiste / Chanson / Prof" autocomplete="off">
+            </div>
+        </div>
+    </div>
 
-                <div class="row"><!-- Row de la recherche -->
+    <div id="overlay">
 
-                    <div class="col-lg-12" style="display: none">
-                        <div class="input-group" id="searchTop">
-                            <input id="search" class="form-control input-lg" type="text" name="search"
-                                   placeholder="Rechercher Artiste / Chanson / Prof" autocomplete="off">
+        <div class="container-fluid">
+            <div id="mainContent">
+                <div class="row" id="leftSidebar" style="position:fixed">
+
+                    <div class="row"><!-- Row de la recherche -->
+
+                        <div class="col-lg-12" style="display: none">
+                            <div class="input-group" id="searchTop">
+                                <input id="search" class="form-control input-lg" type="text" name="search"
+                                       placeholder="Rechercher Artiste / Chanson / Prof" autocomplete="off">
+                            </div>
                         </div>
                     </div>
-                </div>
 
 
-                <!-- Select avec tous les filtres colonne de gauche -->
-                <div id="allFilters" data-select=".triSelect">
-                    <h1>Filtres <i class="glyphicon glyphicon-remove-circle" id="closeFiltre"></i></h1>
-                    <div class="row" id="typetuto">
-                        <div class="col-lg-12">
-                            <select class="form-control triSelect" id="selectTypetuto" data-name="typetuto">
-                                <option selected="selected" value="Choisir">Tous types de tutos</option>
-                                <option value="1">Tutos Chansons</option>
-                                <option value="2">Tutos Divers</option>
-                            </select>
-                        </div>
-                        <!--
-                        <i class="glyphicon glyphicon-info-sign" id="icon-info" data-toggle="tooltip"
-                           data-placement="top"
-                           title='Sélectionner un type de tuto pour débloquer les autres options'></i>
-                           -->
-                    </div>
+                    <!-- Select avec tous les filtres colonne de gauche -->
+                    <div id="allFilters" data-select=".triSelect">
+                        <h1>Filtres <i class="glyphicon glyphicon-remove-circle" id="closeFiltre"></i></h1>
 
-                    <!-- Premiere rangee de filtre -->
-                    <div class="row filtre">
-                        <div class="col-lg-12">
-                            <select class="form-control triSelect" id="selectDifficulty" data-name="difficulty">
-                                <option value="Choisir">Toutes les difficultés</option>
-                                <option class="optiondiff-1" value="1">Très Facile</option>
-                                <option class="optiondiff-2" value="2">Facile</option>
-                                <option class="optiondiff-3" value="3">Moyen</option>
-                                <option class="optiondiff-4" value="4">Difficile</option>
-                                <option class="optiondiff-5" value="5">Très Difficile</option>
-                            </select>
+                        <div class="row" id="typetuto">
+                            <div class="col-lg-12">
+                                <select class="form-control triSelect" id="selectTypetuto" data-name="typetuto">
+                                    <option selected="selected" value="Choisir">Tous types de tutos</option>
+                                    <option value="1">Tutos Chansons</option>
+                                    <option value="2">Tutos Divers</option>
+                                </select>
+                            </div>
+                            <!--
+                            <i class="glyphicon glyphicon-info-sign" id="icon-info" data-toggle="tooltip"
+                               data-placement="top"
+                               title='Sélectionner un type de tuto pour débloquer les autres options'></i>
+                               -->
                         </div>
 
-                        <div class="col-lg-12">
-                            <select class="form-control triSelect" id="selectStyle" data-name="style">
-                                <option selected="selected" value="Choisir">Tous les styles</option>
-                                <option class="resultstyle"></option>
-                            </select>
+                        <!-- Premiere rangee de filtre -->
+                        <div class="row filtre">
+                            <div class="col-lg-12">
+                                <select class="form-control triSelect" id="selectDifficulty" data-name="difficulty">
+                                    <option value="Choisir">Toutes les difficultés</option>
+                                    <option class="optiondiff-1" value="1">Très Facile</option>
+                                    <option class="optiondiff-2" value="2">Facile</option>
+                                    <option class="optiondiff-3" value="3">Moyen</option>
+                                    <option class="optiondiff-4" value="4">Difficile</option>
+                                    <option class="optiondiff-5" value="5">Très Difficile</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <select class="form-control triSelect" id="selectStyle" data-name="style">
+                                    <option selected="selected" value="Choisir">Tous les styles</option>
+                                    <option class="resultstyle"></option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <select class="form-control triSelect" id="selectProf" name="Prof" data-name="prof">
+                                    <option selected="selected" value="Choisir">Tous les profs</option>
+                                    {% for prof in profs %}
+                                        <option class="resultprof" value="{{ prof.id }}">{{ prof.prof }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <select class="form-control triSelect" id="selectTypeguitare" data-name="typeguitare">
+                                    <option selected="selected" value="Choisir">Tous types de guitare</option>
+                                    <option value="1">Acoustique</option>
+                                    <option value="2">Electrique</option>
+                                    <option value="3">Acoustique et Electrique</option>
+                                    <option value="4">Ukulélé</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <select class="form-control triSelect" id="selectTypejeu" data-name="typejeu">
+                                    <option selected="selected" value="Choisir">Tous types de jeux</option>
+                                    {% for typejeu in types_jeu %}
+                                        <option value="{{ typejeu.id }}">{{ typejeu.typejeu }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <select class="form-control triSelect" id="selectLangue" data-name="langue">
+                                    <!-- REFAIRE LA CONDITION POUR LA VALEUR DE LA LANGUE PAR DEFAUT DANS SESSION USER -->
+                                    <option selected="selected" value="Choisir">Toutes les langues</option>
+                                    {% for langue in langues %}
+                                        <option value="{{ langue.id }}">{{ langue.langue }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
                         </div>
 
-                        <div class="col-lg-12">
-                            <select class="form-control triSelect" id="selectProf" name="Prof" data-name="prof">
-                                <option selected="selected" value="Choisir">Tous les profs</option>
-                                {% for prof in profs %}
-                                    <option class="resultprof" value="{{ prof.id }}">{{ prof.prof }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <select class="form-control triSelect" id="selectTypeguitare" data-name="typeguitare">
-                                <option selected="selected" value="Choisir">Tous types de guitare</option>
-                                <option value="1">Acoustique</option>
-                                <option value="2">Electrique</option>
-                                <option value="3">Acoustique et Electrique</option>
-                                <option value="4">Ukulélé</option>
-                            </select>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <select class="form-control triSelect" id="selectTypejeu" data-name="typejeu">
-                                <option selected="selected" value="Choisir">Tous types de jeux</option>
-                                {% for typejeu in types_jeu %}
-                                    <option value="{{ typejeu.id }}">{{ typejeu.typejeu }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <select class="form-control triSelect" id="selectLangue" data-name="langue">
-                                <!-- REFAIRE LA CONDITION POUR LA VALEUR DE LA LANGUE PAR DEFAUT DANS SESSION USER -->
-                                <option selected="selected" value="Choisir">Toutes les langues</option>
-                                {% for langue in langues %}
-                                    <option value="{{ langue.id }}">{{ langue.langue }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <!-- Seconde Rangee-->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="input-group" id="tablature">
+                        <!-- Seconde Rangee-->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="input-group" id="tablature">
                             <span class="input-group-addon">
                                 <input type="checkbox" id="selectTab" name="selectTab">
                             </span>
-                                <span class="form-control"><label for="selectTab">Avec Tablature</label></span>
+                                    <span class="form-control"><label for="selectTab">Avec Tablature</label></span>
+                                </div>
+                            </div>
+
+                            <div id="reset">
+                                <div class="col-lg-12 ">
+                                    <button class="btn btn-danger reset">Reset</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div id="reset">
-                            <div class="col-lg-12 ">
-                                <button class="btn btn-danger reset">Reset</button>
+                    </div>
+                </div>
+                <!-- Fin de la rangée des select -->
+
+                <div class="row" id="tutoContainer">
+                    <script>var path = "{{ asset("/images") }}"</script>
+                    <!-- LOADER -->
+                    {% image 'images/ripple.svg' %}
+                    <img id="loader" src="{{ asset_url }}" alt="loader"/>
+                    {% endimage %}
+
+
+                    <ul id="itemContainer"></ul>
+
+                    <!-- PAGINATION -->
+                    <div id="pagination">
+                        <div class="text-center">
+                            <div class="pagination">
+                                <button class="btn btn-default" id="seeMore">Afficher plus</button>
+                                {% image 'images/ripple.svg' %}
+                                <img id="loadingMore" src="{{ asset_url }}" alt="loader"/>
+                                {% endimage %}
                             </div>
                         </div>
                     </div>
 
                 </div>
-            </div>
-            <!-- Fin de la rangée des select -->
 
-            <div class="row" id="tutoContainer">
-                <script>var path = "{{ asset("/images") }}"</script>
-                <!-- LOADER -->
-                {% image 'images/ripple.svg' %}
-                <img id="loader" src="{{ asset_url }}" alt="loader"/>
-                {% endimage %}
-
-
-                <ul id="itemContainer"></ul>
-
-                <!-- PAGINATION -->
-                <div id="pagination">
-                    <div class="text-center">
-                        <div class="pagination">
-                            <button class="btn btn-default" id="seeMore">Afficher plus</button>
-                            {% image 'images/ripple.svg' %}
-                            <img id="loadingMore" src="{{ asset_url }}" alt="loader"/>
-                            {% endimage %}
-                        </div>
-                    </div>
-                </div>
 
             </div>
-
-
-
-        </div>
-    </div>
-    </div><!-- fin du fluid container -->
+        </div><!-- fin du fluid container -->
+    </div><!-- fin de l'overlay -->
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts  '@CoursdeGratteBundle/Resources/public/js/new_app.js'
+    {% javascripts '@CoursdeGratteBundle/Resources/public/js/typeahead.js'
+    '@CoursdeGratteBundle/Resources/public/js/new_app.js'
     '@CoursdeGratteBundle/Resources/public/js/design.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

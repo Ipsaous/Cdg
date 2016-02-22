@@ -8,6 +8,7 @@
 
 namespace CoursdeGratteBundle\Controller;
 
+use Doctrine\DBAL\Types\JsonArrayType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AjaxController extends Controller{
 
-    private $limit = 24;
     /**
      * Lance la requête pour récupérer tous les tutos
      * @param Request $request
@@ -63,7 +63,7 @@ class AjaxController extends Controller{
         $where = "";
         //Partie qui s'occupe de la fonction rechercher
         if($request->get("query") !== null && $request->get("query") != ""){
-            if(preg_match("/^[a-zA-Z0-9\- _'&âêîïëàèùé]+$/", $request->get("query"))) {
+            if(preg_match("/^[a-zA-Z0-9 '&âêîïëàèùé]+$/", $request->get("query"))) {
                 $query = $request->get("query");
                 $where = ' WHERE (artiste.artiste LIKE "%' . $query . '%" OR tutovideo.titre LIKE "%' . $query . '%" OR prof.prof LIKE "%' . $query . '%")';
             }
@@ -152,4 +152,27 @@ class AjaxController extends Controller{
         }
     }
 
+    /**
+     * récupères les données pour typeahead
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function typeaheadAction(Request $request){
+
+        $em = $this->getDoctrine()->getManager();
+        //if($request->isXmlHttpRequest()) {
+            if ($request->get("titre") !== null) {
+
+                $titles = $em->getRepository("CoursdeGratteBundle:Tutovideo")->findByTitle($request->get("titre"));
+                //$titres = ["salut", "what", "the", "fuck"];
+
+                return new JsonResponse($titles);
+
+            }elseif($request->get("prof") !== null){
+                $em = $this->getDoctrine()->getManager();
+                $profs = $em->getRepository("CoursdeGratteBundle:Prof")->findByName($request->get("prof"));
+                return new JsonResponse($profs);
+            }
+        //}
+    }
 } 

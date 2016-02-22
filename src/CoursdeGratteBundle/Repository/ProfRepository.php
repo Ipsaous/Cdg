@@ -22,4 +22,13 @@ class ProfRepository extends EntityRepository{
         return $query->getArrayResult();
 
     }
+
+    public function findByName($name){
+            $qb = $this->createQueryBuilder("p")
+                ->select("p.prof")->where("p.prof LIKE :query")->setParameter("query", '%'.$name.'%')
+                ->distinct()
+                ->getQuery();
+            return $results = $qb->getArrayResult();
+
+    }
 } 

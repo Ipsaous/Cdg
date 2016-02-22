@@ -44,6 +44,13 @@
                 {% endimage %}
             </button>
         </div>
+        {% if app.request.get("_route") == "home" %}
+        <button id="searchButton">
+            {% image 'images/search_icon.png' %}
+            <img id="searchIcon" src="{{ asset_url }}" alt="searchIcon" />
+            {% endimage %}
+        </button>
+        {% endif %}
         <div class="collapse navbar-collapse navHeaderCollapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="proposition" href="">Poster un TUTO</a></li>

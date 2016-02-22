@@ -9,6 +9,7 @@ single:
         slug: "[a-z0-9\/-]+"
         id: \d+
 
+#Requete Ajax
 ajax_main:
     path:     /ajax
     defaults: { _controller: CoursdeGratteBundle:Ajax:ajax }
@@ -20,6 +21,12 @@ ajax_prof:
 ajax_style:
     path:     /style
     defaults: { _controller: CoursdeGratteBundle:Ajax:ajaxStyle }
+
+ajax_typeahead:
+    path:     /typeahead
+    defaults: { _controller: CoursdeGratteBundle:Ajax:typeahead }
+
+#Fin des requetes ajax
 
 testPassword:
     path: /testPassword
