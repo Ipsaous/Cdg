@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Artiste
  *
  * @ORM\Table(name="artiste")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CoursdeGratteBundle\Repository\ArtisteRepository")
  */
 class Artiste
 {
@@ -27,17 +27,6 @@ class Artiste
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Tutovideo", inversedBy="idArtiste"
-     * @ORM\JoinColumn(nullable=false)
-     *
-     */
-    private $tuto;
-
-    public function setTuto(Tutovideo $tuto){
-        $this->tuto = $tuto;
-    }
 
 
     /**

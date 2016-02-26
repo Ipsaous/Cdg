@@ -2,24 +2,30 @@
 /**
  * Created by PhpStorm.
  * User: ipsaous
- * Date: 10/02/2016
- * Time: 22:17
+ * Date: 25/02/2016
+ * Time: 15:04
  */
 
 namespace MyUserBundle\Controller;
 
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\UserBundle\Controller\SecurityController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\DisabledException;
+use Symfony\Component\Security\Core\Security;
 
-class SecurityController extends Controller
+class SecurityController extends BaseController
 {
+
     public function loginAction(Request $request)
     {
+        //Je redirige si l'utilisateur est déjà connecté
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+        {
+            return $this->redirect($this->generateUrl('home'));
+        }
 
+        $addButton = false;
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 
@@ -48,6 +54,12 @@ class SecurityController extends Controller
 
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
+        if($error instanceof DisabledException){
+            $addButton = true;
+        }
+
+        //Je renvoie l'email si l'utilisateur n'a pas activé son compte
+        $this->resendEmailIsNotEnabled($lastUsername, $request);
 
         if ($this->has('security.csrf.token_manager')) {
             $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
@@ -62,29 +74,21 @@ class SecurityController extends Controller
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
+            'resendButton' => $addButton
         ));
     }
 
-    /**
-     * Renders the login template with the given parameters. Overwrite this function in
-     * an extended controller to provide additional data for the login template.
-     *
-     * @param array $data
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function renderLogin(array $data)
-    {
-        return $this->render('FOSUserBundle:Security:login.html.twig', $data);
+    public function resendEmailIsNotEnabled($username, Request $request){
+        if($request->isMethod("POST") && $request->get("_resend") !== null){
+            $user = $this->get("fos_user.user_manager")->findUserByUsername($username);
+            $mailer = $this->get("fos_user.mailer");
+            if($user->getConfirmationToken() !== null) {
+                $mailer->sendConfirmationEmailMessage($user);
+                $this->addFlash("success", "Un email vient de vous être envoyé. Pensez également à regarder votre dossier Spam");
+            }else{
+                $this->addFlash("danger", "Il semblerait qu'il y ait un soucis. Veuillez me contactez");
+            }
+        }
     }
 
-    public function checkAction()
-    {
-        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
-    }
-
-    public function logoutAction()
-    {
-        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
-    }
-}
+} 

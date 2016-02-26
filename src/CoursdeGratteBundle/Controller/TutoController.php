@@ -9,14 +9,16 @@ class TutoController extends Controller{
 
     public function showAction($slug, $id){
 
+        //Je récupère l'user
+        //$user = $this->get("security.token_storage")->getToken()->getUser();
+
         $id = (int) $id;
         $db = $this->get("database_connection");
         $em = $this->getDoctrine()->getManager();
         //$tuto = $em->getRepository("CoursdeGratteBundle:Tutovideo")->findTutoWithName($db, $id);
         $tuto = $em->getRepository("CoursdeGratteBundle:Tutovideo")->test($id);
-//        $artiste = $tuto->getIdArtiste();
-//        $artiste->setTuto($tuto);
-//        dump($tuto);
+//        $idDiff = $tuto->getIdDifficulty()->getId();
+//        dump($tuto, $idDiff);
 //        die();
         return $this->render("CoursdeGratteBundle:Tuto:index.html.twig",
             array(

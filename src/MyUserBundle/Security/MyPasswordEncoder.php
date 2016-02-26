@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\Encoder\BasePasswordEncoder;
 
 class MyPasswordEncoder extends BasePasswordEncoder{
 
+    const SALT1 = "PROTECTIONMOTDEPASSE1";
+    const SALT2 = "PROTECTIONMOTDEPASSE2";
     /**
      * Encodes the raw password.
      *
@@ -17,9 +19,19 @@ class MyPasswordEncoder extends BasePasswordEncoder{
      */
     public function encodePassword($raw, $salt)
     {
-        $salt1 = "PROTECTIONMOTDEPASSE1";
-        $salt2 = "PROTECTIONMOTDEPASSE2";
-        $password = sha1($salt1.$raw.$salt2);
+        $password = sha1(self::SALT1.$raw.self::SALT2);
+        $hash = password_hash($password.$salt, PASSWORD_BCRYPT );
+        return $hash;
+    }
+
+    /**
+     * Permettra de reencoder les passwords de la "vieille" database
+     * @param $raw
+     * @param $salt
+     * @return bool|string
+     */
+    public function refreshOldPassword($raw, $salt){
+        $password = password_hash($raw.$salt, PASSWORD_BCRYPT);
         return $password;
     }
 
@@ -34,7 +46,8 @@ class MyPasswordEncoder extends BasePasswordEncoder{
      */
     public function isPasswordValid($encoded, $raw, $salt)
     {
-        return $this->comparePasswords($encoded, $this->encodePassword($raw, $salt));
+        $raw = sha1(self::SALT1.$raw.self::SALT2);
+        return $isValid = password_verify($raw.$salt, $encoded);
     }
 
 }

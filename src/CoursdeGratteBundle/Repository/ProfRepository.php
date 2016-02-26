@@ -7,9 +7,14 @@ use Doctrine\ORM\EntityRepository;
 
 class ProfRepository extends EntityRepository{
 
-    public function findAllOrderedByName(){
+    public function findAllOrderedByName($langueId = null){
 
-        $queryBuilder = $this->createQueryBuilder("t")->orderBy('t.prof', 'ASC');
+        if($langueId === null){
+            $queryBuilder = $this->createQueryBuilder("p")->orderBy('p.prof', 'ASC');
+        }else{
+            $queryBuilder = $this->createQueryBuilder("p")->where("p.idLangue = :id")
+                ->setParameter("id", $langueId)->orderBy("p.prof", "ASC");
+        }
         $results = $queryBuilder->getQuery()->getArrayResult();
         return $results;
 

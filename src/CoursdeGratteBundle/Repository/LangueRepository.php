@@ -7,13 +7,16 @@ use Doctrine\ORM\EntityRepository;
 
 class LangueRepository extends EntityRepository{
 
-    public function findAllOrderedById(){
+    public function findAllOrderedById($langueId = null){
 
-        $qb = $this->createQueryBuilder('a');
-        $qb->from($this->_entityName, 'l')->orderBy("a.id", "ASC");
-
-        return $qb->getQuery()->getResult();
-
+        if($langueId === null){
+            $qb = $this->createQueryBuilder('l')->orderBy("l.id", "ASC");
+            return $qb->getQuery()->getResult();
+        }else{
+            $qb = $this->createQueryBuilder("l")->where("l.id = :id")
+                ->setParameter("id", $langueId);
+            return $qb->getQuery()->getSingleResult();
+        }
     }
 
 } 

@@ -9,6 +9,11 @@ single:
         slug: "[a-z0-9\/-]+"
         id: \d+
 
+#Renvoyer l'email de confirmation
+resend:
+    path: /user/resend/{email}
+    defaults: {_controller: MyUserBundle:User:resend }
+
 #Requete Ajax
 ajax_main:
     path:     /ajax
@@ -28,6 +33,6 @@ ajax_typeahead:
 
 #Fin des requetes ajax
 
-testPassword:
-    path: /testPassword
-    defaults: { _controller: CoursdeGratteBundle:Main:testPassword }
+move_users:
+    path: /moveuser
+    defaults: { _controller: CoursdeGratteBundle:Main:moveUserFromOldToNewDatabase }

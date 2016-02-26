@@ -1,8 +1,46 @@
 {% trans_default_domain 'FOSUserBundle' %}
+<div class="container" id="registerContent">
+    <h1>Inscription</h1>
+    <h4 id="inscription-message">L'inscription est <strong>gratuite</strong> ! En vous inscrivant, vous aurez la possibilité de <strong>rajouter les tutos aux favoris</strong>, créer des <strong>playlists</strong>, choisir une <strong>langue par défaut</strong> et, si vous le souhaitez, <strong>recevoir la newsletter</strong> ;).</h4>
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    <div class="row" >
+        <div class="col-md-8 col-md-offset-2">
+
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+
+            {{ form_errors(form) }}
+
+            <div class="form-group {% if not form.username.vars.valid %}has-error{% endif %}">
+                {{ form_label(form.username) }}
+                {{ form_errors(form.username) }}
+                {{ form_widget(form.username, {'attr': { 'class': 'form-control'}}) }}
+            </div>
+
+
+            <div class="form-group {% if not form.email.vars.valid %}has-error{% endif %}">
+                {{ form_label(form.email) }}<small> ( Un mail vous sera envoyé pour confirmer le compte )</small>
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email, {'attr': { 'class' : 'form-control'}}) }}
+            </div>
+
+            <div class="form-group {% if not form.plainPassword.first.vars.valid %}has-error{% endif %}">
+                {{ form_label(form.plainPassword.first) }}<small> ( 8 caractères minimum )</small>
+                {{ form_errors(form.plainPassword.first) }}
+                {{ form_widget(form.plainPassword.first, {'attr' : { 'class' : 'form-control'}}) }}
+            </div>
+
+            <div class="form-group {% if not form.plainPassword.second.vars.valid %}has-error{% endif %}">
+                {{ form_label(form.plainPassword.second) }}
+                {{ form_errors(form.plainPassword.second) }}
+                {{ form_widget(form.plainPassword.second, {'attr' : { 'class' : 'form-control'}}) }}
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-warning" value="{{ 'registration.submit'|trans }}" />
+            </div>
+            {{ form_end(form) }}
+
+        </div>
     </div>
-{{ form_end(form) }}
+
+</div>

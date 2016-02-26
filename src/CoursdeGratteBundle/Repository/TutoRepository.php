@@ -48,7 +48,13 @@ class TutoRepository extends EntityRepository {
 
     public function test($id){
 
-        $qb = $this->createQueryBuilder("t")->join("t.idArtiste", "artistes")->addSelect("artistes")
+        $qb = $this->createQueryBuilder("t")->
+        join("t.idArtiste", "artiste")->addSelect("artiste")->
+            join("t.idStyle", "style")->addSelect("style")->
+            join("t.idProf", "prof")->addSelect("prof")->
+            join("t.idTypejeu", "typejeu")->addSelect("typejeu")->
+            join("t.idStyletechnique", "styletechnique")->addSelect("styletechnique")->
+            join("t.idTypeguitare", "typeguitare")->addSelect("typeguitare")
             ->where("t.id = :id")->setParameter("id", $id);
         return $qb->getQuery()->getSingleResult();
     }

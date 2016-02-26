@@ -28,8 +28,6 @@ class Langue
      */
     private $id;
 
-
-
     /**
      * Set langue
      *
@@ -63,4 +61,6 @@ class Langue
     {
         return $this->id;
     }
+
+
 }

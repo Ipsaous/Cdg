@@ -2,6 +2,7 @@
 
 namespace MyUserBundle\Entity;
 
+use CoursdeGratteBundle\Entity\Paramuser;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Users
  *
  * @ORM\Table(name="users")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="MyUserBundle\Security\UsersRepository")
  * @ORM\AttributeOverrides({
  *     @ORM\AttributeOverride(name="usernameCanonical",
  *          column=@ORM\Column(
@@ -58,7 +59,12 @@ class Users extends BaseUser
      */
     protected $id;
 
-    protected $default_langue;
+    /**
+     * @var \CoursdeGratteBundle\Entity\Paramuser
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Paramuser"), inversedBy="userId"
+     *
+     */
+    protected $defaultLangue;
 
 
 
@@ -124,19 +130,23 @@ class Users extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return \CoursdeGratteBundle\Entity\Paramuser
      */
     public function getDefaultLangue()
     {
-        return $this->default_langue;
+        return $this->defaultLangue;
     }
 
     /**
-     * @param mixed $default_langue
+     * @param "CoursdeGratte\Entity\Paramuser" $defaultLangue
+     * @return Users
      */
-    public function setDefaultLangue($default_langue)
+    public function setDefaultLangue(Paramuser $defaultLangue)
     {
-        $this->default_langue = $default_langue;
+        $this->defaultLangue = $defaultLangue;
+        $defaultLangue->setUserId($this);
+
+        return $this;
         
     }
 

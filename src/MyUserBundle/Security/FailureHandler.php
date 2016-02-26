@@ -5,10 +5,14 @@ namespace MyUserBundle\Security;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Tests\Controller;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 
 
@@ -16,11 +20,13 @@ class FailureHandler implements AuthenticationFailureHandlerInterface {
 
     private $router;
     private $userManager;
+    private $session;
 
-    public function __construct(Router $router, UserManagerInterface $userManager)
+    public function __construct(Router $router, UserManagerInterface $userManager, Session $session)
     {
         $this->router = $router;
         $this->userManager = $userManager;
+        $this->session = $session;
     }
     /**
      * This is called when an interactive authentication attempt fails. This is
@@ -34,16 +40,14 @@ class FailureHandler implements AuthenticationFailureHandlerInterface {
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // TODO: Implement onAuthenticationFailure() method.
-        $username = $request->get("_username");
-        $password = $request->get("_password");
-        $encoder = new MyPasswordEncoder();
-        $user = $this->userManager->findUserByUsername($username);
-        $valid = $encoder->isPasswordValid($user->getPassword(), $password, $encoder->encodePassword($password, $user->getSalt()));
-        dump($valid, $encoder->encodePassword($password, $user->getSalt()), $user);
-        die();
+//        if($exception instanceof DisabledException) {
+//            $username = $request->get("_username");
+//            $user = $this->userManager->findUserByUsername($username);
+//            return new RedirectResponse($this->router->generate('resend', array('email' => $user->getEmail())), 307);
+//
+//        }
 
-        //return new RedirectResponse($this->router->generate('fos_user_security_login'));
+
     }
 
 }

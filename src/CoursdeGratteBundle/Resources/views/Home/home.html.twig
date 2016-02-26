@@ -15,6 +15,7 @@
 
         <div class="container-fluid">
             <div id="mainContent">
+
                 <div class="row" id="leftSidebar" style="position:fixed">
 
                     <div class="row"><!-- Row de la recherche -->
@@ -30,7 +31,7 @@
 
                     <!-- Select avec tous les filtres colonne de gauche -->
                     <div id="allFilters" data-select=".triSelect">
-                        <h1>Filtres <i class="glyphicon glyphicon-remove-circle" id="closeFiltre"></i></h1>
+                        <h1>Filtres</h1>
 
                         <div class="row" id="typetuto">
                             <div class="col-lg-12">
@@ -96,12 +97,16 @@
                             </div>
 
                             <div class="col-lg-12">
-                                <select class="form-control triSelect" id="selectLangue" data-name="langue">
+                                <select class="form-control triSelect langue" id="selectLangue" data-name="langue">
                                     <!-- REFAIRE LA CONDITION POUR LA VALEUR DE LA LANGUE PAR DEFAUT DANS SESSION USER -->
-                                    <option selected="selected" value="Choisir">Toutes les langues</option>
-                                    {% for langue in langues %}
-                                        <option value="{{ langue.id }}">{{ langue.langue }}</option>
-                                    {% endfor %}
+                                    {% if session.langueId is defined %}
+                                        <option selected="selected" value="{{ session.langueId.id }}">{{ session.langueId.langue }}</option>
+                                    {% else %}
+                                        <option selected="selected" value="Choisir">Toutes les langues</option>
+                                        {% for langue in langues %}
+                                            <option value="{{ langue.id }}">{{ langue.langue }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div>
 
@@ -116,12 +121,8 @@
                             </span>
                                     <span class="form-control"><label for="selectTab">Avec Tablature</label></span>
                                 </div>
-                            </div>
 
-                            <div id="reset">
-                                <div class="col-lg-12 ">
-                                    <button class="btn btn-danger reset">Reset</button>
-                                </div>
+                                <button class="btn btn-danger reset" id="reset">Reset</button>
                             </div>
                         </div>
 
@@ -130,6 +131,22 @@
                 <!-- Fin de la rangée des select -->
 
                 <div class="row" id="tutoContainer">
+
+                    <div id="testTop"></div>
+
+                    {# MESSAGE FLASH #}
+                    {% if app.request.hasPreviousSession %}
+                        {% for type, messages in app.session.flashbag.all() %}
+                            {% if type == "confirmed" %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    {# FIN MESSAGE FLASH #}
                     <script>var path = "{{ asset("/images") }}"</script>
                     <!-- LOADER -->
                     {% image 'images/ripple.svg' %}
@@ -143,7 +160,7 @@
                     <div id="pagination">
                         <div class="text-center">
                             <div class="pagination">
-                                <button class="btn btn-default" id="seeMore">Afficher plus</button>
+                                <button class="btn btn-warning" id="seeMore">Afficher plus</button>
                                 {% image 'images/ripple.svg' %}
                                 <img id="loadingMore" src="{{ asset_url }}" alt="loader"/>
                                 {% endimage %}
@@ -160,9 +177,10 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@CoursdeGratteBundle/Resources/public/js/typeahead.js'
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    {% javascripts
     '@CoursdeGratteBundle/Resources/public/js/new_app.js'
-    '@CoursdeGratteBundle/Resources/public/js/design.js' %}
+    '@CoursdeGratteBundle/Resources/public/js/design.js' output="js/compiled/main.js" %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

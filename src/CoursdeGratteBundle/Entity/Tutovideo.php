@@ -213,23 +213,12 @@ class Tutovideo
     /**
      * @var \CoursdeGratteBundle\Entity\Artiste
      *
-     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Artiste"), mappedBy="tuto
+     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Artiste")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_artiste", referencedColumnName="id")
      * })
      */
     private $idArtiste;
-
-    //Field pour récup les names
-    private $difficultyName;
-    private $styleName;
-    private $profName;
-    private $artisteName;
-    private $typeGuitareName;
-    private $typeJeuName;
-    private $styleTechniqueName;
-
-
 
     /**
      * Set titre
@@ -827,7 +816,6 @@ class Tutovideo
     public function setIdArtiste(\CoursdeGratteBundle\Entity\Artiste $idArtiste = null)
     {
         $this->idArtiste = $idArtiste;
-        $idArtiste->setTuto($this);
 
         return $this;
     }
@@ -841,122 +829,5 @@ class Tutovideo
     {
         return $this->idArtiste;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getArtisteName()
-    {
-        return $this->artisteName;
-    }
-
-    /**
-     * @param mixed $artisteName
-     */
-    public function setArtisteName($artisteName)
-    {
-        $this->artisteName = $artisteName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDifficultyName()
-    {
-        return $this->difficultyName;
-    }
-
-    /**
-     * @param mixed $difficultyName
-     */
-    public function setDifficultyName($difficultyName)
-    {
-        $this->difficultyName = $difficultyName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProfName()
-    {
-        return $this->profName;
-    }
-
-    /**
-     * @param mixed $profName
-     */
-    public function setProfName($profName)
-    {
-        $this->profName = $profName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStyleTechniqueName()
-    {
-        return $this->styleTechniqueName;
-    }
-
-    /**
-     * @param mixed $styleTechniqueName
-     */
-    public function setStyleTechniqueName($styleTechniqueName)
-    {
-        $this->styleTechniqueName = $styleTechniqueName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStyleName()
-    {
-        return $this->styleName;
-    }
-
-    /**
-     * @param mixed $styleName
-     */
-    public function setStyleName($styleName)
-    {
-        $this->styleName = $styleName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTypeGuitareName()
-    {
-        return $this->typeGuitareName;
-    }
-
-    /**
-     * @param mixed $typeGuitareName
-     */
-    public function setTypeGuitareName($typeGuitareName)
-    {
-        $this->typeGuitareName = $typeGuitareName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTypeJeuName()
-    {
-        return $this->typeJeuName;
-    }
-
-    /**
-     * @param mixed $typeJeuName
-     */
-    public function setTypeJeuName($typeJeuName)
-    {
-        $this->typeJeuName = $typeJeuName;
-    }
-
-    public function getArtistes(){
-        return $this->artistes;
-    }
-
 
 }

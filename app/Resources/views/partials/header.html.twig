@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,500,600,800' rel='stylesheet' type='text/css'>
     <title>{% block title %}Cours de gratte.com | Retrouvez les meilleurs tutos guitare du net !{% endblock %}</title>
-    {% stylesheets 'css/*' filter="cssrewrite"%}
+    {% stylesheets 'css/*' filter="cssrewrite" output="css/compiled/style.css"%}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
@@ -87,4 +87,4 @@
 
     </div>
 </nav>
-
+<div id="wrapper">

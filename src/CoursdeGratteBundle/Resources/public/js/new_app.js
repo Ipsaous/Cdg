@@ -3,7 +3,7 @@ $(document).ready(function(){
     //Activation des tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
-    //Variable globale
+    //Déclaration de quelques variables globales
     var requete = "";
     var offset = 0;
     var limit = 24;
@@ -11,7 +11,14 @@ $(document).ready(function(){
     var loader = $("#loader");
     var mainUrl = "./ajax";
 
-
+    /**
+     * Fonction qui effectue les requête ajax. Récupération de différents
+     * types de données selon la requete. (Tutos, profs, styles, stylestechnique)
+     * @param method
+     * @param url
+     * @param dataString
+     * @param params
+     */
     function ajaxQuery(method, url, dataString, params){
 
         //Si j'ai pas cliqué sur afficher plus, je vide le container
@@ -19,18 +26,16 @@ $(document).ready(function(){
             $('#itemContainer').empty();
         }
         loader.show();
-        console.log(url);
         $.ajax({
             type:method,
             url:url,
             data:dataString,
             dataType:'json',
             success: function(data){
-
                 var loader = $("#loader");
                 loader.hide();
                 $("#loadingMore").hide();
-                console.log(params);
+                //console.log(params);
                 if(params == "tutos"){
                     affichage(data);
                 }else if(params == "profs"){
@@ -42,7 +47,6 @@ $(document).ready(function(){
                 }
                 //Je remet showMore a false;
                 showMore = false;
-
             },
             error : function(){
                 console.log("Une erreur est survenue");
@@ -52,6 +56,10 @@ $(document).ready(function(){
         });
     }
 
+    /**
+     * Fonction qui construit la requete que j'envoie en GET
+     * @returns {string}
+     */
     function buildDataString(){
 
         var stringData = "";
@@ -98,6 +106,10 @@ $(document).ready(function(){
         console.log(stringData);
         return stringData;
     }
+
+    /**
+     * Fonction qui disable les selects en fonction du typetuto sélectionné
+     */
     function disableInput(){
 
         var selectTypetuto = document.querySelector('#selectTypetuto');
@@ -121,6 +133,10 @@ $(document).ready(function(){
         });
     }
 
+    /**
+     * Fonction qui gère l'affichage du retour de la requete ajax récupérant les tutos
+     * @param data
+     */
     function affichage(data){
 
         loader.hide();
@@ -148,6 +164,14 @@ $(document).ready(function(){
             $("#seeMore").hide();
         }
     }
+
+    /**
+     * Fonction qui rempli les select en ajax ( langue -> prof etc )
+     * @param data
+     * @param type
+     * @param div
+     * @param text
+     */
     function fillSelectAjax(data, type, div, text){
         if(data != null) {
             var length = data.length;
@@ -162,20 +186,32 @@ $(document).ready(function(){
         }
     }
 
+
+    /**
+     * Fonction qui reset les selects
+     */
     function resetAllSelect(){
         var allFilters = document.querySelector('#allFilters');
         var items = allFilters.querySelectorAll(allFilters.getAttribute('data-select'));
         for(var i = 0; i < items.length; i++){
-           items[i].value = "Choisir";
+            if(items[i].classList.contains("langue")){
+                if($('#selectLangue option').length > 1){
+                    var langue = "";
+                    ajaxQuery("GET", './prof', "langue="+langue , 'profs');
+                    items[i].value = "Choisir"
+                }
+            }else{
+                items[i].value = "Choisir";
+            }
         }
-        var langue = $("#selectLangue").val();
-        if(langue == "Choisir"){
-            langue = "";
-        }
-        ajaxQuery("GET", './ajax', "langue="+langue , 'profs');
         disableInput();
     }
-    //Récupération des drapeaux
+
+    /**
+     * Fonction qui récupère les images pour les drapeaux
+     * @param langue
+     * @returns {string}
+     */
     function recupFlag(langue){
 
         if(langue == 'Anglais'){
@@ -200,6 +236,12 @@ $(document).ready(function(){
             return lien = path+'/italie.jpg';
         }
     }
+
+    /**
+     * Fonction qui raccourcie une chaine de caractere
+     * @param string
+     * @returns {*}
+     */
     function shorter(string){
         if(string.length > 18){
             string = string.substr(0,18);
@@ -207,24 +249,47 @@ $(document).ready(function(){
         }
         return string;
     }
-
-    //Ouverture de la sidebar filtre pour les mobiles
+    /**
+     * Fonction qui appelle la fonction du menu filtre responsive
+     */
     function handleMenuFiltresResponsive(){
 
         $("#menuHamburger").click(function(){
-            var sidebar = $("#leftSidebar");
-            sidebar.addClass("filtresOpen");
-            $('body').css("overflow", "hidden");
-        });
-
-        $("#closeFiltre").click(function(){
-            var sidebar = $("#leftSidebar");
-            sidebar.removeClass("filtresOpen");
-            $('body').css("overflow", "visible");
+           toggleFiltres();
         });
     }
 
-    //Fonction pour afficher les vignettes en Fade in
+    /**
+     * Fonction qui ferme les filtres
+     */
+    function closeFiltre(){
+        var sidebar = $("#leftSidebar");
+        if(sidebar.hasClass("filtresOpen")){
+            sidebar.removeClass("filtresOpen");
+            $('body').css("overflow", "visible");
+            $("#menuHamburger").css("background-color", "transparent");
+        }
+    }
+
+    /**
+     * Fonction qui permet d'afficher/cacher les filtres pour les mobiles
+     */
+    function toggleFiltres(){
+        var sidebar = $("#leftSidebar");
+        if(sidebar.hasClass("filtresOpen")){
+            sidebar.removeClass("filtresOpen");
+            $('body').css("overflow", "visible");
+            $("#menuHamburger").css("background-color", "transparent");
+        }else{
+            sidebar.addClass("filtresOpen");
+            $("#menuHamburger").css("background-color", "rgb(255, 165, 0)");
+            $('body').css("overflow", "hidden");
+        }
+    }
+
+    /**
+     * Fonction qui affiche les vignettes en Fade In
+     */
     function showDiv() {
         // If there are hidden divs left
         if($('.tutoVignette:hidden').length) {
@@ -236,6 +301,9 @@ $(document).ready(function(){
     }
 
 
+    /**
+     * Fonction qui affiche/cache le block recherche
+     */
     function toggleSearch(){
         var searchBlock = $("#searchBlock");
         if(searchBlock.css("display") == "none"){
@@ -244,7 +312,7 @@ $(document).ready(function(){
             $("body").css("position","fixed");
             $("#leftSidebar").css("overflow-y", "hidden");
             $("#overlay").css("opacity", "0.2");
-            $("#searchButton").css("background-color", "#1a242f");
+            $("#searchButton").css("background-color", "rgb(255, 165, 0)");
         }else{
             $("#search").val("");
             searchBlock.fadeOut("fast");
@@ -253,6 +321,41 @@ $(document).ready(function(){
             $("#overlay").css("opacity", "1");
             $("#searchButton").css("background-color", "transparent");
         }
+    }
+
+    /**
+     * Fonction qui vérifie qu'une chaine de caractère est valide
+     * @param string
+     * @returns {boolean}
+     */
+    function isStringValid(string){
+        if(string.search(/^[a-zA-Z0-9\-\/ _.'&âçêôüîïëàèùé]+$/) !== -1){
+            return true;
+        }
+        return false;
+
+    }
+
+    /**
+     * Fonction qui permet de cache le block recherche si je click en dehors de la div
+     */
+    function hideSearchBlockOnClickOutside() {
+        var searchBox = $("#searchBlock");
+
+        $(document).mouseup(function (e) {
+            if (!searchBox.is(e.target) // if the target of the click isn't the searhBox...
+                && searchBox.has(e.target).length === 0) // ... nor a descendant of the searhBox
+            {
+                e.preventDefault();
+                document.getElementById('mainContent').style.pointerEvents = 'visible';
+                searchBox.fadeOut("fast");
+                $("body").css("position", "static");
+                $("#leftSidebar").css("overflow-y", "auto");
+                $("#overlay").css("opacity", "1");
+                $("#searchButton").css("background-color", "transparent");
+
+            }
+        });
     }
 
     //------------------- FIN DES FONCTIONS ------------------------//
@@ -266,6 +369,7 @@ $(document).ready(function(){
     });
     //Requete en arrivant sur la page
     ajaxQuery("GET", mainUrl, buildDataString(), 'tutos');
+
 
     $("#selectTypetuto").change(function(){
         offset = 0;
@@ -302,20 +406,27 @@ $(document).ready(function(){
     });
 
     //Lancement de la recherche
-    $("#search").keypress(function(e){
+    $("#search").keypress(function(e){        
         offset = 0;
         if(e.which == 13){
-            var query = $(this).val().trim();
-            if(query != ""){
-                requete = query;
-                ajaxQuery("GET", mainUrl, "query="+query, 'tutos');
-                resetAllSelect();
-                $(this).val("");
-                $('#search').typeahead('destroy');
-                toggleSearch();
-                initialiseTypeahead();
+            if(isStringValid($(this).val())){
+                var query = $(this).val().trim();
+                if(query != ""){
+                    requete = query;
+                    ajaxQuery("GET", mainUrl, "query="+query, 'tutos');
+                    resetAllSelect();
+                    $(this).val("");
+                    $('#search').typeahead('destroy');
+                    toggleSearch();
+                    initialiseTypeahead();
+                    closeFiltre();
+                    $("body").css("overflow", "visible");
+                }
+            }else{
+                console.log("Recherche non valide");
             }
         }
+        
     });
 
     //Gestion de la pagination
@@ -336,10 +447,14 @@ $(document).ready(function(){
 
     //Gestion du bouton Reset
     $(".reset").click(function(){
+        //Je check si j'ai une langue dans les options
         requete = "";
         $("#selectTab").attr("checked", false);
         resetAllSelect();
         ajaxQuery("GET", mainUrl, "", 'tutos');
+        closeFiltre();
+        $("body").css("overflow", "visible");
+
     });
 
     //Gestion de l'ouverture des filtres pour les mobiles
@@ -387,7 +502,7 @@ $(document).ready(function(){
     profs.initialize();
     artistes.initialize();
     initialiseTypeahead();
-    function initialiseTypeahead(){
+    function initialiseTypeahead(){        
         $('#search').typeahead({
                 hint: false,
                 highlight: true,
@@ -419,13 +534,12 @@ $(document).ready(function(){
                 templates:{
                     header:'<h5>Prof(s)</h5>'
                 }
-            });
+        });
+        
     }
 
 
     $("#search").bind("typeahead:select", function(ev, suggestions){
-        //TODO Pour le titre, mais faire pour les autres cas
-        console.log(suggestions);
         var suggestion = "";
         if(suggestions.prof != null){
             suggestion = suggestions.prof;
@@ -442,6 +556,8 @@ $(document).ready(function(){
             $('#search').typeahead('destroy');
             toggleSearch();
             initialiseTypeahead();
+            closeFiltre();
+            $("body").css("overflow", "visible");
 
         }
     });

@@ -1,6 +1,12 @@
+html{
+    min-height: 100%;
+    height: 100%;
+
+}
 body{
     background-color: #222226!important;
     width: 100%;
+    height: 100%;
 }
 /** ---MEDIA QUERIES------ **/
 @media (max-width: 767px) {
@@ -14,9 +20,13 @@ body{
         top: 0px!important;
     }
     #searchBlock{
-        top: 76px!important;
+        top: 78px!important;
+    }
+    #search{
+        font-size: 18px!important;
     }
     .tt-dataset {
+        min-width: 250px;
         width: 100%!important;
         padding-left: 10px!important;
         padding-right: 10px!important;
@@ -51,6 +61,9 @@ body{
         margin: 0!important;
         padding: 0!important;
     }
+    #allFilters{
+        padding-left: 0!important;
+    }
     #closeFiltre{
         vertical-align: -4px;
         font-size: 40px;
@@ -81,6 +94,9 @@ body{
     .flag{
         top:-20px!important;
     }
+    #testTop{
+        margin-bottom: 0px!important;
+    }
 }
 @media (max-width: 992px){
     .button-collapse{
@@ -95,7 +111,14 @@ body{
 
 /** --------------HEADER--------------- **/
 .navbar{
-    background-color: #607D8B!important;
+    background-color: #222226!important;
+    border-bottom: 2px solid orange;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
+    color:#FFA500!important;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+    background-color: #FFA500!important;
 }
 .navbar-right {
     margin-right: 20px!important;
@@ -133,7 +156,7 @@ body{
     width:30px;
 }
 #searchButton:hover{
-    background-color: #1a242f;
+    background-color: rgb(255, 165, 0);
 }
 #menuHamburger{
     position: relative;
@@ -151,30 +174,48 @@ body{
 }
 #menuHamburger:focus, #menuHamburger:hover{
     outline-width: 0;
-    background-color: #1a242f;
+    background-color: rgb(255, 165, 0);
 }
 #iconHamburger{
     width: 30px;
 }
 /** --------------FIN DU HEADER--------------- **/
 
+/** -------------- FOOTER -------------------- **/
+#footer{
+    width: 100%;
+    z-index: 3000;
+    height: 30px;
+    background-color: #1A1A1D;
+    line-height: 30px;
+    padding-left: 10px;
+    font-size: 1.5rem;
+    color:white;
+}
+/** -------------- FIN DU FOOTER ------------- **/
+
 /** -------------- SELECT TRI ---------------- **/
+#allFilters{
+    padding-left: 10px;
+}
 #searchBlock{
     position: absolute;
     display: none;
     width: 100%;
-    top: 60px;
+    top: 62px;
     height: 150px;
     z-index: 2000;
     background: #607D8B; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#607D8B, #222226); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#607D8B, #222226); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#607D8B, #222226); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#607D8B, #222226); /* Standard syntax */
+    background: -webkit-linear-gradient(rgb(68, 58, 41), #222226); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgb(68, 58, 41), #222226); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(rgb(68, 58, 41), #222226); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgb(68, 58, 41), #222226); /* Standard syntax */
 }
 #search{
     border:none;
     border-radius: 0;
+    font-size: 26px;
+    font-weight: bold;
 }
 .twitter-typeahead{width: 100%;}
 .tt-dataset{
@@ -231,8 +272,22 @@ h5{
 /** -------------- FIN DU TRI -----------------**/
 
 /** -------------- Main Content HomePage ---------------**/
-#mainContent {
+/*PUB*/
+#testTop{
+    width: 280px;
+    height: 90px;
+    background-color: darkgrey;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+#wrapper{
     padding-top: 84px;
+    min-height: 100%;
+    margin-bottom: -30px;
+}
+#mainContent {
+    /*padding-top: 84px;*/
     position: relative;
     /*height: 100%;*/
     /*min-height: 100%;*/
@@ -248,7 +303,7 @@ h5{
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-top: 80px;
+    margin-top: 76px;
     top: 0;
     bottom: 0;
     width: 275px;
@@ -342,18 +397,26 @@ h5{
     background-color: rgba(0, 0, 0, 0.90);
     font-size: 1.3rem;
 }
+#pagination{
+    margin-bottom: 40px;
+}
 #seeMore{
     display: none;
 }
 #loadingMore{
     display: none;
 }
+
 /** --------------- FIN MAIN CONTENT HOMEPAGE ----------**/
 
 /** --------------- PAGE LOGIN --------------------------**/
-
+#authContent{
+    margin-bottom: -30px;
+    height: 100%;
+}
 #loginContent{
-    padding-top: 84px;
+    height: 100%;
+    /*padding-top: 84px;*/
 }
 #loginContent h1{
     text-align: center;
@@ -364,3 +427,58 @@ h5{
 }
 
 /**------------------FIN PAGE LOGIN ---------------------**/
+
+/** --------------- PAGE REGISTER --------------------------**/
+@media (max-width: 767px) {
+    #registerContent h4{
+        font-size: 16px;
+        line-height: 22px;
+    }
+}
+#registerContent {
+    height: 100%;
+    color:white;
+}
+#registerContent h1{
+    text-align: center;
+    margin-bottom: 20px;
+}
+#registerContent h4{
+    margin-bottom: 20px;
+    text-align: center;
+}
+#registerContent strong{
+    color:orange;
+}
+#registerContent label{
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+#registerContent small{
+    font-weight: bold;
+}
+#registerContent label:after{
+    content: " *";
+    color:#F44336;
+}
+#registerContent .has-error ul, li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color:#F44336;
+}
+#registerContent .btn{
+    margin-bottom: 60px;
+}
+#checkMailContent {
+    text-align: center;
+}
+#checkMailContent h1{
+    color: white;
+    font-size: 2.8rem;
+}
+#checkMailContent h2{
+    color: orange;
+    font-size: 2.1rem;
+}
+/**------------------FIN PAGE REGISTER ---------------------**/

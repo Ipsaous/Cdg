@@ -8,6 +8,7 @@
 
 namespace CoursdeGratteBundle\Controller;
 
+use CoursdeGratteBundle\Utility\MyUtility;
 use Doctrine\DBAL\Types\JsonArrayType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,6 +23,7 @@ class AjaxController extends Controller{
      * @return JsonResponse
      */
     public function ajaxAction(Request $request){
+        //TODO A SUPPRIMER
         if($request->isMethod("get")){
             $data = $this->handleAjaxTuto($request);
             return new JsonResponse(['data' => $data]);
@@ -63,9 +65,18 @@ class AjaxController extends Controller{
         $where = "";
         //Partie qui s'occupe de la fonction rechercher
         if($request->get("query") !== null && $request->get("query") != ""){
-            if(preg_match("/^[a-zA-Z0-9 '&âêîïëàèùé]+$/", $request->get("query"))) {
+            if(MyUtility::isStringValid($request->get("query"))) {
                 $query = $request->get("query");
                 $where = ' WHERE (artiste.artiste LIKE "%' . $query . '%" OR tutovideo.titre LIKE "%' . $query . '%" OR prof.prof LIKE "%' . $query . '%")';
+            }
+        }
+        //Partie qui gère la langue par défaut
+        $defaultLangue = $this->get("session")->get("_defaultLangue");
+        if($defaultLangue !== null && is_numeric($defaultLangue->getId())){
+            if($where == ""){
+                $where .= " WHERE langue.id = ".$defaultLangue->getId();
+            }else{
+                $where .= " AND langue.id = ".$defaultLangue->getId();
             }
         }
         $filters = ["difficulty", "style", "prof", "typeguitare", "typejeu", "langue", "tablature", "typetuto"];
@@ -160,19 +171,28 @@ class AjaxController extends Controller{
     public function typeaheadAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
-        //if($request->isXmlHttpRequest()) {
+        if($request->isXmlHttpRequest()) {
             if ($request->get("titre") !== null) {
-
-                $titles = $em->getRepository("CoursdeGratteBundle:Tutovideo")->findByTitle($request->get("titre"));
-                //$titres = ["salut", "what", "the", "fuck"];
-
-                return new JsonResponse($titles);
+                if(MyUtility::isStringValid($request->get("titre"))){
+                    $titles = $em->getRepository("CoursdeGratteBundle:Tutovideo")->findByTitle($request->get("titre"));
+                    return new JsonResponse($titles);
+                }
 
             }elseif($request->get("prof") !== null){
-                $em = $this->getDoctrine()->getManager();
-                $profs = $em->getRepository("CoursdeGratteBundle:Prof")->findByName($request->get("prof"));
-                return new JsonResponse($profs);
+                if(MyUtility::isStringValid($request->get("prof"))) {
+                    $profs = $em->getRepository("CoursdeGratteBundle:Prof")->findByName($request->get("prof"));
+                    return new JsonResponse($profs);
+                }
+
+            }elseif($request->get("artiste") !== null){
+                if(MyUtility::isStringValid($request->get("artiste"))) {
+                    $artistes = $em->getRepository("CoursdeGratteBundle:Artiste")->findByName($request->get("artiste"));
+                    for ($i = 0; $i < count($artistes); $i++) {
+                        $artistes[$i]["artiste"] = str_replace("&amp;", "&", $artistes[$i]['artiste']);
+                    }
+                    return new JsonResponse($artistes);
+                }
             }
-        //}
+        }
     }
 } 

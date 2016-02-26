@@ -3,5 +3,12 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+    <div class="container" id="checkMailContent">
+
+        <h1>Un mail vient de vous être envoyé.</h1>
+        <h1>Vous devez cliquer sur le lien inclus dans le mail pour valider votre compte</h1>
+        <h2>Pensez à vérifier votre dossier Spam si vous ne voyez pas le mail ;)</h2>
+
+    </div>
+
 {% endblock fos_user_content %}
