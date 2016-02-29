@@ -2,21 +2,172 @@
 
 {% block body %}
     <style>
-        #container{
-            margin-top: 84px;
-            color:white;
+        #container {
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+        }
+
+        #testUb {
+            width: 300px;
+            height: 250px;
+            background-color: grey;
+        }
+
+        #label {
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        #label a {
+            color: orange;
+        }
+
+        #container hr {
+            width: 50%;
+            margin-top: 5px;
+        }
+
+        #container ul {
+            margin: 0;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        #container li {
+            list-style: none;
+            display: inline-block;
+            list-style: none;
+            font-size: 1.8rem;
+            border: 1px solid white;
+            width: 80px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #hr-1 {
+            border: 3px solid #2ECC71;
+        }
+
+        #hr-2 {
+            border: 3px solid #F39C12;
+        }
+
+        #hr-3 {
+            border: 3px solid #9B59B6;
+        }
+
+        #hr-4 {
+            border: 3px solid #E74C3C;
+        }
+
+        #hr-5 {
+            border: 3px solid #642019;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        #video {
+            margin-top: 20px;
         }
     </style>
     <div id="container">
-        {{ tuto.titre }}
-        {{ tuto.idArtiste.artiste }}
-        {{ tuto.idDifficulty.id }}
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="container">
+                    {#{{ dump(tuto) }}#}
+                    <h1><span class="bold">{{ tuto.titre }}</span> - {{ tuto.idArtiste.artiste }}</h1>
+                    <hr id="hr-{{ tuto.idDifficulty.id }}"/>
+                    <div id="label">
+                        {% if tuto.idProf.siteprof|default %}
+                            <span class="label label-primary"><a
+                                        href="{{ tuto.idProf.siteprof }}">{{ tuto.idProf.prof }}</a></span>
+                        {% else %}
+                            <span class="label label-default">{{ tuto.idProf.prof }}</span>
+                        {% endif %}
+                        <span class="label label-default">{{ tuto.idProf.idLangue.langue }}</span>
+                        <span class="label label-default">{{ tuto.idTypeguitare.typeguitare }}</span>
+
+                        {% if tuto.idTypeTuto.id == 1 %}
+                            <span class="label label-default">{{ tuto.idStyle.style }}</span>
+                            <span class="label label-default">{{ tuto.idTypejeu.typejeu }}</span>
+                        {% elseif tuto.idTypeTuto.id == 2 %}
+                            <span class="label label-default">{{ tuto.idStyletechnique.styletechnique }}</span>
+                        {% endif %}
+                        </span>
+
+                    </div>
+
+                    <div id="video">
+                        {#<div class="col-lg-2">#}
+                        {#<ul id="linkContainer">#}
+                        {#&#123;&#35;{{ dump(videoLinks) }}&#35;&#125;#}
+                        {#{% for key, value in videoLinks %}#}
+                        {#<li class="videoLink" data-videoid={{ value }}>{{ key }}</li>#}
+                        {#{% endfor %}#}
+                        {#</ul>#}
+                        {#</div>#}
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe data-videoId="{{ videoLinks.Tuto }}" id="actualVideo" width="853" height="480"
+                                        src="//www.youtube.com/embed/{{ videoLinks.Tuto }}?rel=0&wmode=opaque"
+                                        frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            {% if videoLinks|length > 1 %}
+                                <div id="videoPart">
+                                    <ul id="linkContainer">
+                                        {#{{ dump(videoLinks) }}#}
+                                        {% for key, value in videoLinks %}
+                                            <li class="videoLink" data-videoid={{ value }}>{{ key }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-12">
+                <div id="testUb">
+
+                </div>
+            </div>
+        </div>
     </div>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts  '@CoursdeGratteBundle/Resources/public/js/new_app.js'
-    '@CoursdeGratteBundle/Resources/public/js/design.js'%}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {#{% javascripts  '@CoursdeGratteBundle/Resources/public/js/main.js'#}
+    {#'@CoursdeGratteBundle/Resources/public/js/design.js'%}#}
+    {#<script src="{{ asset_url }}"></script>#}
+    {#{% endjavascripts %}#}
+    <script>
+        $(document).ready(function () {
+            var pathYoutube = "//www.youtube.com/embed/";
+            var actualVideo = $("#actualVideo").attr("data-videoId");
+            var links = $("#linkContainer > li");
+            console.log(links);
+            for (var i = 0; i < links.length; i++) {
+                if ($(links[i]).attr("data-videoId") === actualVideo) {
+                    $(links[i]).css("color", "orange");
+                }
+            }
+            $("#linkContainer").on("click", ".videoLink", function () {
+
+                var videoId = $(this).attr("data-videoId");
+                links.css("color", "white");
+                $(this).css("color", "orange");
+                console.log(videoId);
+                $("#actualVideo").attr("src", pathYoutube + videoId);
+            })
+
+        });
+    </script>
 {% endblock %}
+

@@ -13,6 +13,7 @@ use Doctrine\DBAL\Types\JsonArrayType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class AjaxController extends Controller{
@@ -21,16 +22,16 @@ class AjaxController extends Controller{
      * Lance la requête pour récupérer tous les tutos
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function ajaxAction(Request $request){
-        //TODO A SUPPRIMER
-        if($request->isMethod("get")){
-            $data = $this->handleAjaxTuto($request);
-            return new JsonResponse(['data' => $data]);
-        }
+
         if($request->isXmlHttpRequest()){
             $data = $this->handleAjaxTuto($request);
             return new JsonResponse(['data' => $data]);
+        }
+        else{
+            throw new \Exception("Vous ne pouvez pas accéder à cette page");
         }
     }
 
@@ -82,7 +83,7 @@ class AjaxController extends Controller{
         $filters = ["difficulty", "style", "prof", "typeguitare", "typejeu", "langue", "tablature", "typetuto"];
         foreach($filters as $filter){
             $value = $request->get($filter);
-            if(is_numeric($value)) {
+            if(is_numeric($value)) {          
                 //Si la cle GET n'existe pas ça retourne null
                 if ($value !== null) {
                     if ($filter == 'tablature') {
@@ -121,6 +122,7 @@ class AjaxController extends Controller{
      * Lance un requête pour récupérer les profs en fonction de la langue
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function ajaxProfAction(Request $request){
 
@@ -135,7 +137,8 @@ class AjaxController extends Controller{
                 }
                 return new JsonResponse(['profs' => $profs]);
             }
-
+        }else{
+            throw new \Exception("Une erreur s'est produite");
         }
     }
 
@@ -143,6 +146,7 @@ class AjaxController extends Controller{
      * Lance un requête pour récupérer les styles en fonction du type de tuto
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function ajaxStyleAction(Request $request){
 
@@ -157,16 +161,17 @@ class AjaxController extends Controller{
                     $styles = $em->getRepository('CoursdeGratteBundle:Styletechnique')->findStyleWithTypeTuto();
                     return new JsonResponse(["stylestechniques" => $styles]);
                 }
-
             }
 
+        }else{
+            throw new \Exception("Une erreur s'est produite");
         }
     }
 
     /**
      * récupères les données pour typeahead
      * @param Request $request
-     * @return JsonResponse
+     * @throws \Exception
      */
     public function typeaheadAction(Request $request){
 
@@ -193,6 +198,32 @@ class AjaxController extends Controller{
                     return new JsonResponse($artistes);
                 }
             }
+        }else{
+            throw new \Exception("Une erreur s'est produite");
         }
+    }
+
+    public function checkPseudoEmailAction(Request $request){
+
+        if($request->isXmlHttpRequest()){
+            if($request->get("pseudo") !== null) {
+                $user = $this->get("fos_user.user_manager")->findUserByUsername($request->get("pseudo"));
+                if ($user !== null) {
+                    return new JsonResponse(['errorPseudo' => "Le nom d'utilisateur est déjà utilisé"]);
+                } else {
+                    return new JsonResponse(["pseudo" => "Nom d'utilisateur valide"]);
+                }
+            }elseif($request->get("email") !== null){
+                $user = $this->get("fos_user.user_manager")->findUserByEmail($request->get("email"));
+                if($user !== null){
+                    return new JsonResponse(['errorEmail' => "L'adresse e-mail est déjà utilisée"]);
+                }else{
+                    return new JsonResponse(["email" => "Email Valide"]);
+                }
+            }
+        }else{
+            throw new \Exception("Erreur");
+        }
+
     }
 } 

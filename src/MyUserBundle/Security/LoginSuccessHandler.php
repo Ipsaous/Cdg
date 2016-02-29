@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ipsaous
- * Date: 23/02/2016
- * Time: 18:12
- */
 
 namespace MyUserBundle\Security;
 

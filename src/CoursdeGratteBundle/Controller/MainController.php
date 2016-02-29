@@ -10,25 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \CoursdeGratteBundle\Entity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class MainController extends Controller
 {
 
-    public function indexAction()
-    {
+    public function indexAction(){
+
         $em = $this->getDoctrine()->getManager();
         //Je récupére l'user
         $user = $this->get("security.token_storage")->getToken()->getUser();
-        if($this->isGranted("ROLE_USER")){
-            $defaultLangue = $em->getRepository("CoursdeGratteBundle:Paramuser")->getDefaultLangue($user->getId());
-            if($defaultLangue !== null)
-                $this->get("session")->set("_defaultLangue", $defaultLangue);
+        $defaultLangue = $this->get("session")->get("_defaultLangue");
+
+        if($defaultLangue === null){
+            if($this->isGranted("ROLE_USER")){
+                $defaultLangue = $em->getRepository("CoursdeGratteBundle:Paramuser")->getDefaultLangue($user->getId());
+                if($defaultLangue !== null)
+                    $this->get("session")->set("_defaultLangue", $defaultLangue);
+            }
         }
 
-        $session = $this->get("session")->get("_defaultLangue");
-        if($session !== null) {
-            $langueId = $session->getLangueId()->getId();
+        if($defaultLangue !== null) {
+            $langueId = $defaultLangue->getLangueId()->getId();
             $langues = $em->getRepository('CoursdeGratteBundle:Langue')->findAllOrderedById($langueId);
             $profs = $em->getRepository('CoursdeGratteBundle:Prof')->findAllOrderedByName($langueId);
         }else{
@@ -36,14 +40,13 @@ class MainController extends Controller
             $profs = $em->getRepository('CoursdeGratteBundle:Prof')->findAllOrderedByName();
         }
         $types_jeu = $em->getRepository('CoursdeGratteBundle:Typejeu')->findAllOrderedByName();
-        //Si j'ai une langue par défaut en session, je change les profs et langues que je récupère
 
-        return $this->render('CoursdeGratteBundle:Home:home.html.twig',
+        return $this->render('CoursdeGratteBundle:Home:index.html.twig',
             array(
                 'profs' => $profs,
                 'types_jeu' => $types_jeu,
                 'langues' => $langues,
-                'session' => $session
+                'default_langue' => $defaultLangue
             ));
     }
 

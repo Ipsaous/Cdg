@@ -12,11 +12,9 @@ class ParamuserRepository extends EntityRepository {
     {
         $qb = $this->createQueryBuilder("p")->join("p.langueId", "langue")->addSelect("langue")
             ->where("p.userId = :id")->setParameter("id", $userId);
-        try{
-            return $qb->getQuery()->getSingleResult();
-        }catch (NoResultException $e){
-            return null;
-        }
+
+        return $qb->getQuery()->getOneOrNullResult();
+
     }
 
 } 

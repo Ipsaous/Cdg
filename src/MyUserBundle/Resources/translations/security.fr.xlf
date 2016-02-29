@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="15">
                 <source>Account is disabled.</source>
-                <target>Votre compte n'a pas encore été activé. Veuillez regarder dans votre boîte Spam que le mail de confirmation n'y soit pas</target>
+                <target>Votre compte n'a pas encore été activé. Veuillez regarder dans votre boîte Spam que le mail de confirmation n'y soit pas.</target>
             </trans-unit>
         </body>
     </file>

@@ -1,3 +1,18 @@
-#services:
-#    my_password_encoder:
-#        class: MyUserBundle\Security\MyPasswordEncoder
+services:
+
+    cdg_registration_confirm_listener:
+        class: MyUserBundle\EventListener\RegistrationConfirmListener
+        arguments: ['@router', '@session']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    auth_success_handler:
+        class: MyUserBundle\Security\LoginSuccessHandler
+        arguments: ['@router', '@param_user_repository', '@session']
+
+    auth_failure_handler:
+        class: MyUserBundle\Security\FailureHandler
+        arguments: ['@router', '@fos_user.user_manager', '@session']
+
+    my_password_encoder:
+        class: MyUserBundle\Security\MyPasswordEncoder

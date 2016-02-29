@@ -31,6 +31,12 @@ ajax_typeahead:
     path:     /typeahead
     defaults: { _controller: CoursdeGratteBundle:Ajax:typeahead }
 
+ajax_check_username:
+    path: /ajax/check
+    defaults: { _controller: CoursdeGratteBundle:Ajax:checkPseudoEmail }
+
+
+
 #Fin des requetes ajax
 
 move_users:

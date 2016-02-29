@@ -15,3 +15,12 @@
         {% endblock fos_user_content %}
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if app.request.get("_route") == "fos_user_registration_register" %}
+        {% javascripts 'js/register.js' output="js/compiled/main.js" %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+{% endblock %}

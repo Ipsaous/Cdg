@@ -18,6 +18,7 @@ body{
     }
     #searchButton{
         top: 0px!important;
+        left: 75px!important;
     }
     #searchBlock{
         top: 78px!important;
@@ -63,6 +64,7 @@ body{
     }
     #allFilters{
         padding-left: 0!important;
+        padding-right: 0!important;
     }
     #closeFiltre{
         vertical-align: -4px;
@@ -98,12 +100,71 @@ body{
         margin-bottom: 0px!important;
     }
 }
-@media (max-width: 992px){
+@media (min-width: 768px) and (max-width: 992px){
     .button-collapse{
         left: 10px;
     }
     #searchIcon{
+        width: 28px!important;
         right: 10px!important;
+    }
+
+    /** TEST **/
+    #searchBlock{
+        top: 62px!important;
+    }
+    #menuHamburger{
+        display: block!important;
+        top:5px!important;
+        margin-left: 0!important;
+        margin-top: 0!important;
+        margin-bottom: 0!important;
+    }
+    #leftSidebar{
+        width: 350px!important;
+        margin-top: 62px!important;
+        z-index: 2500;
+        top:0;
+        float: none!important;
+        background-color: #222226;
+        transition-duration:0.3s;
+        overflow-y: scroll;
+        transform: translateX(-100%);
+        -webkit-transform:translateX(-100%);
+        -o-transform:translateX(-100%);
+        -ms-transform:translateX(-100%);
+        -moz-transform:translateX(-100%);
+    }
+    #leftSidebar .row{
+        width: 100%!important;
+        margin: 0!important;
+        padding: 0!important;
+    }
+    #allFilters{
+        padding-left: 0!important;
+    }
+    #closeFiltre{
+        vertical-align: -4px;
+        font-size: 40px;
+        margin-left: 30px;
+        display:inline-block!important;
+    }
+    #closeFiltre:hover{
+        color:orange;
+    }
+    .logoToHide{
+        display:none;
+    }
+    #tutoContainer{
+        margin: 0!important;
+        transition-duration:0.3s;
+    }
+    #searchButton{
+        top: 5px!important;
+        left:75px!important;
+        padding: 10px 11px!important;
+        margin-top: 0!important;
+        margin-bottom: 0!important;
     }
 }
 
@@ -153,7 +214,7 @@ body{
     border-radius: 4px;
 }
 #searchIcon{
-    width:30px;
+    width:28px;
 }
 #searchButton:hover{
     background-color: rgb(255, 165, 0);
@@ -197,6 +258,7 @@ body{
 /** -------------- SELECT TRI ---------------- **/
 #allFilters{
     padding-left: 10px;
+    padding-right: 10px;
 }
 #searchBlock{
     position: absolute;
@@ -297,13 +359,14 @@ h5{
     padding: 0;
     margin: 0;
     width: 100%;
+    transition-duration: 0.3s;
 }
 
 #leftSidebar {
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-top: 76px;
+    margin-top: 78px;
     top: 0;
     bottom: 0;
     width: 275px;
@@ -417,6 +480,7 @@ h5{
 #loginContent{
     height: 100%;
     /*padding-top: 84px;*/
+    padding-bottom: 60px;
 }
 #loginContent h1{
     text-align: center;
@@ -424,6 +488,9 @@ h5{
 }
 #loginContent label{
     color: white;
+}
+#loginContent .btn{
+    margin-bottom: 20px;
 }
 
 /**------------------FIN PAGE LOGIN ---------------------**/
@@ -445,6 +512,7 @@ h5{
 }
 #registerContent h4{
     margin-bottom: 20px;
+    line-height: 25px;
     text-align: center;
 }
 #registerContent strong{
@@ -461,11 +529,16 @@ h5{
     content: " *";
     color:#F44336;
 }
-#registerContent .has-error ul, li{
+#registerContent .has-error ul, .has-error li{
     list-style: none;
     margin: 0;
     padding: 0;
     color:#F44336;
+}
+#registerContent ul, .liSuccess{
+    margin: 0;
+    padding: 0;
+    color:#8BC34A
 }
 #registerContent .btn{
     margin-bottom: 60px;
