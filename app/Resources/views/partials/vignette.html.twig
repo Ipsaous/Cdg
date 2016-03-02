@@ -1,0 +1,16 @@
+{% for tuto in tutos %}
+<div class="tutoVignette">
+    <img class="flag" src=""/>
+    <a href="./tuto/{{ tuto.slug }} - {{ tuto.id }}">
+        <div class="thumbnail class-{{ tuto.idDifficulty.id }}">
+            <img src="http://img.youtube.com/vi/{{ tuto.lienTuto }}/mqdefault.jpg"  class="img-responsive vignette" alt="{{ tuto.titre }}">
+            <ul class="info">
+                <li class="fonce-{{ tuto.idDifficulty.id }}"></li>
+                <li class="titre">{{ tuto.titre }}</li>
+                <li class="artiste">{{ tuto.idArtiste.artiste }}</li>
+                <li class="prof">{{ tuto.idProf.prof }}</li>
+            </ul>
+        </div>
+    </a>
+</div>
+{% endfor %}

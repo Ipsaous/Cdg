@@ -1,88 +1,64 @@
 {% extends 'base.html.twig' %}
+{% block title %}Tuto Guitare et Tablature {{ tuto.titre }}{% if tuto.idTypetuto.id == 1 %} de {{ tuto.idArtiste.artiste }}{% endif %} - {{ tuto.idProf.prof }}{% endblock %}
 
 {% block body %}
-    <style>
-        #container {
-            color: white;
-        }
 
-        h1 {
-            text-align: center;
-            font-size: 2.2rem;
-        }
+    <div class="container" id="singleTutoContainer">
+        <div class="row" id="tutoContent">
+            <!-- LEFT COL -->
+            <div class="col-md-8" id="videoContainer">
+                <!-- PLAYER -->
+                <div id="player">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe data-videoId="{{ videoLinks.Tuto }}" id="actualVideo" width="853" height="480"
+                                src="//www.youtube.com/embed/{{ videoLinks.Tuto }}?rel=0&wmode=opaque"
+                                frameborder="0"
+                                allowfullscreen>
 
-        #testUb {
-            width: 300px;
-            height: 250px;
-            background-color: grey;
-        }
+                        </iframe>
+                    </div>
+                </div>
+            </div>
 
-        #label {
-            text-align: center;
-            font-size: 1.8rem;
-        }
+            <div class="col-md-4" id="sidebarParts">
+                {% if videoLinks|length > 1 %}
+                <div id="partsContent">
+                    <div id="partsHeader">
+                        <h4>Parties</h4>
+                        <hr/>
+                    </div>
 
-        #label a {
-            color: orange;
-        }
+                    <div id="videoParts">
+                        <ul id="linkContainer">
+                            {#{{ dump(videoLinks) }}#}
+                            {% for key, value in videoLinks %}
 
-        #container hr {
-            width: 50%;
-            margin-top: 5px;
-        }
+                                <li class="videoLink" data-videoid={{ value }}>
+                                    <i class="glyphicon glyphicon-play iconActivePart"></i>
+                                    <img class="vignettePart" src="http://img.youtube.com/vi/{{ value }}/mqdefault.jpg"
+                                         alt="key">
+                                    <span class="partText">{{ key }}</span>
 
-        #container ul {
-            margin: 0;
-            padding: 0;
-            margin-top: 10px;
-        }
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% else %}
+                    <div id="test"></div>
+                {% endif %}
+            </div>
 
-        #container li {
-            list-style: none;
-            display: inline-block;
-            list-style: none;
-            font-size: 1.8rem;
-            border: 1px solid white;
-            width: 80px;
-            text-align: center;
-            cursor: pointer;
-        }
 
-        #hr-1 {
-            border: 3px solid #2ECC71;
-        }
-
-        #hr-2 {
-            border: 3px solid #F39C12;
-        }
-
-        #hr-3 {
-            border: 3px solid #9B59B6;
-        }
-
-        #hr-4 {
-            border: 3px solid #E74C3C;
-        }
-
-        #hr-5 {
-            border: 3px solid #642019;
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        #video {
-            margin-top: 20px;
-        }
-    </style>
-    <div id="container">
+        </div>
         <div class="row">
-            <div class="col-lg-9">
-                <div class="container">
-                    {#{{ dump(tuto) }}#}
-                    <h1><span class="bold">{{ tuto.titre }}</span> - {{ tuto.idArtiste.artiste }}</h1>
-                    <hr id="hr-{{ tuto.idDifficulty.id }}"/>
+            <div class="col-md-8" id="metaDataContainer">
+                <!-- META DATA -->
+                <div id="metaData">
+                    <h1>
+                        <span class="bold">{{ tuto.titre }}</span>{% if tuto.idArtiste.artiste|default %} - {{ tuto.idArtiste.artiste }}{% endif %}
+                    </h1>
+
                     <div id="label">
                         {% if tuto.idProf.siteprof|default %}
                             <span class="label label-primary"><a
@@ -93,54 +69,62 @@
                         <span class="label label-default">{{ tuto.idProf.idLangue.langue }}</span>
                         <span class="label label-default">{{ tuto.idTypeguitare.typeguitare }}</span>
 
-                        {% if tuto.idTypeTuto.id == 1 %}
+                        {% if tuto.idTypetuto.id == 1 %}
                             <span class="label label-default">{{ tuto.idStyle.style }}</span>
                             <span class="label label-default">{{ tuto.idTypejeu.typejeu }}</span>
-                        {% elseif tuto.idTypeTuto.id == 2 %}
+                        {% elseif tuto.idTypetuto.id == 2 %}
                             <span class="label label-default">{{ tuto.idStyletechnique.styletechnique }}</span>
                         {% endif %}
                         </span>
-
                     </div>
+                </div>
 
-                    <div id="video">
-                        {#<div class="col-lg-2">#}
-                        {#<ul id="linkContainer">#}
-                        {#&#123;&#35;{{ dump(videoLinks) }}&#35;&#125;#}
-                        {#{% for key, value in videoLinks %}#}
-                        {#<li class="videoLink" data-videoid={{ value }}>{{ key }}</li>#}
-                        {#{% endfor %}#}
-                        {#</ul>#}
-                        {#</div>#}
-                        <div class="col-lg-8 col-lg-offset-2">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe data-videoId="{{ videoLinks.Tuto }}" id="actualVideo" width="853" height="480"
-                                        src="//www.youtube.com/embed/{{ videoLinks.Tuto }}?rel=0&wmode=opaque"
-                                        frameborder="0" allowfullscreen></iframe>
-                            </div>
-                            {% if videoLinks|length > 1 %}
-                                <div id="videoPart">
-                                    <ul id="linkContainer">
-                                        {#{{ dump(videoLinks) }}#}
-                                        {% for key, value in videoLinks %}
-                                            <li class="videoLink" data-videoid={{ value }}>{{ key }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
+                <div id="favShareContainer">
+                    <div id="favShare">
+                        <div id="favIcon">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </div>
+                        {% if tuto.lientablature|default %}
+                        <div id="tabIcon">
+                            <i class="glyphicon glyphicon-floppy-save"></i>
+                        </div>
+                        {% endif %}
+
+                        <div id="shareButton">
+                            {% image 'images/facebookshare.jpg' %}
+                            <img src="{{ asset_url }}" alt="partage facebook" />
+                            {% endimage %}
+                            {% image 'images/twittershare.jpg' %}
+                            <img src="{{ asset_url }}" alt="partage twitter" />
+                            {% endimage %}
+                            {% image 'images/googleplusshare.jpg' %}
+                            <img src="{{ asset_url }}" alt="partage google+" />
+                            {% endimage %}
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-sm-12">
-                <div id="testUb">
 
+                <div class="clearFloat"></div>
+
+                <h5>Description</h5>
+                <div id="youtubeDescription">
+
+                    {{ description|raw|nl2br }}
                 </div>
             </div>
+
+            <div class="col-md-4" id="suggestions">
+                {% if videoLinks|length > 1 %}
+                <div id="test"></div>
+                {% endif %}
+            </div>
         </div>
+
+
     </div>
 
 {% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {#{% javascripts  '@CoursdeGratteBundle/Resources/public/js/main.js'#}
@@ -152,20 +136,20 @@
             var pathYoutube = "//www.youtube.com/embed/";
             var actualVideo = $("#actualVideo").attr("data-videoId");
             var links = $("#linkContainer > li");
-            console.log(links);
             for (var i = 0; i < links.length; i++) {
                 if ($(links[i]).attr("data-videoId") === actualVideo) {
-                    $(links[i]).css("color", "orange");
+                    $(links[i]).find("i").css("display", "inline-block");
+                    $(links[i]).addClass("activePart");
                 }
             }
             $("#linkContainer").on("click", ".videoLink", function () {
-
+                links.removeClass("activePart");
+                links.find("i").css("display", "none");
                 var videoId = $(this).attr("data-videoId");
-                links.css("color", "white");
-                $(this).css("color", "orange");
-                console.log(videoId);
+                $(this).find("i").css("display", "inline-block");
+                $(this).addClass("activePart");
                 $("#actualVideo").attr("src", pathYoutube + videoId);
-            })
+            });
 
         });
     </script>

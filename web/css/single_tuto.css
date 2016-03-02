@@ -1,0 +1,262 @@
+/**MEDIA QUERIES **/
+@media (max-width: 767px) {
+    #test{
+        display: none;
+    }
+
+}
+@media (max-width: 992px){
+
+    #test{
+        display: none;
+    }
+    /*Différentes parties*/
+    #partsHeader h4{
+        font-size: 16px;
+        margin: 0;
+    }
+    #partsHeader hr{
+        margin: 5px 0;
+    }
+    #videoParts ul {
+        max-height: 110px!important;
+    }
+    #videoParts ul li{
+        font-size: 14px!important;
+    }
+    #videoParts .vignettePart{
+        width: 60px!important;
+    }
+    #videoParts .iconActivePart{
+        font-size: 1.2rem!important;
+        top:15px!important;
+    }
+
+}
+#singleTutoContainer{
+    padding-bottom: 40px;
+}
+/** PUB **/
+#test{
+    margin: 0 auto;
+    width: 300px;
+    height: 250px;
+    background-color: grey;
+}
+/** PARTIE GAUCHE **/
+#metaData h1 {
+    color:white;
+    font-size: 2.2rem;
+    margin-top: 0;
+}
+
+#tutoContent {
+    color: white;
+    margin-bottom: 20px;
+}
+
+/** PLAYER **/
+#videoContainer {
+}
+
+#player {
+}
+
+#sidebarParts {
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+#partsContent {
+    background-color: #151517;
+    padding: 5px 15px;
+
+}
+#videoParts ul{
+    padding: 0;
+    margin: 0;
+    max-height: 275px;
+    overflow-y: auto;
+
+}
+#videoParts ul li{
+    position: relative;
+    color:white;
+    list-style: none;
+    font-size: 1.6rem;
+    cursor:pointer;
+    padding: 5px;
+}
+#videoParts .activePart{
+    color:orange;
+    background-color: #1F1F21;
+}
+#videoParts ul li:hover{
+    background-color: #2f2f31;
+}
+#videoParts .vignettePart{
+    width: 80px;
+}
+#videoParts .partText{
+    margin-left: 10px;
+}
+.iconActivePart{
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    color:orange;
+    font-size: 1.3rem;
+    vertical-align: 0;
+    float: right;
+}
+
+#label {
+    font-size: 1.8rem;
+}
+
+#label a {
+    color: orange;
+}
+
+#container hr {
+    width: 50%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#container ul {
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+}
+
+#container #linkContainer li {
+    list-style: none;
+    display: inline-block;
+    list-style: none;
+    font-size: 1.8rem;
+    border: 1px solid white;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#hr-1 {
+    border: 3px solid #2ECC71;
+}
+
+#hr-2 {
+    border: 3px solid #F39C12;
+}
+
+#hr-3 {
+    border: 3px solid #9B59B6;
+}
+
+#hr-4 {
+    border: 3px solid #E74C3C;
+}
+
+#hr-5 {
+    border: 3px solid #642019;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#video {
+    margin-top: 20px;
+}
+#favShareContainer{
+    margin:20px 0;
+    padding: 5px 0;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+#favShare{
+    height: 35px;
+}
+#favShare #favIcon{
+    float: left;
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+}
+#favShare #tabIcon{
+    float: left;
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+}
+#favShare #favIcon i{
+    color: white;
+    padding-left: 3px;
+    font-size: 30px;
+    cursor: pointer;
+    vertical-align: -12px;
+}
+
+#favShare #tabIcon i{
+    color: #fa1e64;
+    padding-left: 3px;
+    font-size: 30px;
+    cursor: pointer;
+    vertical-align: -16px;
+}
+
+#favShare #favIcon i:hover{
+    color: #d5d5d5;
+}
+#favShare #tabIcon i:hover{
+    color: #cd1e59;
+}
+
+#shareButton{
+    float: right;
+}
+#shareButton img{
+    height: 35px;
+    cursor: pointer;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -moz-transition: 0.2s;
+}
+#shareButton img:hover{
+    padding: 2px;
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -moz-transition: 0.2s;
+
+}
+
+#youtubeDescription {
+    background-color: white;
+    color: #2a2a2e;
+    padding: 10px;
+    max-height: 180px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+
+/** PARTIE DROITE **/
+
+#testUb {
+    width: 300px;
+    height: 250px;
+    background-color: grey;
+}
+
+#suggestions {
+    margin-top: 20px;
+}
+
+#suggestions .tutoVignette {
+    width: 300px;
+}
