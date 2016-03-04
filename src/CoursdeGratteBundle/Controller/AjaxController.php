@@ -28,7 +28,12 @@ class AjaxController extends Controller{
 
         if($request->isXmlHttpRequest()){
             $data = $this->handleAjaxTuto($request);
-            return new JsonResponse(['data' => $data]);
+            $number = count($data);
+
+            return $this->render("partials/toerase.html.twig", array("tutos" => $data, "number" => $number));
+
+//            return new JsonResponse(['data' => $data]);
+
         }
         else{
             throw new \Exception("Vous ne pouvez pas accéder à cette page");
@@ -98,7 +103,8 @@ class AjaxController extends Controller{
 
                     } else {
                         //Cas pour les 2 styles de tutos différents
-                        if (isset($typeTuto) AND $typeTuto == 2 AND $filter == "style") {
+                        $typeTuto = $request->get("typetuto");
+                        if (isset($typeTuto) AND $typeTuto == 2 AND $filter === "style") {
                             $filter = "styletechnique";
                         }
 

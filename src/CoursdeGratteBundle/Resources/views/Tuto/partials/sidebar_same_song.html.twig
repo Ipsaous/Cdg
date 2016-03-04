@@ -1,0 +1,32 @@
+<div id="navSingleTuto">
+
+    <h1>{{ tuto.idArtiste.artiste }}</h1>
+
+    {% if tutoSameSong|default %}
+        <h2>Sur la même chanson</h2>
+        {% for sameSong in tutoSameSong %}
+            <ul>
+                <li class="same-{{ sameSong.idDifficulty.id }}">
+                    <a href="{{ path("single", {'slug': sameSong.slug, 'id': sameSong.id}) }}">
+                        {{ sameSong.titre | truncate(18, false, "...") }} - {{ sameSong.idProf.prof | truncate(18, false, "...")  }}</a>
+                    <img class="sameFlag" src="{{ asset(sameSong.idProf.idLangue.id|flag) }}" alt="langue" />
+
+                </li>
+
+
+            </ul>
+        {% endfor %}
+        <hr/>
+    {% endif %}
+    {% if tutoSameArtist|default %}
+        {% for sameArtist in tutoSameArtist %}
+            <ul>
+                <li class="same-{{ sameArtist.idDifficulty.id }}">
+                    <a href="{{ path("single", {"slug": sameArtist.slug, "id": sameArtist.id}) }}">{{ sameArtist.titre | truncate(18, false, "...") }} - {{ sameArtist.idProf.prof | truncate(18, false, "...") }}</a>
+                    <img class="sameFlag" src="{{ asset(sameArtist.idProf.idLangue.id|flag) }}" alt="langue" />
+                </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+
+</div>

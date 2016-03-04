@@ -22,28 +22,22 @@ $(document).ready(function(){
     function ajaxQuery(method, url, dataString, params){
 
         //Si j'ai pas cliqué sur afficher plus, je vide le container
-        var type = 'json';
-        if(params == "tutos"){
-            type = 'html';
-        }
         if(!showMore){
             $('#itemContainer').empty();
         }
-
         loader.show();
         $.ajax({
             type:method,
             url:url,
             data:dataString,
-            dataType: type,
+            dataType:'json',
             success: function(data){
-
                 var loader = $("#loader");
                 loader.hide();
                 $("#loadingMore").hide();
+                //console.log(params);
                 if(params == "tutos"){
-                    //affichage(data);
-                    affichageTest(data);
+                    affichage(data);
                 }else if(params == "profs"){
                     fillSelectAjax(data.profs, "prof", "#selectProf", "Tous les profs");
                 }else if(params == "styles"){
@@ -139,62 +133,32 @@ $(document).ready(function(){
         });
     }
 
-    ///**
-    // * Fonction qui gère l'affichage du retour de la requete ajax récupérant les tutos
-    // * @param data
-    // */
-    //function affichage(data){
-    //
-    //    loader.hide();
-    //    var container = $('#itemContainer');
-    //    var results = data.data;
-    //    var topMois = $('#topMois');
-    //    if(results.length > 0){
-    //        for(var j=0; j < results.length; j++) {
-    //            var flag = recupFlag(results[j].langue);
-    //            var titre = shorter(results[j].titre);
-    //            var artiste = shorter(results[j].artiste);
-    //            var prof = shorter(results[j].prof);
-    //
-    //            container.append('<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 tutoVignette"><img class="flag" src="'+flag+'"/><a href="./tuto/' + results[j].slug + '-' + results[j].tutoid + '"><div class="thumbnail class-' + results[j].id + '"><img src="http://img.youtube.com/vi/' + results[j].lientuto + '/mqdefault.jpg"  class="img-responsive vignette" alt="' + results[j].titre + '"><ul class="info"><li class="fonce-' + results[j].id + '"></li><li class="titre">' + titre + '</li><li class="artiste">' + artiste + '</li><li class="prof">' + prof + '</li></ul></div></a></div>');
-    //
-    //            $('#itemContainer .tutoVignette').slice(offset, offset + limit).hide();
-    //        }
-    //    }
-    //    showDiv();
-    //
-    //    //Affichage du bouton "afficher plus"
-    //    if(results.length >= 24){ // si j'ai plus de 24 résultats, j'affiche le bouton
-    //        $("#seeMore").show();
-    //    }else{
-    //        $("#seeMore").hide();
-    //    }
-    //}
-
     /**
-     * Methode qui gère l'affichage des vignettes
-     * Remplace la methode affichage qui récupérer la réponse en json et construisait le html a partir de la
-     * cette methode utilise directement une réponse html renvoyé en utilisant un template twig
+     * Fonction qui gère l'affichage du retour de la requete ajax récupérant les tutos
      * @param data
      */
-    function affichageTest(data){
-        //TODO Changer le nom de la méthode une fois que j'aurais suffisamment testé
+    function affichage(data){
+
         loader.hide();
         var container = $('#itemContainer');
+        var results = data.data;
+        var topMois = $('#topMois');
+        if(results.length > 0){
+            for(var j=0; j < results.length; j++) {
+                var flag = recupFlag(results[j].langue);
+                var titre = shorter(results[j].titre);
+                var artiste = shorter(results[j].artiste);
+                var prof = shorter(results[j].prof);
 
-        container.append(data);
+                container.append('<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 tutoVignette"><img class="flag" src="'+flag+'"/><a href="./tuto/' + results[j].slug + '-' + results[j].tutoid + '"><div class="thumbnail class-' + results[j].id + '"><img src="http://img.youtube.com/vi/' + results[j].lientuto + '/mqdefault.jpg"  class="img-responsive vignette" alt="' + results[j].titre + '"><ul class="info"><li class="fonce-' + results[j].id + '"></li><li class="titre">' + titre + '</li><li class="artiste">' + artiste + '</li><li class="prof">' + prof + '</li></ul></div></a></div>');
 
-        $('#itemContainer .tutoVignette').slice(offset, offset + limit).hide();
-        //Fonction qui permet d'afficher les vignettes en fadeIn
+                $('#itemContainer .tutoVignette').slice(offset, offset + limit).hide();
+            }
+        }
         showDiv();
 
-        //Nombre de résultats
-        var numberResults = $("#numberResults").val();
-        if(numberResults == 0 && showMore == false){
-            $("#itemContainer").append("<h2>Aucun Résultat Trouvé</h2>")
-        }
         //Affichage du bouton "afficher plus"
-        if(numberResults == undefined){ // si j'ai plus de 24 résultats, j'affiche le bouton
+        if(results.length >= 24){ // si j'ai plus de 24 résultats, j'affiche le bouton
             $("#seeMore").show();
         }else{
             $("#seeMore").hide();
@@ -496,7 +460,6 @@ $(document).ready(function(){
         ajaxQuery("GET", mainUrl, "", 'tutos');
         closeFiltre();
         $("body").css("overflow", "visible");
-        $("#tutoContainer").css("opacity", "1");
 
     });
 

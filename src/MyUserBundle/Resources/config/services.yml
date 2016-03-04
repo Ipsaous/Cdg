@@ -16,3 +16,11 @@ services:
 
     my_password_encoder:
         class: MyUserBundle\Security\MyPasswordEncoder
+
+    #J'ai mis le meme nom que le listener de fosuserpourl'override mais faire attention car ca va supprimer
+    #le comportement pour tous les messages flash. A voir si c'est ce que je veux
+    fos_user.listener.flash:
+        class: MyUserBundle\EventListener\FlashListener
+        arguments: ['@session', '@translator']
+        tags:
+            - { name: kernel.event_subscriber }

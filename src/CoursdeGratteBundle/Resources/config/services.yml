@@ -4,4 +4,9 @@ services:
         class: Doctrine\ORM\EntityRepository
         factory: ['@doctrine.orm.entity_manager', 'getRepository']
         arguments:
-          - CoursdeGratteBundle\Entity\Paramuser
+            - CoursdeGratteBundle\Entity\Paramuser
+
+    flag_extension:
+        class: CoursdeGratteBundle\Twig\FlagExtension
+        tags:
+            - { name: twig.extension }

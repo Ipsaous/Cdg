@@ -19,7 +19,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% if app.request.get("_route") == "fos_user_registration_register" %}
-        {% javascripts 'js/register.js' output="js/compiled/main.js" %}
+        {% javascripts 'js/register.js' output="js/compiled/register.js" %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endif %}

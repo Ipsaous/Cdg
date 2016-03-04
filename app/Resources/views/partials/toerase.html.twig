@@ -1,0 +1,24 @@
+{% if number >= 0 and number < 24 %}
+    <input type="hidden" id="numberResults" value="{{ number }}" />
+{% endif %}
+{% if number > 0 %}
+{% for tuto in tutos %}
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 tutoVignette">
+       <img class="flag" src="{{ asset(tuto.langueid|flag) }}"/>
+        <a href="{{ path("single", {"slug": tuto.slug, "id":tuto.tutoid }) }}">
+            <div class="thumbnail class-{{ tuto.id }}">
+                <img src="http://img.youtube.com/vi/{{ tuto.lientuto }}/mqdefault.jpg"  class="img-responsive vignette" alt="{{ tuto.titre }}">
+                <ul class="info">
+                    <li class="fonce-{{ tuto.id }}"></li>
+                    <li class="titre">{{ tuto.titre |truncate(18, false, "...") }}</li>
+
+                    <li class="artiste">{% if tuto.artiste|default %}{{ tuto.artiste | truncate(18, false, "...") }}{% endif %}</li>
+
+                    <li class="prof">{{ tuto.prof }}</li>
+                </ul>
+            </div>
+        </a>
+    </div>
+{% endfor %}
+{% else %}
+{% endif %}

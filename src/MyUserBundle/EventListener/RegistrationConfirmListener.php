@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ipsaous
- * Date: 25/02/2016
- * Time: 16:12
- */
+
 
 namespace MyUserBundle\EventListener;
 
 
+use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -41,7 +37,7 @@ class RegistrationConfirmListener implements EventSubscriberInterface
     {
         $url = $this->router->generate('home');
         $this->session->getFlashBag()->add("confirmed", "Votre Inscription est terminée ! Bienvenue à vous ;)");
-
         $event->setResponse(new RedirectResponse($url));
     }
+
 }

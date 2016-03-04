@@ -6,6 +6,7 @@ namespace CoursdeGratteBundle\Controller;
 use CoursdeGratteBundle\Entity\Tutovideo;
 use CoursdeGratteBundle\Utility\MyUtility;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TutoController extends Controller{
 
@@ -16,20 +17,35 @@ class TutoController extends Controller{
 
         $id = (int) $id;
         $em = $this->getDoctrine()->getManager();
-        $tuto = $em->getRepository("CoursdeGratteBundle:Tutovideo")->findTutoByIdSlug($id, $slug);
+        $tutoRepository = $em->getRepository("CoursdeGratteBundle:Tutovideo");
+        $tuto = $tutoRepository->findTutoByIdSlug($id, $slug);
         $description = "";
+        $tutoSameArtist = [];
+        $tutoSameSong = [];
+
         if($tuto !== null){
+            //Je récupère les chansons d'un meme artiste
+            if($tuto->getIdTypetuto()->getId() === 1){
+                $tutoSameSong = $tutoRepository->findTutoSameSong($tuto->getId(), $tuto->getTitre(), $tuto->getIdArtiste()->getId());
+                $tutoSameArtist = $tutoRepository->findTutoByArtist($tuto->getId(), $tuto->getIdArtiste()->getId(), $tutoSameSong);
+
+//                dump($tutoSameArtist);
+//                dump($tutoSameSong);
+//                die();
+            }
             $videoLinks = $this->getVideoLink($tuto);
             $description = MyUtility::getDescriptionYoutube($tuto->getLientuto());
         }else{
-            throw new \Exception("Page Introuvable. Il Semblerait que ce tuto n'existe plus");
+            throw new NotFoundHttpException("Page Introuvable. Il Semblerait que ce tuto n'existe plus");
         }
 
         return $this->render("CoursdeGratteBundle:Tuto:index.html.twig",
             array(
                 'tuto' => $tuto,
                 'videoLinks' => $videoLinks,
-                'description' => $description
+                'description' => $description,
+                'tutoSameArtist'=> $tutoSameArtist,
+                'tutoSameSong' => $tutoSameSong
             ));
     }
 

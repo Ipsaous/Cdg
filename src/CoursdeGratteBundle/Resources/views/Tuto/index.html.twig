@@ -3,125 +3,134 @@
 
 {% block body %}
 
-    <div class="container" id="singleTutoContainer">
-        <div class="row" id="tutoContent">
-            <!-- LEFT COL -->
-            <div class="col-md-8" id="videoContainer">
-                <!-- PLAYER -->
-                <div id="player">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe data-videoId="{{ videoLinks.Tuto }}" id="actualVideo" width="853" height="480"
-                                src="//www.youtube.com/embed/{{ videoLinks.Tuto }}?rel=0&wmode=opaque"
-                                frameborder="0"
-                                allowfullscreen>
+    {% include 'CoursdeGratteBundle:Tuto:partials/sidebar_same_song.html.twig' %}
+    <div id="overlayTuto">
+        <div class="container" id="singleTutoContainer">
+            <div class="row" id="tutoContent">
+                <!-- LEFT COL -->
+                <div class="col-md-8" id="videoContainer">
+                    <!-- PLAYER -->
+                    <div id="player">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe data-videoId="{{ videoLinks.Tuto }}" id="actualVideo" width="853" height="480"
+                                    src="//www.youtube.com/embed/{{ videoLinks.Tuto }}?rel=0&wmode=opaque"
+                                    frameborder="0"
+                                    allowfullscreen>
 
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4" id="sidebarParts">
-                {% if videoLinks|length > 1 %}
-                <div id="partsContent">
-                    <div id="partsHeader">
-                        <h4>Parties</h4>
-                        <hr/>
-                    </div>
-
-                    <div id="videoParts">
-                        <ul id="linkContainer">
-                            {#{{ dump(videoLinks) }}#}
-                            {% for key, value in videoLinks %}
-
-                                <li class="videoLink" data-videoid={{ value }}>
-                                    <i class="glyphicon glyphicon-play iconActivePart"></i>
-                                    <img class="vignettePart" src="http://img.youtube.com/vi/{{ value }}/mqdefault.jpg"
-                                         alt="key">
-                                    <span class="partText">{{ key }}</span>
-
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-                {% else %}
-                    <div id="test"></div>
-                {% endif %}
-            </div>
-
-
-        </div>
-        <div class="row">
-            <div class="col-md-8" id="metaDataContainer">
-                <!-- META DATA -->
-                <div id="metaData">
-                    <h1>
-                        <span class="bold">{{ tuto.titre }}</span>{% if tuto.idArtiste.artiste|default %} - {{ tuto.idArtiste.artiste }}{% endif %}
-                    </h1>
-
-                    <div id="label">
-                        {% if tuto.idProf.siteprof|default %}
-                            <span class="label label-primary"><a
-                                        href="{{ tuto.idProf.siteprof }}">{{ tuto.idProf.prof }}</a></span>
-                        {% else %}
-                            <span class="label label-default">{{ tuto.idProf.prof }}</span>
-                        {% endif %}
-                        <span class="label label-default">{{ tuto.idProf.idLangue.langue }}</span>
-                        <span class="label label-default">{{ tuto.idTypeguitare.typeguitare }}</span>
-
-                        {% if tuto.idTypetuto.id == 1 %}
-                            <span class="label label-default">{{ tuto.idStyle.style }}</span>
-                            <span class="label label-default">{{ tuto.idTypejeu.typejeu }}</span>
-                        {% elseif tuto.idTypetuto.id == 2 %}
-                            <span class="label label-default">{{ tuto.idStyletechnique.styletechnique }}</span>
-                        {% endif %}
-                        </span>
-                    </div>
-                </div>
-
-                <div id="favShareContainer">
-                    <div id="favShare">
-                        <div id="favIcon">
-                            <i class="glyphicon glyphicon-plus"></i>
-                        </div>
-                        {% if tuto.lientablature|default %}
-                        <div id="tabIcon">
-                            <i class="glyphicon glyphicon-floppy-save"></i>
-                        </div>
-                        {% endif %}
-
-                        <div id="shareButton">
-                            {% image 'images/facebookshare.jpg' %}
-                            <img src="{{ asset_url }}" alt="partage facebook" />
-                            {% endimage %}
-                            {% image 'images/twittershare.jpg' %}
-                            <img src="{{ asset_url }}" alt="partage twitter" />
-                            {% endimage %}
-                            {% image 'images/googleplusshare.jpg' %}
-                            <img src="{{ asset_url }}" alt="partage google+" />
-                            {% endimage %}
+                            </iframe>
                         </div>
                     </div>
                 </div>
 
-                <div class="clearFloat"></div>
+                <div class="col-md-4" id="sidebarParts">
+                    {% if videoLinks|length > 1 %}
+                        <div id="partsContent">
+                            <div id="partsHeader">
+                                <h4>Parties</h4>
+                                <hr/>
+                            </div>
 
-                <h5>Description</h5>
-                <div id="youtubeDescription">
+                            <div id="videoParts">
+                                <ul id="linkContainer">
+                                    {#{{ dump(videoLinks) }}#}
+                                    {% for key, value in videoLinks %}
 
-                    {{ description|raw|nl2br }}
+                                        <li class="videoLink" data-videoid={{ value }}>
+                                            <i class="glyphicon glyphicon-play iconActivePart"></i>
+                                            <img class="vignettePart"
+                                                 src="http://img.youtube.com/vi/{{ value }}/mqdefault.jpg"
+                                                 alt="key">
+                                            <span class="partText">{{ key }}</span>
+
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div id="test"></div>
+                    {% endif %}
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-8" id="metaDataContainer">
+                    <!-- META DATA -->
+                    <div id="metaData">
+                        <h1>
+                            <span class="bold">{{ tuto.titre }}</span>{% if tuto.idArtiste.artiste|default %} - {{ tuto.idArtiste.artiste }}{% endif %}
+                        </h1>
+
+                        <div id="label">
+                            {% if tuto.idProf.siteprof|default %}
+                                <span class="label label-primary"><a
+                                            href="{{ tuto.idProf.siteprof }}">{{ tuto.idProf.prof }}</a></span>
+                            {% else %}
+                                <span class="label label-default">{{ tuto.idProf.prof }}</span>
+                            {% endif %}
+                            <span class="label label-default">{{ tuto.idProf.idLangue.langue }}</span>
+                            <span class="label label-default">{{ tuto.idTypeguitare.typeguitare }}</span>
+
+                            {% if tuto.idTypetuto.id == 1 %}
+                                <span class="label label-default">{{ tuto.idStyle.style }}</span>
+                                <span class="label label-default">{{ tuto.idTypejeu.typejeu }}</span>
+                            {% elseif tuto.idTypetuto.id == 2 %}
+                                <span class="label label-default">{{ tuto.idStyletechnique.styletechnique }}</span>
+                            {% endif %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div id="favShareContainer">
+                        <div id="favShare">
+                            <div id="favIcon">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </div>
+                            {% if tuto.lientablature|default %}
+                                <div id="tabIcon">
+                                    <i class="glyphicon glyphicon-save-file"></i>
+                                </div>
+                            {% endif %}
+
+                            <div id="shareButton">
+                                {% image 'images/facebookshare.jpg' %}
+                                <img src="{{ asset_url }}" alt="partage facebook"/>
+                                {% endimage %}
+                                {% image 'images/twittershare.jpg' %}
+                                <img src="{{ asset_url }}" alt="partage twitter"/>
+                                {% endimage %}
+                                {% image 'images/googleplusshare.jpg' %}
+                                <img src="{{ asset_url }}" alt="partage google+"/>
+                                {% endimage %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearFloat"></div>
+
+                    <h5>Description</h5>
+
+                    <div id="youtubeDescription">
+
+                        {{ description|raw|nl2br }}
+                    </div>
+
+                </div>
+
+                <div class="col-md-4" id="suggestions">
+                    {% if videoLinks|length > 1 %}
+                        <div id="test"></div>
+                    {% endif %}
                 </div>
             </div>
 
-            <div class="col-md-4" id="suggestions">
-                {% if videoLinks|length > 1 %}
-                <div id="test"></div>
-                {% endif %}
-            </div>
-        </div>
 
+        </div><!-- Fin du container -->
+    </div><!-- Fin de l'overlay-->
 
-    </div>
+    {#{{ dump(tutoSameSong) }}#}
+    {#{{ dump(tutoSameArtist) }}#}
 
 {% endblock %}
 
@@ -150,6 +159,34 @@
                 $(this).addClass("activePart");
                 $("#actualVideo").attr("src", pathYoutube + videoId);
             });
+
+            $("#menuHamburgerTuto").on("click", function () {
+//                $("#navSingleTuto").toggleClass("navSingleTutoOpen");
+                toggleNavTuto();
+            });
+
+            /**
+             * Fonction qui affiche/cache le block recherche
+             */
+            function toggleNavTuto(){
+                var navSingleTuto = $("#navSingleTuto");
+                var overflowTuto = $("#overlayTuto");
+                if(navSingleTuto.hasClass("navSingleTutoOpen")){
+                    navSingleTuto.removeClass("navSingleTutoOpen");
+                    navSingleTuto.fadeOut("fast");
+                    $('body').css("overflow", "visible");
+                    $("#menuHamburgerTuto").css("background-color", "transparent");
+                    overflowTuto.css("opacity", "1");
+
+                }else{
+                    navSingleTuto.fadeIn("fast");
+                    navSingleTuto.addClass("navSingleTutoOpen");
+                    $("#menuHamburgerTuto").css("background-color", "rgb(255, 165, 0)");
+                    $('body').css("overflow", "hidden");
+                    overflowTuto.css("opacity", "0.05");
+
+                }
+            }
 
         });
     </script>

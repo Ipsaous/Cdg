@@ -2,8 +2,18 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
+            <!-- Je vérifie si je suis sur la page tuto pour afficher également une icone si différents tutos ont été fait -->
+            {% if (app.request.get("_route") == "single") %}
+                {% if (tutoSameArtist|length > 0) or (tutoSameSong|length > 0) %}
+            <button id="menuHamburgerTuto">
+                    {% image 'images/m_hamburger.png' %}
+                    <img id="iconHamburgerTuto" src="{{ asset_url }}" alt="menuTuto" />
+                    {% endimage %}
+                {% endif %}
+            </button>
+            {% endif %}
             <!-- Je vérifie que je suis bien sur la homePage pour afficher l'icone Hamburger -->
-            {% if app.request.get("_route") == "home" %}
+            {% if (app.request.get("_route") == "home") %}
                 <button id="menuHamburger">
                     {% image 'images/m_hamburger.png' %}
                     <img id="iconHamburger" src="{{ asset_url }}" alt="menuFiltres" />
@@ -19,7 +29,7 @@
                 <!-- Je suis pas sur la home page donc je laisse le logo s'afficher normalement meme sur mobile -->
                 <a href="{{ path('home') }}" class="brand-logo">
                     {% image 'images/logo.jpg' %}
-                    <img id="logo" src="{{ asset_url }}" alt="logo" />
+                    <img id="{% if app.request.get("_route") == "single" %}logoTuto{% else %}logo{% endif %}" src="{{ asset_url }}" alt="logo" />
                     {% endimage %}
                 </a>
             {% endif %}
