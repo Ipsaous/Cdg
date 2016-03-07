@@ -7,6 +7,7 @@
        <img class="flag" src="{{ asset(tuto.langueid|flag) }}"/>
         <a href="{{ path("single", {"slug": tuto.slug, "id":tuto.tutoid }) }}">
             <div class="thumbnail class-{{ tuto.id }}">
+                <div class="fonce-{{ tuto.id }} vignetteOverlay"></div>
                 <img src="http://img.youtube.com/vi/{{ tuto.lientuto }}/mqdefault.jpg"  class="img-responsive vignette" alt="{{ tuto.titre }}">
                 <ul class="info">
                     <li class="fonce-{{ tuto.id }}"></li>

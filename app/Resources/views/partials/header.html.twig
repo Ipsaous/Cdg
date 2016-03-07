@@ -50,13 +50,17 @@
         {% endif %}
         <div class="collapse navbar-collapse navHeaderCollapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="proposition" href="">Poster un TUTO</a></li>
+                <li><a class="proposition" href="">Poster un Tuto</a></li>
+
+                <li><a href="">Playlists à l'honneur</a></li>
 
                 <!-- Affichage du menu en fonction d'une session ouverte ou non -->
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
                 <li><a id="inscription-link" href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
                 <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
                 {% endif %}
+
+                <li><a href="">A propos</a></li>
 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li class="dropdown">

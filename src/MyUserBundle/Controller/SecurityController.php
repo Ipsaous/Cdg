@@ -25,6 +25,7 @@ class SecurityController extends BaseController
             return $this->redirect($this->generateUrl('home'));
         }
 
+
         $addButton = false;
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();

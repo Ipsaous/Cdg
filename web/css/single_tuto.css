@@ -5,6 +5,8 @@
     }
     #logoTuto{
         /*margin-top: 0!important;*/
+        margin-top: 13px!important;
+        position: absolute;
     }
     #menuHamburgerTuto{
         margin-left: 15px;
@@ -254,14 +256,28 @@
     -ms-transform: scale(1.1);
     -moz-transform: scale(1.1);
 }
-
+/** Description **/
 #youtubeDescription {
     background-color: white;
     color: #2a2a2e;
     padding: 10px;
-    max-height: 180px;
+    padding-bottom: 5px;
     margin-top: 10px;
+
+}
+#contentDescription{
     overflow: hidden;
+    height: auto;
+}
+#afficherPlus{
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+}
+#sepDescription{
+    border-color: #2a2a2e;
+    margin-top: 10px;
+    margin-bottom: 2px;
 }
 
 
@@ -346,9 +362,17 @@
     margin-bottom: 5px;
     padding: 0 5px;
 }
+
 #navSingleTuto ul li a{
     color: white;
     line-height: 40px;
+    display: block;
+}
+#navSingleTuto ul li a:hover{
+    text-decoration: none;
+}
+#navSingleTuto ul li:hover{
+    opacity: 0.92;
 }
 .sameFlag{
     position: absolute;

@@ -45,6 +45,9 @@ body{
     .tutoVignette{
         padding: 0;
     }
+    .vignetteOverlay {
+        display: none;
+    }
     #menuHamburger{
         display: block!important;
     }
@@ -100,8 +103,15 @@ body{
     .flag{
         top:-20px!important;
     }
-    #testTop{
-        margin-bottom: 0px!important;
+    #testContainer{
+        /*width: 320px!important;*/
+        /*height: 100px!important;*/
+        margin-top: 10px!important;
+        margin-bottom: 10px!important;
+    }
+    #testContainer img{
+        margin: 0 auto!important;
+
     }
 }
 @media (min-width: 768px) and (max-width: 992px){
@@ -184,6 +194,9 @@ body{
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
     background-color: #FFA500!important;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+    background-color: #151515!important;
 }
 .navbar-right {
     margin-right: 20px!important;
@@ -338,12 +351,16 @@ h5{
 
 /** -------------- Main Content HomePage ---------------**/
 /*PUB*/
-#testTop{
-    width: 280px;
+#testContainer{
+    max-width: 728px;
     height: 90px;
-    background-color: darkgrey;
     margin: 0 auto;
+    /*background-color: darkgrey;*/
     margin-bottom: 20px;
+
+}
+#testContainer img{
+    margin: 0 auto;
 }
 
 #wrapper{
@@ -424,6 +441,35 @@ h5{
     list-style: none;
     text-align: center;
 }
+.vignetteOverlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+.vignetteOverlay:hover{
+    opacity: 0;
+}
+/*Overlay vignette*/
+.fonce-1.vignetteOverlay{
+    background-color: #2ECC71;
+}
+.fonce-2.vignetteOverlay{
+    background-color: #F39C12;
+}
+.fonce-3.vignetteOverlay{
+    background-color: #9B59B6;
+}
+.fonce-4.vignetteOverlay{
+    background-color: #E74C3C;
+}
+.fonce-5.vignetteOverlay{
+    background-color: #642019;
+}
+/*Difficulty stroke*/
 .tutoVignette .info .fonce-1{
     background-color: #2ECC71;
     height: 8px;

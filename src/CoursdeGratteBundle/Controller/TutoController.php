@@ -28,13 +28,9 @@ class TutoController extends Controller{
             if($tuto->getIdTypetuto()->getId() === 1){
                 $tutoSameSong = $tutoRepository->findTutoSameSong($tuto->getId(), $tuto->getTitre(), $tuto->getIdArtiste()->getId());
                 $tutoSameArtist = $tutoRepository->findTutoByArtist($tuto->getId(), $tuto->getIdArtiste()->getId(), $tutoSameSong);
-
-//                dump($tutoSameArtist);
-//                dump($tutoSameSong);
-//                die();
             }
             $videoLinks = $this->getVideoLink($tuto);
-            $description = MyUtility::getDescriptionYoutube($tuto->getLientuto());
+            $description = MyUtility::getDescriptionYoutube($tuto->getLientuto(), $tuto->getTitre(), $tuto->getIdArtiste()->getArtiste());
         }else{
             throw new NotFoundHttpException("Page Introuvable. Il Semblerait que ce tuto n'existe plus");
         }

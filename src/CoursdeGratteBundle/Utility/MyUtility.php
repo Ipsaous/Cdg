@@ -27,7 +27,7 @@ class MyUtility {
     	return true;
     }
 
-    public static function getDescriptionYoutube($idYoutube){
+    public static function getDescriptionYoutube($idYoutube, $titre, $artiste){
         //récupération de la description via youtube
         $JSON = file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=".$idYoutube."&key=AIzaSyDGo5E2hMOmCbgkRqFExpiN9LtcN5DDtkA");
         $data = json_decode($JSON);
@@ -35,7 +35,12 @@ class MyUtility {
         $testItem = $data->items; // Pour vérifier que l'on a une description ( que l'id de la video existe quoi)
         if(!empty($testItem)){
             $data = $data ->items[0]->snippet->description;
-            $content = $data;
+            if($artiste !== ""){
+                $content = $titre. " - " . $artiste ."<br /><br />";
+            }else{
+                $content = $titre;
+            }
+            $content .= $data;
 
             //Pattern to retrieve the url in the comment
             $pattern = '`((?:https?|ftp)://\S+?)(?=[[:punct:]]?(?:\s|\Z)|\Z)`';

@@ -84,7 +84,7 @@
 
                     <div id="favShareContainer">
                         <div id="favShare">
-                            <div id="favIcon">
+                            <div id="favIcon" data-toggle="modal" data-target="#favModal">
                                 <i class="glyphicon glyphicon-plus"></i>
                             </div>
                             {% if tuto.lientablature|default %}
@@ -113,7 +113,12 @@
 
                     <div id="youtubeDescription">
 
-                        {{ description|raw|nl2br }}
+                        <div id="contentDescription">
+                            {{ description|raw|nl2br }}
+                        </div>
+
+                        <hr id="sepDescription"/>
+                        <div id="afficherPlus">Plus</div>
                     </div>
 
                 </div>
@@ -128,6 +133,14 @@
 
         </div><!-- Fin du container -->
     </div><!-- Fin de l'overlay-->
+
+
+    <!-- Include des modal -->
+    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+        {% include "CoursdeGratteBundle:Tuto/partials:fav_modal.html.twig" %}
+    {% else %}
+        {# Juste afficher un bouton avec un bouton pour se logger ou s'inscrire#}
+    {% endif %}
 
     {#{{ dump(tutoSameSong) }}#}
     {#{{ dump(tutoSameArtist) }}#}
@@ -187,6 +200,40 @@
 
                 }
             }
+
+            /**
+             * Fonction pour agrandir la description
+             */
+            function showMoreDescription(text){
+                var contentDescription = $("#contentDescription");
+                if(text <= 400){
+                    $('#afficherPlus').hide();
+                    $('#sepDescription').hide();
+
+                }else{
+                    contentDescription.css('height','165px');
+                }
+
+                $('#afficherPlus').click(function(){
+
+                    var css = contentDescription.css('overflow');
+                    console.log(css);
+
+                    if(css == 'visible'){
+                        contentDescription.css('overflow','hidden');
+                        contentDescription.css('height','158px');
+                        $('#afficherPlus').text('Plus');
+
+                    }else{
+                        contentDescription.css('overflow','visible');
+                        contentDescription.css('height','auto');
+                        $('#afficherPlus').text('Moins');
+                    }
+
+                });
+            }
+
+            showMoreDescription($("#contentDescription").text());
 
         });
     </script>

@@ -209,6 +209,11 @@ class AjaxController extends Controller{
         }
     }
 
+    /**
+     * Vérifie qu'un username ou email n'existe pas
+     * @param Request $request
+     * @throws \Exception
+     */
     public function checkPseudoEmailAction(Request $request){
 
         if($request->isXmlHttpRequest()){
@@ -230,6 +235,16 @@ class AjaxController extends Controller{
         }else{
             throw new \Exception("Erreur");
         }
+
+    }
+
+    /**
+     * Charge les playlist d'un utilisateur
+     * @param Request $request
+     */
+    public function loadPlaylistFromUser(Request $request){
+
+
 
     }
 } 
