@@ -2,7 +2,10 @@
 
 namespace MyUserBundle\Entity;
 
+use CoursdeGratteBundle\Entity\Favoris;
 use CoursdeGratteBundle\Entity\Paramuser;
+use CoursdeGratteBundle\Entity\Playlist;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,10 +34,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Users extends BaseUser
 {
 
-    public function __construct(){
-        parent::__construct();
-        //$this->salt = "";
-    }
     /**
      * @var boolean
      *
@@ -66,7 +65,68 @@ class Users extends BaseUser
      */
     protected $defaultLangue;
 
+    /**
+     * @ORM\OneToMany(targetEntity="CoursdeGratteBundle\Entity\Playlist"), mappedBy="user"
+     */
+    protected $playlists;
+    /**
+     * @ORM\OneToMany(targetEntity="CoursdeGratteBundle\Entity\Favoris"), mappedBy="user"
+     */
+    protected $favoris;
 
+
+    public function __construct(){
+        parent::__construct();
+        $this->playlists = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
+    }
+
+    /**
+     * @param Favoris $favoris
+     * @param Playlist $playlist
+     * @return $this
+     */
+    public function addFavoris(Favoris $favoris){
+
+        $this->favoris[] = $favoris;
+        $favoris->setUser($this);
+        return $this;
+
+    }
+
+    /**
+     * @param Favoris $favoris
+     */
+    public function removeFavoris(Favoris $favoris){
+        $this->favoris->removeElement($favoris);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFavoris(){
+        return $this->favoris;
+    }
+
+    /**
+     * @param Playlist $playlist
+     * @return $this
+     */
+    public function addPlaylist(Playlist $playlist ){
+
+        $this->playlists[] = $playlist;
+        $playlist->setUser($this);
+        return $this;
+
+    }
+
+    public function removePlaylist(Playlist $playlist){
+        $this->playlists->removeElement($playlist);
+    }
+
+    public function getPlaylists(){
+        return $this->playlists;
+    }
 
     /**
      * Set newsletterActive

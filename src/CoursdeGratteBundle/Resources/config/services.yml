@@ -10,3 +10,4 @@ services:
         class: CoursdeGratteBundle\Twig\FlagExtension
         tags:
             - { name: twig.extension }
+

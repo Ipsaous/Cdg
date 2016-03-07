@@ -44,7 +44,7 @@ class Favoris
     /**
      * @var \CoursdeGratteBundle\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users", inversedBy="favoris")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -53,6 +53,9 @@ class Favoris
 
 
 
+    public function __construct(){
+
+    }
     /**
      * Get id
      *

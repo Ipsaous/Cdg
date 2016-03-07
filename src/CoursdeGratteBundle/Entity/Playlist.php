@@ -2,6 +2,7 @@
 
 namespace CoursdeGratteBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +15,7 @@ class Playlist
 {
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
@@ -45,14 +46,12 @@ class Playlist
     /**
      * @var \MyUserBundle\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users", inversedBy="playlists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
     private $user;
-
-
 
     /**
      * Set name

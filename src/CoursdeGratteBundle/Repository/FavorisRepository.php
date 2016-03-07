@@ -14,9 +14,9 @@ use MyUserBundle\Entity\Users;
 
 class FavorisRepository extends EntityRepository{
 
-    public function findAllByUser(Users $user){
+    public function findAllByUser($id){
 
-        $qb = $this->createQueryBuilder("f")->where("f.user = :id")->setParameter("id", $user->getId());
+        $qb = $this->createQueryBuilder("f")->where("f.user = :id")->setParameter("id", $id);
         return $qb->getQuery()->getResult();
 
     }

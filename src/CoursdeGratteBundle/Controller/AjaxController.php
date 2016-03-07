@@ -241,10 +241,15 @@ class AjaxController extends Controller{
     /**
      * Charge les playlist d'un utilisateur
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function loadPlaylistFromUser(Request $request){
+    public function loadPlaylistFromUserAction(Request $request){
 
-
-
+        if($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $id = intval($request->get("id"));
+            $playlists = $em->getRepository("CoursdeGratteBundle:Playlist")->findAllByUser($id);
+            return new JsonResponse($playlists);
+        }
     }
 } 
