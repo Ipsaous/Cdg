@@ -2,6 +2,7 @@
 
 namespace CoursdeGratteBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 /**
  * Paramuser
  * @ORM\Entity(repositoryClass="CoursdeGratteBundle\Repository\ParamuserRepository")
@@ -19,7 +20,7 @@ class Paramuser
 
     /**
      * @var \MyUserBundle\Entity\Users
-     * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users"), mappedBy="id"
+     * @ORM\ManyToOne(targetEntity="MyUserBundle\Entity\Users", inversedBy="defaultLangue")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

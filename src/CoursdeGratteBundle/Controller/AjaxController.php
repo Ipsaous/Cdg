@@ -8,6 +8,7 @@
 
 namespace CoursdeGratteBundle\Controller;
 
+use CoursdeGratteBundle\Entity\Playlist;
 use CoursdeGratteBundle\Utility\MyUtility;
 use Doctrine\DBAL\Types\JsonArrayType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -235,21 +236,6 @@ class AjaxController extends Controller{
         }else{
             throw new \Exception("Erreur");
         }
-
     }
 
-    /**
-     * Charge les playlist d'un utilisateur
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function loadPlaylistFromUserAction(Request $request){
-
-        if($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $id = intval($request->get("id"));
-            $playlists = $em->getRepository("CoursdeGratteBundle:Playlist")->findAllByUser($id);
-            return new JsonResponse($playlists);
-        }
-    }
 } 

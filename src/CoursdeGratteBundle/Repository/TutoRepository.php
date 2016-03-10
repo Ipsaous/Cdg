@@ -85,4 +85,14 @@ class TutoRepository extends EntityRepository {
 
     }
 
+    public function customFindBy($id){
+
+        $qb = $this->createQueryBuilder("t")
+            ->where("t.id = :id")
+            ->setParameter("id", $id);
+
+        return $qb->getQuery()->getSingleResult();
+
+    }
+
 } 

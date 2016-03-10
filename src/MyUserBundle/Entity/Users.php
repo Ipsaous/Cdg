@@ -12,24 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="MyUserBundle\Security\UsersRepository")
- * @ORM\AttributeOverrides({
- *     @ORM\AttributeOverride(name="usernameCanonical",
- *          column=@ORM\Column(
- *              name     = "username_canonical",
- *              type     = "string",
- *              unique   = false
- *          )
- *      ),
- *      @ORM\AttributeOverride(name="emailCanonical",
- *          column=@ORM\Column(
- *              name     = "email_canonical",
- *              type     = "string",
- *              unique   = false
- *          )
- *      ),
- * })
+ * @ORM\Entity
+ *
  */
 class Users extends BaseUser
 {
@@ -60,17 +44,17 @@ class Users extends BaseUser
 
     /**
      * @var \CoursdeGratteBundle\Entity\Paramuser
-     * @ORM\ManyToOne(targetEntity="CoursdeGratteBundle\Entity\Paramuser"), inversedBy="userId"
+     * @ORM\OneToMany(targetEntity="CoursdeGratteBundle\Entity\Paramuser", mappedBy="userId")
      *
      */
     protected $defaultLangue;
 
     /**
-     * @ORM\OneToMany(targetEntity="CoursdeGratteBundle\Entity\Playlist"), mappedBy="user"
+     * @ORM\OneToMany(targetEntity="CoursdeGratteBundle\Entity\Playlist", mappedBy="user")
      */
     protected $playlists;
     /**
-     * @ORM\OneToMany(targetEntity="CoursdeGratteBundle\Entity\Favoris"), mappedBy="user"
+     * @ORM\OneToMany(targetEntity="CoursdeGratteBundle\Entity\Favoris", mappedBy="user")
      */
     protected $favoris;
 
@@ -83,7 +67,7 @@ class Users extends BaseUser
 
     /**
      * @param Favoris $favoris
-     * @param Playlist $playlist
+     * @internal param Playlist $playlist
      * @return $this
      */
     public function addFavoris(Favoris $favoris){
@@ -207,7 +191,7 @@ class Users extends BaseUser
         $defaultLangue->setUserId($this);
 
         return $this;
-        
+
     }
 
     public function addSalt($salt){

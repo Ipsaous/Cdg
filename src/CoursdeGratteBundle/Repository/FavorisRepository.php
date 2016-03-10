@@ -21,4 +21,12 @@ class FavorisRepository extends EntityRepository{
 
     }
 
+    public function customFindBy($id){
+        $qb = $this->createQueryBuilder("f")
+            ->where("f.id = :id")
+            ->setParameter("id", $id);
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
 } 

@@ -4,6 +4,7 @@ namespace CoursdeGratteBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Playlist
@@ -16,16 +17,17 @@ class Playlist
     /**
      * @var string
      * @Assert\NotBlank()
+     * @Assert\Length(min = 2)
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     * @Gedmo\Slug(fields={"name"})
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @var integer
@@ -77,19 +79,6 @@ class Playlist
         return $this->name;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return Playlist
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
 
     /**
      * Get slug
@@ -157,5 +146,19 @@ class Playlist
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Playlist
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

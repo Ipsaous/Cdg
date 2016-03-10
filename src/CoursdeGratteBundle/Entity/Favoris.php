@@ -52,7 +52,6 @@ class Favoris
     private $user;
 
 
-
     public function __construct(){
 
     }
@@ -97,7 +96,7 @@ class Favoris
      *
      * @return Favoris
      */
-    public function setTuto(\CoursdeGratteBundle\Entity\Tutovideo $tuto = null)
+    public function setTuto(Tutovideo $tuto)
     {
         $this->tuto = $tuto;
 

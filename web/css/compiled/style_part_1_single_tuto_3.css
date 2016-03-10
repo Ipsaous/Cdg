@@ -422,9 +422,6 @@ body::-webkit-scrollbar-thumb
     border-radius:5px;
 }
 /** MODAL PLAYLIST**/
-#favModal{
-    top:10%!important;
-}
 .modal-body #loaderPlaylist{
     display: none;
     margin: 0 auto;
@@ -443,11 +440,6 @@ body::-webkit-scrollbar-thumb
 .modal-body ul{
     padding: 0;
     margin: 0;
-}
-#loaderPlaylist{
-    display: none;
-    width: 50px;
-    margin-left: 40px;
 }
 #playlistContainer label{
     line-height: 40px;

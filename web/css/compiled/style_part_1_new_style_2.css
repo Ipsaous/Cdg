@@ -12,7 +12,6 @@ body{
 .clearFloat{
     clear:both;
 }
-
 /** ---MEDIA QUERIES------ **/
 @media (max-width: 767px) {
     #logo{

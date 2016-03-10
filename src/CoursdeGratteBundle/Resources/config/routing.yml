@@ -35,9 +35,10 @@ ajax_check_username:
     path: /ajax/check
     defaults: { _controller: CoursdeGratteBundle:Ajax:checkPseudoEmail }
 
-ajax_load_playlist:
-    path: /ajax/playlist
-    defaults: { _controller: CoursdeGratteBundle:Ajax:loadPlaylistFromUser }
+ajax_add_favoris:
+    path: /ajax/addfav
+    defaults: { _controller: CoursdeGratteBundle:Tuto:changePlaylist }
+    methods : [POST]
 
 #Fin des requetes ajax
 

@@ -14,7 +14,6 @@ class PlaylistType extends AbstractType{
     public function buildForm(FormBuilderInterface $form, array $options){
 
         $form
-            ->add("tuto_id", HiddenType::class)
             ->add("name", TextType::class);
     }
 

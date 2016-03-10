@@ -11,3 +11,9 @@ services:
         tags:
             - { name: twig.extension }
 
+    fav_form_type:
+        class: CoursdeGratteBundle\Form\FavorisType
+        arguments : ['@security.token_storage']
+        tags:
+            - { name: form.type }
+

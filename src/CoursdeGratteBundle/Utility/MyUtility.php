@@ -13,6 +13,12 @@ use Gedmo\Sluggable\Util\Urlizer;
 
 class MyUtility {
 
+    /**
+     * Custom slug pour correspondre a ce que j'avais en bdd
+     * @param $prof
+     * @param $titre
+     * @return string
+     */
     public static function createSlug($prof, $titre){
 
         $slug = Urlizer::urlize($prof, "-") ."/" . Urlizer::urlize($titre, "-");
@@ -20,6 +26,12 @@ class MyUtility {
 
     }
 
+    /**
+     * Vérification que mon string est valide
+     * //TODO Voir avec les assert directement selon les cas
+     * @param $string
+     * @return bool
+     */
     public static function isStringValid($string){
     	if(!preg_match("/^[a-zA-Z0-9\-\/ .'&âêôüîçïëàèùé?!]+$/", $string)){
     		return false;
@@ -27,6 +39,13 @@ class MyUtility {
     	return true;
     }
 
+    /**
+     * Récupération de la description youtube
+     * @param $idYoutube
+     * @param $titre
+     * @param $artiste
+     * @return mixed|string
+     */
     public static function getDescriptionYoutube($idYoutube, $titre, $artiste){
         //récupération de la description via youtube
         $JSON = file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=".$idYoutube."&key=AIzaSyDGo5E2hMOmCbgkRqFExpiN9LtcN5DDtkA");

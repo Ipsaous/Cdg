@@ -26,8 +26,16 @@ class PlaylistRepository extends EntityRepository{
             ->orWhere("p.id = :id")
             ->setParameter("id", 1);
 
-        return $qb->getQuery()->getResult();
+        return $qb;
 
+    }
+
+    public function customFindBy($id){
+        $qb = $this->createQueryBuilder("p")
+            ->where("p.id = :id")
+            ->setParameter("id", $id);
+
+        return $qb->getQuery()->getSingleResult();
     }
 
 } 
