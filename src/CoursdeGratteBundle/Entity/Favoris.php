@@ -51,10 +51,6 @@ class Favoris
      */
     private $user;
 
-
-    public function __construct(){
-
-    }
     /**
      * Get id
      *

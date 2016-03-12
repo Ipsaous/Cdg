@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     var pathYoutube = "//www.youtube.com/embed/";
     var actualVideo = $("#actualVideo").attr("data-videoId");
     var links = $("#linkContainer > li");
@@ -8,6 +9,7 @@ $(document).ready(function(){
             $(links[i]).addClass("activePart");
         }
     }
+    //Partie qui gère les tutos en plusieurs parties et load l'id youtube correspondant
     $("#linkContainer").on("click", ".videoLink", function () {
         links.removeClass("activePart");
         links.find("i").css("display", "none");
@@ -17,6 +19,7 @@ $(document).ready(function(){
         $("#actualVideo").attr("src", pathYoutube + videoId);
     });
 
+    //Gère l'affichage de la sidebar avec les tutos d'un meme artiste/meme chanson
     $("#menuHamburgerTuto").on("click", function () {
 //                $("#navSingleTuto").toggleClass("navSingleTutoOpen");
         toggleNavTuto();
@@ -50,11 +53,16 @@ $(document).ready(function(){
      */
     function showMoreDescription(text){
         var contentDescription = $("#contentDescription");
-        if(text <= 400){
+        var height = contentDescription.css("height");
+        console.log(contentDescription.css("height"));
+
+        if(height < "165px"){
             $('#afficherPlus').hide();
             $('#sepDescription').hide();
+            contentDescription.css('height','auto');
 
-        }else{
+        }
+        else{
             contentDescription.css('height','165px');
         }
 
@@ -77,65 +85,27 @@ $(document).ready(function(){
         });
     }
 
+
     showMoreDescription($("#contentDescription").text());
 
-    /**
-     * TODO A SUPPRIMER
-     */
-    function getAllPlaylist(){
-        var loader = $("#loaderPlaylist");
-        var mainUrl = "../../ajax/playlist";
-
-        $("#favIcon").on("click", function(){
-            loader.show().css("display", "block");
-            $("#playlistContainer").empty();
-            if(userId !== ""){
-                $.ajax({
-                    type:"POST",
-                    url:mainUrl,
-                    data: "id="+userId,
-                    dataType: "json",
-                    success: function(data){
-                        console.log(data);
-                        loader.hide();
-                        for(var i = 0; i < data.length; i++) {
-                            $("#playlistContainer").append(
-                                "<div id='checkbox'><label><input type='hidden' value='"+data[i].id+"'/><input type='checkbox'/>"+data[i].name+"</label></div>");
-                        }
-
-                    },
-                    error : function(){
-                        console.log("Une erreur est survenue");
-                        loader.hide();
-                    }
-                });
-
-            }
-
-        });
-    }
-
-    //var radios = $("#checkbox").find('input[type="radio"]');
-    //var playlistContainer = document.querySelector("#playlistContainer");
-    //var checkbox = playlistContainer.querySelectorAll('.checkbox');
     var playlistContainer = $("#playlistContainer");
     var checkboxes = playlistContainer.find(".checkbox");
-    console.log(checkboxes);
-    var form = $('form[name="favoris"]');
-    console.log(form);
+    var favorisForm = $('form[name="favoris"]');
+
+    //Je boucle pour pouvoir rajouter l'appel ajax sur mes "radios"
     checkboxes.each(function(i){
-        console.log(checkboxes[i]);
         var input = $(checkboxes[i]).find('input[type="radio"]');
-        //console.log(input);
         $(input).change(function(){
-           //console.log("il y a un changement");
-           // var playlistId = $(this).val();
-           // var tutoId = $("#favoris_tuto").val();
-           addFavoris(form);
-            //console.log(form.serialize());
+            $("#loaderPlaylist").show().css("display", "inline-block");
+            addFavoris(favorisForm);
         });
     });
 
+    /**
+     * Function permettant de faire un appel ajax pour rajouter un favoris dans une playlist existante
+     * ou d'en rajouter un dans une playlist nouvellement crée
+     * @param form
+     */
     function addFavoris(form){
         var url = form.attr("action");
         $.ajax({
@@ -144,16 +114,59 @@ $(document).ready(function(){
             data: form.serialize(),
             dataType: "json",
             success: function(data){
-                $(".modal").modal("hide");
-                $("#favShareContainer").after("<div class='alert alert-success'>"+data.message+"</div>");
-                $(".alert-success").delay(3000).slideUp();
-                //console.log(data);
+                handleResponse(data);
             },
             error : function(){
                 console.log("Une erreur est survenue");
             }
         });
     }
+
+    /**
+     * Fonction qui permet de gérer la réponse Ajax permettant de rajouter un favoris/playlist
+     * @param data
+     */
+    function handleResponse(data){
+
+        $(".modal").modal("hide"); //Je Cache La Modal
+        $("#loaderPlaylist").hide(); // Je Cache Le Loader
+        //Je rajoute le message comme quoi un favoris a été ajouté et/ou une playlist crée
+        //J'ai des erreurs
+        if(data.error !== undefined){
+            var error = data.error.replace("ERROR:", "");
+            $("#favShareContainer").after("<div class='alert alert-danger'>"+error+"</div>");
+        }else{
+            $("#favShareContainer").after("<div class='alert alert-success'>"+data.message+"</div>");
+        }
+
+        //Je cachel le message
+        $(".alert-success, .alert-danger").delay(3000).slideUp();
+
+        //Si c'est une création de playlist, je rajoute une nouvelle playlist dans la liste des "radios"
+        if(data.playlist !== undefined) {
+
+            $("#playlistContainer").append(
+                "<div class='checkbox'><input type='radio' id='favoris_playlist_" + data.playlist.id + "' name='favoris[playlist]' require='required' value='" + data.playlist.id + "' checked='checked'><label for='favoris_playlist_" + data.playlist.id + "' name='favoris[playlist]' required='required' value='" + data.playlist.id + "'>" + data.playlist.name + "</label></div>");
+
+            //J'efface la valeur de l'input
+            $("#favoris_new_playlist_name").val("");
+            //Je rajoute le comportement me permettant de cliquer sur la nouvelle playlist crée
+            $("#playlistContainer .checkbox").last().find("input[type='radio']").change(function(){
+                $("#loaderPlaylist").show().css("display", "inline-block");
+                addFavoris(favorisForm);
+            });
+        }
+    }
+
+    $("#addPlaylist").click(function(e){
+        e.preventDefault();
+        $("#loaderPlaylist").show().css("display", "inline-block");
+        var playlistForm = $("form[name='playlist']");
+        if($.trim(playlistForm.length) > 0)
+            addFavoris(playlistForm);
+    });
+
+    $(".alert-success").delay(3000).slideUp();
 
 
 

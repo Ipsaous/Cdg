@@ -16,8 +16,9 @@ class Playlist
 {
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Veuillez remplir le champ")
      * @Assert\Length(min = 2)
+     * @Assert\Regex("/^[a-zA-Z0-9\-\/ .'&âêôüîçïëàèùé?!]+$/", message="Le nom de la playlist n'est pas valide")
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;

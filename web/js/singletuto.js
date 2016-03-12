@@ -53,11 +53,16 @@ $(document).ready(function(){
      */
     function showMoreDescription(text){
         var contentDescription = $("#contentDescription");
-        if(text <= 400){
+        var height = contentDescription.css("height");
+        console.log(contentDescription.css("height"));
+
+        if(height < "165px"){
             $('#afficherPlus').hide();
             $('#sepDescription').hide();
+            contentDescription.css('height','auto');
 
-        }else{
+        }
+        else{
             contentDescription.css('height','165px');
         }
 
@@ -85,14 +90,14 @@ $(document).ready(function(){
 
     var playlistContainer = $("#playlistContainer");
     var checkboxes = playlistContainer.find(".checkbox");
-    var form = $('form[name="favoris"]');
+    var favorisForm = $('form[name="favoris"]');
 
     //Je boucle pour pouvoir rajouter l'appel ajax sur mes "radios"
     checkboxes.each(function(i){
         var input = $(checkboxes[i]).find('input[type="radio"]');
         $(input).change(function(){
             $("#loaderPlaylist").show().css("display", "inline-block");
-            addFavoris(form);
+            addFavoris(favorisForm);
         });
     });
 
@@ -126,22 +131,29 @@ $(document).ready(function(){
         $(".modal").modal("hide"); //Je Cache La Modal
         $("#loaderPlaylist").hide(); // Je Cache Le Loader
         //Je rajoute le message comme quoi un favoris a été ajouté et/ou une playlist crée
-        $("#favShareContainer").after("<div class='alert alert-success'>"+data.message+"</div>");
+        //J'ai des erreurs
+        if(data.error !== undefined){
+            var error = data.error.replace("ERROR:", "");
+            $("#favShareContainer").after("<div class='alert alert-danger'>"+error+"</div>");
+        }else{
+            $("#favShareContainer").after("<div class='alert alert-success'>"+data.message+"</div>");
+        }
+
         //Je cachel le message
-        $(".alert-success").delay(3000).slideUp();
+        $(".alert-success, .alert-danger").delay(3000).slideUp();
 
         //Si c'est une création de playlist, je rajoute une nouvelle playlist dans la liste des "radios"
         if(data.playlist !== undefined) {
 
-            $("#playlistContainer").append(
+            $("#favoris__token").before(
                 "<div class='checkbox'><input type='radio' id='favoris_playlist_" + data.playlist.id + "' name='favoris[playlist]' require='required' value='" + data.playlist.id + "' checked='checked'><label for='favoris_playlist_" + data.playlist.id + "' name='favoris[playlist]' required='required' value='" + data.playlist.id + "'>" + data.playlist.name + "</label></div>");
 
             //J'efface la valeur de l'input
-            $("#favoris_new_playlist_name").val("");
+            $("#playlist_name").val("");
             //Je rajoute le comportement me permettant de cliquer sur la nouvelle playlist crée
             $("#playlistContainer .checkbox").last().find("input[type='radio']").change(function(){
                 $("#loaderPlaylist").show().css("display", "inline-block");
-                addFavoris(form);
+                addFavoris(favorisForm);
             });
         }
     }
@@ -149,10 +161,9 @@ $(document).ready(function(){
     $("#addPlaylist").click(function(e){
         e.preventDefault();
         $("#loaderPlaylist").show().css("display", "inline-block");
-        var form = $("form[name='favoris']");
-        //TODO RAJOUTER UN MESSAGE D'ERREUR
-        if($.trim(form.length) > 0)
-            addFavoris(form);
+        var playlistForm = $("form[name='playlist']");
+        if($.trim(playlistForm.length) > 0)
+            addFavoris(playlistForm);
     });
 
     $(".alert-success").delay(3000).slideUp();

@@ -14,7 +14,9 @@ class PlaylistType extends AbstractType{
     public function buildForm(FormBuilderInterface $form, array $options){
 
         $form
-            ->add("name", TextType::class);
+            ->add("name", TextType::class, array(
+                "translation_domain" => false,
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver){

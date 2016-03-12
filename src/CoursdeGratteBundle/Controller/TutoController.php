@@ -14,8 +14,6 @@ use MyUserBundle\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Translation\Translator;
 
 class TutoController extends Controller{
 
@@ -23,7 +21,7 @@ class TutoController extends Controller{
 
         //Je récupère l'user
         $user = $this->getUser();
-//        if($this->get("security.authorization_checker")->isGranted("IS_AUTHENTICATED_FULLY")){
+//        if($this->get("security.authorization_checker")->isGranted("IS_AUTHENTICATED_REMEMBERED")){
 //
 //        }
 
@@ -62,22 +60,25 @@ class TutoController extends Controller{
             $favoris = new Favoris();
         }
 
-        //Création du formulaire
-        $form = $this->createForm(FavorisType::class, $favoris);
+        //Création des formulaires
+        $favorisForm = $this->createForm(FavorisType::class, $favoris);
         $playlist = new Playlist();
+        $playlistForm = $this->createForm(PlaylistType::class, $playlist);
 
+        //TODO Relancer l'idée d'un deuxieme formulaire pour l'ajout d'une playlist
         if($request->isMethod("POST")){
-            //Si j'ai playlist dans la request, c'est la création d'une playlist
-            if($request->get("favoris")['new_playlist'] !== null
-                && trim($request->get("favoris")['new_playlist']['name']) !== "") {
 
-                $form->handleRequest($request);
-                $json = $this->addPlaylist($form, $request, $tuto, $playlist, $favoris, $em, $user);
+            //Si j'ai playlist dans la request, c'est la création d'une playlist
+            if($request->get("playlist") !== null
+                && trim($request->get("playlist")['name']) !== "") {
+
+                $playlistForm->handleRequest($request);
+                $json = $this->addPlaylist($playlistForm, $request, $tuto, $playlist, $favoris, $em, $user);
                 return new JsonResponse($json);
 
             }else {
-                $form->handleRequest($request);
-                $json = $this->changePlaylist($form, $request, $favoris, $user, $tuto, $em);
+                $favorisForm->handleRequest($request);
+                $json = $this->changePlaylist($favorisForm, $request, $favoris, $user, $tuto, $em);
                 return new JsonResponse($json);
             }
         }
@@ -90,7 +91,8 @@ class TutoController extends Controller{
                 'tutoSameArtist'=> $tutoSameArtist,
                 'tutoSameSong' => $tutoSameSong,
                 'alreadyInFav' => $isAlreadyInFav,
-                'form' => $form->createView(),
+                'favorisForm' => $favorisForm->createView(),
+                'playlistForm' => $playlistForm->createView()
             ));
     }
 
@@ -137,7 +139,7 @@ class TutoController extends Controller{
      * @param $em
      */
     public function getPlaylist($em){
-        if($this->get("security.authorization_checker")->isGranted("IS_AUTHENTICATED_FULLY")) {
+        if($this->get("security.authorization_checker")->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
             $user = $this->getUser();
             $playlists = $em->getRepository("CoursdeGratteBundle:Playlist")->findAllByUser($user->getId());
             foreach ($playlists as $playlist) {
@@ -152,7 +154,7 @@ class TutoController extends Controller{
      * @return null
      */
     public function checkIfAlreadyInFavs($tutoId){
-        if($this->get("security.authorization_checker")->isGranted("IS_AUTHENTICATED_FULLY")) {
+        if($this->get("security.authorization_checker")->isGranted("IS_AUTHENTICATED_REMEMBERED")) {
             $array = [];
             $em = $this->getDoctrine()->getManager();
             $user = $this->getUser();
@@ -183,7 +185,7 @@ class TutoController extends Controller{
 
         if ($form->isValid()) {
             //Récupération du nom de la playlist et creation
-            $playlistName = $request->get("favoris")['new_playlist']["name"];
+            $playlistName = $request->get("playlist")["name"];
             $playlist->setName($playlistName);
             $playlist->setUser($user);
             $em->persist($playlist);
@@ -207,14 +209,8 @@ class TutoController extends Controller{
             $json = ["playlist" => array("id" => $id, "name" => $playlist->getName()), "message" => "Favoris Ajouté"];
 
         }else{
-            //TODO GERER LES ERREURS
-            $errors = $form->getErrors(true, true);
-            $errorCollection = array();
-            foreach ($errors as $error) {
-                $errorCollection[] = $error->getMessageTemplate();
-            }
-            $json = ["errors" => $errorCollection];
-
+            $errors = $form->getErrors(true, true)->__toString();
+            $json = ["error" => $errors];
         }
 
         return $json;
@@ -236,6 +232,7 @@ class TutoController extends Controller{
             //Récupération de mes playlist en fonction de son id dans la requete
             $playlist = $em->getRepository("CoursdeGratteBundle:Playlist")->find($request->get("favoris")['playlist']);
             if ($playlist !== null && $user !== null) { // Le tuto ne peux pas être null car je renvois une exception
+
                 $favoris->setPlaylist($playlist);
                 $favoris->setUser($user);
                 $favoris->setTuto($tuto);
@@ -243,12 +240,18 @@ class TutoController extends Controller{
                 $em->flush();
                 $json = ["message" => "Favoris ajouté"];
             }else{
-                $json = ["message" => "Une Valeur est nulle alors qu'elle ne devrais pas l'etre :D"];
+                $json = ["error" => "Une Valeur est nulle alors qu'elle ne devrais pas l'etre :D"];
             }
-        }else{
+        }else {
             //TODO GERER LES ERREURS
-            $json = ["message" => "Blop, y'a un erreur"];
+            $errors = $form->getErrors(true, true);
+            $errorCollection = array();
+            foreach ($errors as $error) {
+                $errorCollection[] = $error->getMessageTemplate();
+            }
+            $json = ["error" => "Une erreur s'est produite" ];
         }
+
         return $json;
     }
 

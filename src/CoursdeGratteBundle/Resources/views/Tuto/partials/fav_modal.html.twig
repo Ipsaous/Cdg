@@ -10,13 +10,12 @@
                     {% endimage %}
                 </h4>
             </div>
-            {{ form_start(form, { method : "POST", action : path("single", {"slug" : tuto.slug, "id" : tuto.id}) }) }}
+
             <div class="modal-body">
-
                 <ul id="playlistContainer">
+                    {{  form_start(favorisForm, { method : "POST", action : path("single", {"slug" : tuto.slug, "id" : tuto.id}) }) }}
 
-
-                    {% for playlist in form.playlist %}
+                    {% for playlist in favorisForm.playlist %}
                         <div class="checkbox">
                             {% if alreadyInFav|default and alreadyInFav.playlist.id == playlist.vars.value %}
                                 {{ form_widget(playlist, {'attr' : { 'checked ' : true }}) }}
@@ -27,24 +26,17 @@
                         </div>
                     {% endfor %}
 
-
+                    {{ form_end(favorisForm) }}
                 </ul>
             </div>
             <div class="modal-footer">
-
-                {{ form_widget(form.new_playlist.name, {'attr' : { 'class' : 'form-control', 'placeholder' : 'Nouvelle Playlist'} }) }}
-                {#{{ form_start(addForm, { method : "POST", action : path("single", {"slug" : tuto.slug, "id" : tuto.id}) }) }}#}
-
-                {#<div class="form-group {% if not addForm.name.vars.valid %}has-error{% endif %}">#}
-                    {#{{ form_errors(addForm.name) }}#}
-                    {#{{ form_widget(addForm.name, { 'attr' : {'class' : 'form-control', 'placeholder' : "Nouvelle Playlist"} }) }}#}
-                {#</div>#}
-
+                {{  form_start(playlistForm, { method : "POST", action : path("single", {"slug" : tuto.slug, "id" : tuto.id}) }) }}
+                {{ form_widget(playlistForm.name, { 'attr' : { 'class' : 'form-control', 'placeholder' : 'Nouvelle Playlist'} }) }}
                 <button id="addPlaylist" class="btn btn-primary" name="addPlaylist">Créer une nouvelle playlist</button>
-                {#{{ form_end(addForm) }}#}
+                {{ form_end(playlistForm) }}
 
             </div>
-            {{ form_end(form) }}
+
 
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -6,11 +6,7 @@ use CoursdeGratteBundle\Repository\PlaylistRepository;
 use MyUserBundle\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
@@ -40,12 +36,10 @@ class FavorisType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'label' => false,
+                "translation_domain" => false,
                 'query_builder' => function (PlaylistRepository $repo) use ($userId) {
                     return $repo->findAllByUser($userId);
                 }
-            ))
-                ->add('new_playlist', PlaylistType::class, array(
-                    'mapped' => false
             ));
         }
 
