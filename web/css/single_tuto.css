@@ -64,6 +64,9 @@
     background-color: grey;
 }
 /** PARTIE GAUCHE **/
+#metaData {
+    position: relative;
+}
 #metaData h1 {
     color:white;
     font-size: 2.2rem;
@@ -93,6 +96,7 @@
     background-color: #0C0C0C;
     padding: 5px 15px;
     padding-bottom: 10px;
+
 
 }
 #videoParts ul{
@@ -452,4 +456,22 @@ body::-webkit-scrollbar-thumb
 #playlistContainer label{
     line-height: 40px;
     font-size: 20px;
+}
+/** MODAL NOT CONNECTED FAV **/
+
+#connectModal{
+    position: absolute;
+    display: none;
+    width: 290px;
+    bottom: -10px;
+    background-color: #FFFFFF;
+    padding: 0 15px 15px 15px;
+    border: 1px solid #c5c5c5;
+    box-shadow: 0 0 15px rgba(0,0,0,.18);
+    z-index: 1500;
+
+}
+#connectModal h5{
+    font-size: 17px;
+    margin-bottom: 20px;
 }

@@ -168,6 +168,36 @@ $(document).ready(function(){
 
     $(".alert-success").delay(3000).slideUp();
 
+    function showConnectModal(){
+        //Modal Favoris si non connecté
+        var connectModal = $("#connectModal");
+        //La div connectModal n'existe pas
+        if(!connectModal.length){
+            return;
+        }
+
+        $("#favIcon").click(function(){
+            console.log("showConnectModal Called");
+            if(connectModal.css("display") === "block"){
+                connectModal.fadeOut('fast');
+            }else{
+                connectModal.fadeIn("fast");
+            }
+
+        });
+        $(document).mouseup(function (e)
+        {
+            var container = $("#connectModal");
+
+            if (!container.is(e.target)  // if the target of the click isn't the container...
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                container.fadeOut("fast");
+            }
+        });
+    }
+    showConnectModal();
+
 
 
 });

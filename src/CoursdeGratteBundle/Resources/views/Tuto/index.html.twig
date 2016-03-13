@@ -80,6 +80,11 @@
                             {% endif %}
                             </span>
                         </div>
+
+                        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            {% include "CoursdeGratteBundle:Tuto/partials:fav_connect_modal.html.twig" %}
+                        {% endif %}
+
                     </div>
 
                     <div id="favShareContainer">
@@ -157,8 +162,6 @@
     <!-- Include des modal -->
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         {% include "CoursdeGratteBundle:Tuto/partials:fav_modal.html.twig" %}
-    {% else %}
-        {# Juste afficher un bouton avec un bouton pour se logger ou s'inscrire#}
     {% endif %}
 
     {#{{ dump(tutoSameSong) }}#}
